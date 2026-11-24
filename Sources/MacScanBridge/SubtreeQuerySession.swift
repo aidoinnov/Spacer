@@ -1,0 +1,1 @@
+../SpaceSnifferAutomation/SubtreeQuerySession.swift

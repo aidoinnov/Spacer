@@ -1,0 +1,43 @@
+[package]
+name = "space-sniffer-gpui"
+version = "0.3.0"
+edition = "2024"
+rust-version = "1.97"
+
+[dependencies]
+gpui-kit = { version = "=0.6.6", default-features = false, features = ["assets"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex = "1"
+notify = "8"
+anyhow = "1"
+trash = "5.4.0"
+base64 = "0.22"
+tempfile = "3"
+chrono = "0.4"
+futures = "0.3"
+getrandom = "0.3"
+raw-window-handle = "0.6"
+image = {version="0.25",default-features=false,features=["png"]}
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+overflow-checks = true
+
+[profile.release.package.gpui-pre-macros]
+debug-assertions = true
+
+[features]
+default = ["capture"]
+# The pinned upstream exposes its offscreen GPU capture API under test-support.
+# Our acceptance commands remain separately gated by qa.
+capture = ["gpui-kit/test-support"]
+qa = ["capture"]
+
+[target.'cfg(target_os = "macos")'.dependencies]
+libloading = "0.8"
+libc = "0.2"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows = { version = "0.61.3", features = ["Win32_Foundation", "Win32_Security", "Win32_System_JobObjects", "Win32_System_Threading", "Win32_UI_WindowsAndMessaging", "Win32_System_Pipes", "Win32_System_IO", "Win32_Security_Authorization", "Win32_System_Memory", "Win32_Storage_FileSystem", "Win32_System_ProcessStatus", "Win32_Graphics_Dwm"] }

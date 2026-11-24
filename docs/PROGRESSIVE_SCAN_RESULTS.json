@@ -1,0 +1,2156 @@
+{
+  "S01": {
+    "source": "docs/validation/progressive-scan-2026-11-16/exploratory/report.json",
+    "series": "exploratory",
+    "source_status": "measured_engine_only",
+    "binary_sha256": "72398a09a5a41683c7252e8d4d86670b04e44d5763926bcb13a85a69beaad5d4",
+    "summary": {
+      "posix": {
+        "attempts": 5,
+        "valid": 5,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 5,
+            "p50": 13.29175,
+            "p95": 45.396958,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 5,
+            "p50": 13.283458,
+            "p95": 45.375416,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 5,
+            "p50": 6.015625,
+            "p95": 6.0625,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 5,
+            "p50": 0.007411,
+            "p95": 0.010396,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 5,
+        "valid": 5,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 5,
+            "p50": 15.747834,
+            "p95": 23.479084,
+            "paired_improvement_pct": -31.652784622039974,
+            "paired_improvement_ci95": [
+              -271.97045729595123,
+              80.27446905142851
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 5,
+            "p50": 15.73225,
+            "p95": 23.468334,
+            "paired_improvement_pct": -31.627999275489856,
+            "paired_improvement_ci95": [
+              -272.225206685303,
+              80.29155038490447
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 5,
+            "p50": 6.6875,
+            "p95": 6.859375,
+            "paired_improvement_pct": -10.56701030927835,
+            "paired_improvement_ci95": [
+              -31.044776119402982,
+              7.458563535911603
+            ]
+          },
+          "cpu_seconds": {
+            "n": 5,
+            "p50": 0.007893,
+            "p95": 0.008001000000000001,
+            "paired_improvement_pct": 8.703278909728777,
+            "paired_improvement_ci95": [
+              -48.9245283018868,
+              29.813098313326236
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 5,
+        "valid": 5,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 5,
+            "p50": 10.042333,
+            "p95": 15.851625,
+            "paired_improvement_pct": -19.25912690202569,
+            "paired_improvement_ci95": [
+              -59.096973217874336,
+              87.1926991231439
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 5,
+            "p50": 10.034583,
+            "p95": 15.839709,
+            "paired_improvement_pct": -19.243867071360484,
+            "paired_improvement_ci95": [
+              -59.15593885683697,
+              87.21508580769816
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 5,
+            "p50": 5.984375,
+            "p95": 6.359375,
+            "paired_improvement_pct": 0.7792207792207793,
+            "paired_improvement_ci95": [
+              -21.492537313432834,
+              9.30232558139535
+            ]
+          },
+          "cpu_seconds": {
+            "n": 5,
+            "p50": 0.00612,
+            "p95": 0.006879,
+            "paired_improvement_pct": 20.05127513156121,
+            "paired_improvement_ci95": [
+              -16.716981132075464,
+              50.16352443247403
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          -59.096973217874336,
+          87.1926991231439
+        ],
+        "p95_improvement_ci95": [
+          -19.25912690202569,
+          77.87884157348164
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          -59.15593885683697,
+          87.21508580769816
+        ],
+        "p95_improvement_ci95": [
+          -19.243867071360484,
+          77.88541927637644
+        ],
+        "status": "engine_proxy_only"
+      },
+      "peak_rss_mib": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          -21.492537313432834,
+          9.30232558139535
+        ],
+        "p95_improvement_ci95": [
+          -5.714285714285714,
+          1.2886597938144329
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          -16.716981132075464,
+          50.16352443247403
+        ],
+        "p95_improvement_ci95": [
+          7.178518418566999,
+          41.131204309349755
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "insufficient_pairs",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  },
+  "S03-4100": {
+    "source": "docs/validation/progressive-scan-2026-11-16/exploratory/report.json",
+    "series": "exploratory",
+    "source_status": "measured_engine_only",
+    "binary_sha256": "72398a09a5a41683c7252e8d4d86670b04e44d5763926bcb13a85a69beaad5d4",
+    "summary": {
+      "posix": {
+        "attempts": 5,
+        "valid": 5,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 5,
+            "p50": 41.862042,
+            "p95": 145.535041,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 5,
+            "p50": 7.375,
+            "p95": 7.53125,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 5,
+            "p50": 0.019389999999999998,
+            "p95": 0.020316,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 5,
+        "valid": 5,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 5,
+            "p50": 34.986292,
+            "p95": 61.00575,
+            "paired_improvement_pct": -9.48866948113948,
+            "paired_improvement_ci95": [
+              -152.8098303752053,
+              78.37365092026187
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 5,
+            "p50": 8.5,
+            "p95": 8.796875,
+            "paired_improvement_pct": -17.04781704781705,
+            "paired_improvement_ci95": [
+              -18.181818181818183,
+              0.2074688796680498
+            ]
+          },
+          "cpu_seconds": {
+            "n": 5,
+            "p50": 0.025415999999999998,
+            "p95": 0.029242000000000004,
+            "paired_improvement_pct": -28.607529654461082,
+            "paired_improvement_ci95": [
+              -69.36175141897372,
+              -2.651003222788232
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 5,
+        "valid": 5,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 5,
+            "p50": 23.555959,
+            "p95": 27.124333,
+            "paired_improvement_pct": 47.08844488370455,
+            "paired_improvement_ci95": [
+              -12.404126246633853,
+              82.74281586934104
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 5,
+            "p50": 7.640625,
+            "p95": 7.75,
+            "paired_improvement_pct": -1.4522821576763485,
+            "paired_improvement_ci95": [
+              -6.666666666666667,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 5,
+            "p50": 0.012200999999999998,
+            "p95": 0.013661,
+            "paired_improvement_pct": 36.760106567821154,
+            "paired_improvement_ci95": [
+              32.75743256546565,
+              45.734914904589985
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          -12.404126246633853,
+          82.74281586934104
+        ],
+        "p95_improvement_ci95": [
+          35.205423089490004,
+          82.74281586934104
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "status": "not_applicable_or_missing"
+      },
+      "peak_rss_mib": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          -6.666666666666667,
+          0.0
+        ],
+        "p95_improvement_ci95": [
+          -5.084745762711865,
+          -1.4522821576763485
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          32.75743256546565,
+          45.734914904589985
+        ],
+        "p95_improvement_ci95": [
+          32.75743256546565,
+          39.05289974524202
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "insufficient_pairs",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  },
+  "S04": {
+    "source": "docs/validation/progressive-scan-2026-11-16/exploratory/report.json",
+    "series": "exploratory",
+    "source_status": "measured_engine_only",
+    "binary_sha256": "72398a09a5a41683c7252e8d4d86670b04e44d5763926bcb13a85a69beaad5d4",
+    "summary": {
+      "posix": {
+        "attempts": 5,
+        "valid": 5,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 5,
+            "p50": 14.167667,
+            "p95": 27.005791,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 5,
+            "p50": 14.159625,
+            "p95": 26.998833,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 5,
+            "p50": 6.296875,
+            "p95": 6.40625,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 5,
+            "p50": 0.011848999999999998,
+            "p95": 0.012974999999999999,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 5,
+        "valid": 5,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 5,
+            "p50": 15.475542,
+            "p95": 18.787792,
+            "paired_improvement_pct": 30.430506553205568,
+            "paired_improvement_ci95": [
+              -37.35594589435203,
+              50.485503098352346
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 5,
+            "p50": 15.463875,
+            "p95": 18.771792,
+            "paired_improvement_pct": 30.47183928283122,
+            "paired_improvement_ci95": [
+              -37.45885520242479,
+              50.48774812707156
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 5,
+            "p50": 6.65625,
+            "p95": 6.890625,
+            "paired_improvement_pct": -7.317073170731707,
+            "paired_improvement_ci95": [
+              -12.787723785166241,
+              1.9753086419753085
+            ]
+          },
+          "cpu_seconds": {
+            "n": 5,
+            "p50": 0.007631999999999999,
+            "p95": 0.009944,
+            "paired_improvement_pct": 32.23892100192677,
+            "paired_improvement_ci95": [
+              18.98981670061101,
+              48.594818128112074
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 5,
+        "valid": 5,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 5,
+            "p50": 12.917417,
+            "p95": 43.34175,
+            "paired_improvement_pct": 8.824670992055356,
+            "paired_improvement_ci95": [
+              -60.49057774312183,
+              38.72626630169703
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 5,
+            "p50": 12.902625,
+            "p95": 43.312834,
+            "paired_improvement_pct": 8.877353743478373,
+            "paired_improvement_ci95": [
+              -60.424837621685356,
+              38.784197165063084
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 5,
+            "p50": 6.625,
+            "p95": 7.203125,
+            "paired_improvement_pct": -6.106870229007633,
+            "paired_improvement_ci95": [
+              -12.439024390243903,
+              -1.240694789081886
+            ]
+          },
+          "cpu_seconds": {
+            "n": 5,
+            "p50": 0.008102,
+            "p95": 0.011016999999999999,
+            "paired_improvement_pct": 28.244399185336057,
+            "paired_improvement_ci95": [
+              15.090558766859344,
+              44.7463921005992
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          -60.49057774312183,
+          38.72626630169703
+        ],
+        "p95_improvement_ci95": [
+          -60.49057774312183,
+          15.464923656826018
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          -60.424837621685356,
+          38.784197165063084
+        ],
+        "p95_improvement_ci95": [
+          -60.424837621685356,
+          15.47944911148979
+        ],
+        "status": "engine_proxy_only"
+      },
+      "peak_rss_mib": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          -12.439024390243903,
+          -1.240694789081886
+        ],
+        "p95_improvement_ci95": [
+          -12.439024390243903,
+          -5.2109181141439205
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 5,
+        "p50_improvement_ci95": [
+          15.090558766859344,
+          44.7463921005992
+        ],
+        "p95_improvement_ci95": [
+          15.090558766859344,
+          31.622921765549826
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "insufficient_pairs",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  },
+  "S02": {
+    "source": "docs/validation/progressive-scan-2026-11-16/paired-20/report.json",
+    "series": "paired-20",
+    "source_status": "stopped_low_backing_space",
+    "binary_sha256": "72398a09a5a41683c7252e8d4d86670b04e44d5763926bcb13a85a69beaad5d4",
+    "summary": {
+      "posix": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 858.122167,
+            "p95": 1441.07925,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 858.629792,
+            "p95": 1441.063583,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 47.0234375,
+            "p95": 47.890625,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.718236,
+            "p95": 0.921361,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 588.624604,
+            "p95": 1323.924,
+            "paired_improvement_pct": 32.9593623203234,
+            "paired_improvement_ci95": [
+              14.656828946103584,
+              41.988700991076286
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 588.6074375000001,
+            "p95": 1324.670792,
+            "paired_improvement_pct": 32.942305682858596,
+            "paired_improvement_ci95": [
+              14.713812149346381,
+              41.99779270231251
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 47.3359375,
+            "p95": 47.96875,
+            "paired_improvement_pct": -0.6793290540363928,
+            "paired_improvement_ci95": [
+              -1.3871828270258073,
+              -0.3012725074181027
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.489467,
+            "p95": 0.553042,
+            "paired_improvement_pct": 33.571400373117704,
+            "paired_improvement_ci95": [
+              24.374358570323132,
+              43.29273188941573
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 606.81375,
+            "p95": 893.346875,
+            "paired_improvement_pct": 33.01611003638867,
+            "paired_improvement_ci95": [
+              16.789565690636564,
+              39.15379899748062
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 603.0747085,
+            "p95": 893.960875,
+            "paired_improvement_pct": 33.02034105521161,
+            "paired_improvement_ci95": [
+              20.427754793934035,
+              39.7691056784984
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 47.359375,
+            "p95": 47.671875,
+            "paired_improvement_pct": -0.567123672266155,
+            "paired_improvement_ci95": [
+              -0.8796439338833246,
+              -0.017685340460516452
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.49974300000000005,
+            "p95": 0.568468,
+            "paired_improvement_pct": 33.09913576398077,
+            "paired_improvement_ci95": [
+              24.68243726412237,
+              37.03317789361375
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          12.544362408269134,
+          39.27532957056331
+        ],
+        "p95_improvement_ci95": [
+          18.704184873767723,
+          64.76727079088687
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          16.1101031203264,
+          41.89793886851147
+        ],
+        "p95_improvement_ci95": [
+          18.736130166055084,
+          64.7661290546079
+        ],
+        "status": "engine_proxy_only"
+      },
+      "peak_rss_mib": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          -1.4023372287145242,
+          0.01661681621801263
+        ],
+        "p95_improvement_ci95": [
+          -0.9583608724388631,
+          1.3627514600908501
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          14.962851574794383,
+          35.801199027125875
+        ],
+        "p95_improvement_ci95": [
+          26.899187178641608,
+          47.844534456571814
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "within_point_thresholds",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  },
+  "S03-4095": {
+    "source": "docs/validation/progressive-scan-2026-11-16/paired-20/report.json",
+    "series": "paired-20",
+    "source_status": "stopped_low_backing_space",
+    "binary_sha256": "72398a09a5a41683c7252e8d4d86670b04e44d5763926bcb13a85a69beaad5d4",
+    "summary": {
+      "posix": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 24.822708499999997,
+            "p95": 34.704417,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 7.0703125,
+            "p95": 7.421875,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.0195665,
+            "p95": 0.022455,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 13.680916,
+            "p95": 33.576958,
+            "paired_improvement_pct": 39.73963132961153,
+            "paired_improvement_ci95": [
+              33.402142469861246,
+              52.977461092452884
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 7.84375,
+            "p95": 8.5625,
+            "paired_improvement_pct": -12.807227516273526,
+            "paired_improvement_ci95": [
+              -15.628317320987325,
+              -6.409642790861229
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.011214499999999999,
+            "p95": 0.014617000000000002,
+            "paired_improvement_pct": 39.24512999716974,
+            "paired_improvement_ci95": [
+              36.79450715750852,
+              47.83233573806258
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 13.575875,
+            "p95": 31.401125,
+            "paired_improvement_pct": 44.05637825153055,
+            "paired_improvement_ci95": [
+              37.38862063222619,
+              49.19872323913472
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 7.328125,
+            "p95": 7.75,
+            "paired_improvement_pct": -3.167075979244508,
+            "paired_improvement_ci95": [
+              -7.100110242007454,
+              -0.3310528534743782
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.010905499999999999,
+            "p95": 0.012738999999999999,
+            "paired_improvement_pct": 44.05338789833456,
+            "paired_improvement_ci95": [
+              36.3510219465457,
+              47.88821644167625
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          30.74532963474981,
+          54.769736699311686
+        ],
+        "p95_improvement_ci95": [
+          -6.456219753023644,
+          50.69245472787471
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "status": "not_applicable_or_missing"
+      },
+      "peak_rss_mib": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          -5.777777777777778,
+          0.21834061135371177
+        ],
+        "p95_improvement_ci95": [
+          -6.976744186046512,
+          4.536489151873767
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          35.58369985692333,
+          50.63209375288365
+        ],
+        "p95_improvement_ci95": [
+          39.56459157970493,
+          45.18815408594968
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "within_point_thresholds",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  },
+  "S03-4096": {
+    "source": "docs/validation/progressive-scan-2026-11-16/paired-20/report.json",
+    "series": "paired-20",
+    "source_status": "stopped_low_backing_space",
+    "binary_sha256": "72398a09a5a41683c7252e8d4d86670b04e44d5763926bcb13a85a69beaad5d4",
+    "summary": {
+      "posix": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 22.176604500000003,
+            "p95": 43.320167,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 7.2421875,
+            "p95": 7.796875,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.0186255,
+            "p95": 0.023682,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 10.74625,
+            "p95": 20.407083,
+            "paired_improvement_pct": 46.64194930472269,
+            "paired_improvement_ci95": [
+              37.15288651583931,
+              53.85417635244861
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 8.0703125,
+            "p95": 8.75,
+            "paired_improvement_pct": -9.766231766575943,
+            "paired_improvement_ci95": [
+              -13.3204503008923,
+              -6.365997300723897
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.0094135,
+            "p95": 0.013464,
+            "paired_improvement_pct": 42.11254110586785,
+            "paired_improvement_ci95": [
+              36.078807129274125,
+              50.37251661998822
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 12.9136875,
+            "p95": 30.09025,
+            "paired_improvement_pct": 46.00439944047379,
+            "paired_improvement_ci95": [
+              26.835608128184067,
+              51.14182953113592
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 7.328125,
+            "p95": 7.78125,
+            "paired_improvement_pct": -0.6574483740575459,
+            "paired_improvement_ci95": [
+              -3.6738508264704164,
+              1.6822442468994194
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.010301,
+            "p95": 0.013021999999999999,
+            "paired_improvement_pct": 39.75911458333333,
+            "paired_improvement_ci95": [
+              32.326163614629735,
+              50.15090539304173
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          22.91310260968405,
+          55.03232821389046
+        ],
+        "p95_improvement_ci95": [
+          13.517962565116301,
+          61.79983255094933
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "status": "not_applicable_or_missing"
+      },
+      "peak_rss_mib": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          -2.8169014084507045,
+          2.7027027027027026
+        ],
+        "p95_improvement_ci95": [
+          -2.0491803278688523,
+          4.572564612326044
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          28.73861355565847,
+          51.61925123296325
+        ],
+        "p95_improvement_ci95": [
+          40.01922900833258,
+          49.589926269571706
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "within_point_thresholds",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  },
+  "S03-4097": {
+    "source": "docs/validation/progressive-scan-2026-11-16/paired-20/report.json",
+    "series": "paired-20",
+    "source_status": "stopped_low_backing_space",
+    "binary_sha256": "72398a09a5a41683c7252e8d4d86670b04e44d5763926bcb13a85a69beaad5d4",
+    "summary": {
+      "posix": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 36.281771,
+            "p95": 102.574792,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 7.359375,
+            "p95": 7.765625,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.0209075,
+            "p95": 0.024371,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 57.393521,
+            "p95": 212.9725,
+            "paired_improvement_pct": -59.98885492188032,
+            "paired_improvement_ci95": [
+              -135.38620829222523,
+              -25.660402385875205
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 8.53125,
+            "p95": 8.796875,
+            "paired_improvement_pct": -15.466670067897063,
+            "paired_improvement_ci95": [
+              -18.974021622367424,
+              -11.683088554254198
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.029366000000000003,
+            "p95": 0.032098999999999996,
+            "paired_improvement_pct": -42.48250663597336,
+            "paired_improvement_ci95": [
+              -53.44344843962189,
+              -34.2703386866907
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 22.7201875,
+            "p95": 58.125583,
+            "paired_improvement_pct": 33.98001219373356,
+            "paired_improvement_ci95": [
+              -6.963991246447692,
+              60.886395583340146
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 7.484375,
+            "p95": 7.890625,
+            "paired_improvement_pct": -0.21599178951296882,
+            "paired_improvement_ci95": [
+              -2.5321593605595103,
+              1.0126196853925187
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.012313,
+            "p95": 0.013823,
+            "paired_improvement_pct": 38.67380685070367,
+            "paired_improvement_ci95": [
+              32.678685348833326,
+              44.545607156391824
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          15.270428638269948,
+          55.83905825298585
+        ],
+        "p95_improvement_ci95": [
+          -29.894531614626345,
+          82.53582843236488
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "status": "not_applicable_or_missing"
+      },
+      "peak_rss_mib": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          -4.54054054054054,
+          1.4583333333333333
+        ],
+        "p95_improvement_ci95": [
+          -3.2719836400818,
+          1.2072434607645874
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          32.35571891671134,
+          44.17489488354514
+        ],
+        "p95_improvement_ci95": [
+          33.98807121395579,
+          46.73193547108487
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "within_point_thresholds",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  },
+  "S03-100000": {
+    "source": "docs/validation/progressive-scan-2026-11-16/guarded-20/report.json",
+    "series": "guarded-20",
+    "source_status": "measured_engine_only",
+    "binary_sha256": "7c8b92540dd8d898ad030aedcaf82d9936662dc96e3d95f8761aea96dda3809e",
+    "summary": {
+      "posix": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 322.13127099999997,
+            "p95": 466.783875,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 47.921875,
+            "p95": 49.640625,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.304766,
+            "p95": 0.370693,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 348.8325,
+            "p95": 482.411583,
+            "paired_improvement_pct": -7.56937061170253,
+            "paired_improvement_ci95": [
+              -18.328826348775006,
+              -1.9590306515090274
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 48.0234375,
+            "p95": 50.09375,
+            "paired_improvement_pct": -0.558899514412087,
+            "paired_improvement_ci95": [
+              -2.330874316939891,
+              0.9842684965783144
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.325558,
+            "p95": 0.412446,
+            "paired_improvement_pct": -6.310818567708882,
+            "paired_improvement_ci95": [
+              -14.35187465363688,
+              -2.85938859970426
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 223.0598755,
+            "p95": 389.578209,
+            "paired_improvement_pct": 30.601224423549624,
+            "paired_improvement_ci95": [
+              25.50090213495412,
+              32.57443171234069
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "paired_improvement_pct": null,
+            "paired_improvement_ci95": null
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 52.859375,
+            "p95": 53.5,
+            "paired_improvement_pct": -9.540815829495207,
+            "paired_improvement_ci95": [
+              -11.682818903426961,
+              -8.069208562966296
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.2134835,
+            "p95": 0.277815,
+            "paired_improvement_pct": 29.25090147949079,
+            "paired_improvement_ci95": [
+              25.985555396477096,
+              32.337241693199665
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          23.11663258270922,
+          37.1014146742996
+        ],
+        "p95_improvement_ci95": [
+          -6.336898428126081,
+          45.648043861840776
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "status": "not_applicable_or_missing"
+      },
+      "peak_rss_mib": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          -11.868603499504788,
+          -8.437399935959014
+        ],
+        "p95_improvement_ci95": [
+          -9.638168427793788,
+          -6.729264475743349
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          25.81306847318562,
+          35.610232305335536
+        ],
+        "p95_improvement_ci95": [
+          20.76867960543644,
+          39.75823660009766
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "within_point_thresholds",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  },
+  "S05": {
+    "source": "docs/validation/progressive-scan-2026-11-16/guarded-20/report.json",
+    "series": "guarded-20",
+    "source_status": "measured_engine_only",
+    "binary_sha256": "7c8b92540dd8d898ad030aedcaf82d9936662dc96e3d95f8761aea96dda3809e",
+    "summary": {
+      "posix": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 367.7578125,
+            "p95": 498.363375,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 367.7455415,
+            "p95": 498.151833,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 46.671875,
+            "p95": 47.34375,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.3430965,
+            "p95": 0.428026,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 520.5375630000001,
+            "p95": 746.267417,
+            "paired_improvement_pct": -43.38958749939448,
+            "paired_improvement_ci95": [
+              -50.84366621527201,
+              -37.39562522152605
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 520.5257085000001,
+            "p95": 746.314042,
+            "paired_improvement_pct": -43.39552861574473,
+            "paired_improvement_ci95": [
+              -50.84651582415318,
+              -37.42938090904334
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 49.515625,
+            "p95": 51.078125,
+            "paired_improvement_pct": -6.443927658894922,
+            "paired_improvement_ci95": [
+              -7.356515214343542,
+              -5.848930481283422
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.495284,
+            "p95": 0.60416,
+            "paired_improvement_pct": -44.99746115701815,
+            "paired_improvement_ci95": [
+              -48.851778910422695,
+              -38.60099540278804
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 224.181208,
+            "p95": 555.0265,
+            "paired_improvement_pct": 39.42723639192735,
+            "paired_improvement_ci95": [
+              36.50089483258297,
+              41.00753300829646
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 224.16825,
+            "p95": 555.011292,
+            "paired_improvement_pct": 39.4287185137005,
+            "paired_improvement_ci95": [
+              36.5028028526974,
+              41.00758168766931
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 47.4765625,
+            "p95": 48.59375,
+            "paired_improvement_pct": -1.5951574319482524,
+            "paired_improvement_ci95": [
+              -2.2979019012262345,
+              -1.21724487707653
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.2136565,
+            "p95": 0.260424,
+            "paired_improvement_pct": 38.627504321366025,
+            "paired_improvement_ci95": [
+              37.05639181416491,
+              40.48935513484889
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          35.536419146502816,
+          42.97176616955931
+        ],
+        "p95_improvement_ci95": [
+          -67.89454204215724,
+          70.9834160833708
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          35.54161882578122,
+          42.971869368393726
+        ],
+        "p95_improvement_ci95": [
+          -67.9099060837834,
+          71.0703312086499
+        ],
+        "status": "engine_proxy_only"
+      },
+      "peak_rss_mib": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          -2.5945764981586876,
+          -1.2874101320849356
+        ],
+        "p95_improvement_ci95": [
+          -3.761651131824234,
+          -1.2541254125412542
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          35.42524952856816,
+          40.65241957621015
+        ],
+        "p95_improvement_ci95": [
+          28.47695214659226,
+          41.67655478854603
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "failed",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  },
+  "S06": {
+    "source": "docs/validation/progressive-scan-2026-11-16/guarded-20/report.json",
+    "series": "guarded-20",
+    "source_status": "measured_engine_only",
+    "binary_sha256": "7c8b92540dd8d898ad030aedcaf82d9936662dc96e3d95f8761aea96dda3809e",
+    "summary": {
+      "posix": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 470.1314585,
+            "p95": 706.618542,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 470.11345800000004,
+            "p95": 706.68075,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 47.0625,
+            "p95": 47.375,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.41070799999999996,
+            "p95": 0.45859999999999995,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 683.4326245,
+            "p95": 880.421417,
+            "paired_improvement_pct": -39.032253621644884,
+            "paired_improvement_ci95": [
+              -46.65716272055525,
+              -30.366730309336997
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 683.526083,
+            "p95": 880.491334,
+            "paired_improvement_pct": -39.046833717582885,
+            "paired_improvement_ci95": [
+              -46.56910519816728,
+              -30.367979648100068
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 50.3828125,
+            "p95": 51.21875,
+            "paired_improvement_pct": -7.310773966578716,
+            "paired_improvement_ci95": [
+              -7.7766699900299106,
+              -6.59377070907886
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.585418,
+            "p95": 0.6427,
+            "paired_improvement_pct": -40.55124528352215,
+            "paired_improvement_ci95": [
+              -46.82867826162325,
+              -37.141103950943986
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 306.1809375,
+            "p95": 482.252125,
+            "paired_improvement_pct": 34.08553304904063,
+            "paired_improvement_ci95": [
+              30.30272621392619,
+              41.12599606537633
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 306.1194795,
+            "p95": 482.239292,
+            "paired_improvement_pct": 34.0873134977369,
+            "paired_improvement_ci95": [
+              30.30343388136519,
+              41.127325155794196
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 48.09375,
+            "p95": 48.515625,
+            "paired_improvement_pct": -2.290440470762259,
+            "paired_improvement_ci95": [
+              -2.693343549568855,
+              -1.866748634452497
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.260762,
+            "p95": 0.273889,
+            "paired_improvement_pct": 36.21357628856052,
+            "paired_improvement_ci95": [
+              34.497860950172566,
+              38.921376051079505
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          30.571396405502604,
+          43.018207618025315
+        ],
+        "p95_improvement_ci95": [
+          13.72577544995503,
+          56.4507753599941
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          30.581045693299668,
+          43.022453202857065
+        ],
+        "p95_improvement_ci95": [
+          13.726480194746474,
+          56.45739014083243
+        ],
+        "status": "engine_proxy_only"
+      },
+      "peak_rss_mib": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          -2.5166666666666666,
+          -1.7532252729077076
+        ],
+        "p95_improvement_ci95": [
+          -2.6741498844503138,
+          -1.5081967213114755
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          33.69588411685649,
+          39.926821496807186
+        ],
+        "p95_improvement_ci95": [
+          38.24318595883616,
+          41.24814653292629
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "within_point_thresholds",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  },
+  "S07": {
+    "source": "docs/validation/progressive-scan-2026-11-16/guarded-20/report.json",
+    "series": "guarded-20",
+    "source_status": "measured_engine_only",
+    "binary_sha256": "7c8b92540dd8d898ad030aedcaf82d9936662dc96e3d95f8761aea96dda3809e",
+    "summary": {
+      "posix": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 523.3035205,
+            "p95": 595.285792,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 523.283417,
+            "p95": 595.243833,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 50.203125,
+            "p95": 51.1875,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.4254525,
+            "p95": 0.445579,
+            "paired_improvement_pct": 0.0,
+            "paired_improvement_ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "bulk": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 479.7484375,
+            "p95": 901.736791,
+            "paired_improvement_pct": 6.603343007389484,
+            "paired_improvement_ci95": [
+              2.8899066323653955,
+              9.631567848170128
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 479.724208,
+            "p95": 901.781041,
+            "paired_improvement_pct": 6.613901922948699,
+            "paired_improvement_ci95": [
+              2.88964528574376,
+              9.634598238030133
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 51.4296875,
+            "p95": 52.078125,
+            "paired_improvement_pct": -2.279217038253183,
+            "paired_improvement_ci95": [
+              -2.7727720172219135,
+              -1.1735400910658642
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.41303599999999996,
+            "p95": 0.497889,
+            "paired_improvement_pct": 3.3478113276281456,
+            "paired_improvement_ci95": [
+              1.4390809706710248,
+              5.250426469548566
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      },
+      "stream": {
+        "attempts": 20,
+        "valid": 20,
+        "failures": 0,
+        "metrics": {
+          "scan_complete_ms": {
+            "n": 20,
+            "p50": 298.0720835,
+            "p95": 490.542417,
+            "paired_improvement_pct": 41.77279014164922,
+            "paired_improvement_ci95": [
+              38.34192891046513,
+              47.75947228835633
+            ]
+          },
+          "useful_callback_proxy_ms": {
+            "n": 20,
+            "p50": 298.056396,
+            "p95": 490.523459,
+            "paired_improvement_pct": 41.7760520866144,
+            "paired_improvement_ci95": [
+              38.344968123650375,
+              47.75919154466314
+            ]
+          },
+          "peak_rss_mib": {
+            "n": 20,
+            "p50": 50.8203125,
+            "p95": 51.5,
+            "paired_improvement_pct": -1.0198333173193508,
+            "paired_improvement_ci95": [
+              -2.0385460441128576,
+              -0.13851732060599917
+            ]
+          },
+          "cpu_seconds": {
+            "n": 20,
+            "p50": 0.2595805,
+            "p95": 0.28171300000000005,
+            "paired_improvement_pct": 38.73216088592112,
+            "paired_improvement_ci95": [
+              37.24557537296249,
+              41.10585423403771
+            ]
+          }
+        },
+        "gate": "pending_GUI_and_full_matrix"
+      }
+    },
+    "engine_gate": {
+      "scan_complete_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          38.172036483280536,
+          48.72011424617629
+        ],
+        "p95_improvement_ci95": [
+          -30.47132313328213,
+          38.141497756425544
+        ],
+        "status": "measured"
+      },
+      "useful_callback_proxy_ms": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          38.17341340630334,
+          48.720123442501304
+        ],
+        "p95_improvement_ci95": [
+          -30.513294840521322,
+          38.14100128610656
+        ],
+        "status": "engine_proxy_only"
+      },
+      "peak_rss_mib": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          -1.9675202998126171,
+          -0.6036217303822937
+        ],
+        "p95_improvement_ci95": [
+          -2.3034398034398036,
+          0.0
+        ],
+        "status": "measured"
+      },
+      "cpu_seconds": {
+        "n": 20,
+        "p50_improvement_ci95": [
+          37.20879591702212,
+          41.823731769950086
+        ],
+        "p95_improvement_ci95": [
+          33.25263222261729,
+          39.86860534916295
+        ],
+        "status": "measured"
+      }
+    },
+    "engine_total_time_point_gate": "within_point_thresholds",
+    "adoption": "pending_GUI_cache_lifecycle_and_full_gate_matrix"
+  }
+}

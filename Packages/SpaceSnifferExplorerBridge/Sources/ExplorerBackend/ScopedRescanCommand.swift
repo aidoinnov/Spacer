@@ -1,0 +1,1 @@
+../ExplorerService/ScopedRescanCommand.swift

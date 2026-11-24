@@ -1,0 +1,1 @@
+../../../../Sources/SpaceSnifferAutomation/Queries.swift

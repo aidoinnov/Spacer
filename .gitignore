@@ -1,0 +1,32 @@
+.build/
+dist/
+.DS_Store
+References/Windows/
+
+# Rebuildable caches and local tool configuration
+.codex/
+.swiftpm/
+**/target/
+**/bin/
+**/obj/
+**/__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+
+# Frozen evidence, research checkouts and unrelated local deliverables
+docs/validation/
+References/
+outputs/
+
+# Compiler scratch files and packaged installers
+*.swiftmodule
+*.swiftdoc
+*.swiftsourceinfo
+*.abi.json
+*.dmp
+*.dmg
+*.zip
+*.exe
+*.dll

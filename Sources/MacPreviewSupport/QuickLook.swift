@@ -1,0 +1,1 @@
+../MacSpaceSniffer/QuickLook.swift

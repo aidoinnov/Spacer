@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""Compose a release bundle from already-built binaries; never replaces a running app."""
+import argparse, hashlib, json, pathlib, plistlib, shutil, subprocess
+
+p = argparse.ArgumentParser()
+p.add_argument('--rust-binary', type=pathlib.Path, required=True)
+p.add_argument('--native-directory', type=pathlib.Path, required=True)
+p.add_argument('--output', type=pathlib.Path, required=True)
+a = p.parse_args()
+repo = pathlib.Path(__file__).resolve().parents[2]
+assert not a.output.exists(), 'Output must be new; preserve the previous bundle for rollback'
+inputs = {'MacSpaceSniffer': a.rust_binary, 'MacScanBridge': a.native_directory / 'MacScanBridge',
+          'libMacPreviewSupport.dylib': a.native_directory / 'libMacPreviewSupport.dylib'}
+for value in inputs.values():
+    assert value.is_file(), value
+contents = a.output / 'Contents'
+(contents / 'MacOS').mkdir(parents=True)
+resources = contents / 'Resources'
+(resources / 'MCP').mkdir(parents=True)
+for name, source in inputs.items():
+    shutil.copy2(source, contents / 'MacOS' / name)
+for name in ['space_sniffer_mcp.py', 'control_transport.py']:
+    shutil.copy2(repo / 'scripts/mcp' / name, resources / 'MCP' / name)
+shutil.copy2(repo / 'gpui-app/native/macos-app/AppIcon.icns', resources / 'AppIcon.icns')
+shutil.copy2(repo / 'gpui-app/assets/fonts/OFL.txt', resources / 'NotoSansKR-OFL.txt')
+info = {'CFBundleExecutable': 'MacSpaceSniffer', 'CFBundleIdentifier': 'local.macspacesniffer.app',
+        'CFBundleName': 'Mac Space Sniffer', 'CFBundleDisplayName': 'Mac Space Sniffer',
+        'CFBundlePackageType': 'APPL', 'CFBundleShortVersionString': '0.3.0', 'CFBundleVersion': '300',
+        'CFBundleIconFile': 'AppIcon', 'LSMinimumSystemVersion': '14.0', 'NSHighResolutionCapable': True,
+        'NSPrincipalClass': 'NSApplication',
+        'NSHumanReadableCopyright': 'Space Sniffer contributors'}
+(contents / 'Info.plist').write_bytes(plistlib.dumps(info))
+for name in ['MacScanBridge', 'libMacPreviewSupport.dylib', 'MacSpaceSniffer']:
+    subprocess.run(['codesign', '--force', '--sign', '-', str(contents / 'MacOS' / name)], check=True)
+subprocess.run(['codesign', '--force', '--sign', '-', str(a.output)], check=True)
+subprocess.run(['codesign', '--verify', '--deep', '--strict', str(a.output)], check=True)
+result = subprocess.run([str(contents / 'MacOS/MacSpaceSniffer'), '--qa-output', 'unused'], capture_output=True)
+assert result.returncode == 64, 'Release must reject acceptance commands before opening a window'
+manifest = {'version': '0.3.0', 'bundleId': info['CFBundleIdentifier'], 'signature': 'ad-hoc',
+            'qaCommandsRejected': True, 'files': {str(v.relative_to(a.output)): hashlib.sha256(v.read_bytes()).hexdigest()
+                                               for v in a.output.rglob('*') if v.is_file()}}
+a.output.with_suffix('.manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+print(json.dumps({'bundle': str(a.output), 'passed': True, 'signature': 'ad-hoc'}))

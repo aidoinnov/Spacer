@@ -1,0 +1,174 @@
+{
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/Report.swift": {
+    "source": "Sources/SpaceSnifferCore/Report.swift",
+    "sha256": "88068a036b1a8265d6078320e3f43c40fc6fb0b3407d609061d7330e7141eb6b"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/ExportFormatting.swift": {
+    "source": "Sources/SpaceSnifferCore/Platform/ExportFormatting.swift",
+    "sha256": "e8ccab73851c58349351317b81dae3a18133cb8821b300f383abc901dafcfbcd"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/SnapshotTree.swift": {
+    "source": "Sources/SpaceSnifferCore/SnapshotTree.swift",
+    "sha256": "e42235d6484f8220284c28bc74de63287442d360bf068a2c9fcde8f3789e0cca"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/ScanVolumeCoverage.swift": {
+    "source": "Sources/SpaceSnifferCore/ScanVolumeCoverage.swift",
+    "sha256": "cdbabfdc0da1f1210624c724c1087e24802d13f3abf8a2f0c0291a3e1c372023"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/SnapshotPath.swift": {
+    "source": "Sources/SpaceSnifferCore/SnapshotPath.swift",
+    "sha256": "05fa186b41eb40d2c96b73307f08aac86dfafd400e9a82a78658d4d57257ae04"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/Model.swift": {
+    "source": "Sources/SpaceSnifferCore/Model.swift",
+    "sha256": "168c920951113aa88053e3f16f9fdfe7ab7e516421ae74a6a6813e70fc2f56df"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/ArtifactSelection.swift": {
+    "source": "Sources/SpaceSnifferCore/ArtifactSelection.swift",
+    "sha256": "f4fc549c4daf8858e763d4c205eadc27b412d8f51b1e38e267132a4ba2c14def"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/FileIdentity.swift": {
+    "source": "Sources/SpaceSnifferCore/FileIdentity.swift",
+    "sha256": "05b2ed4a294f296e89d1fdb0cf7c9d2dba86734d9c01f24eb839a5de364256f1"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/DiskNodeCoding.swift": {
+    "source": "Sources/SpaceSnifferCore/DiskNodeCoding.swift",
+    "sha256": "e396945d2e5e62faef7bc6c075793160c61c4ffd2ab417dcd1050a81a7880ebc"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/SNSSnapshot.swift": {
+    "source": "Sources/SpaceSnifferCore/SNSSnapshot.swift",
+    "sha256": "0cafacc295ce046d8f46c1be0940d631367b712042077f35f1469c0bfca09906"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/ConfiguredReport.swift": {
+    "source": "Sources/SpaceSnifferCore/ConfiguredReport.swift",
+    "sha256": "5a04e5fe7f694704fb1baec55c38a84a7e1f63955d925b5dddd4bd5a1a27a1b4"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/NodeTable.swift": {
+    "source": "Sources/SpaceSnifferCore/NodeTable.swift",
+    "sha256": "69a3a3352cbb04d257ce4ccef2dccfaff0199a1df0a3842e65a5a91b27ee8791"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/NodeOptionalMetadata.swift": {
+    "source": "Sources/SpaceSnifferCore/NodeOptionalMetadata.swift",
+    "sha256": "a5aeb897ea001dc05ec0b02772f50e4b210cb3759be476928111144c36d6b9de"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/NodePathStorage.swift": {
+    "source": "Sources/SpaceSnifferCore/NodePathStorage.swift",
+    "sha256": "9ff37ffe65d7813bef5a58aae0aa81c00506baebc7f7c3de8f1b2d5ebe9ffea7"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/ArtifactByteSink.swift": {
+    "source": "Sources/SpaceSnifferCore/ArtifactByteSink.swift",
+    "sha256": "18f691af7fe67b76de6c94dc6c8a2a070ca34c96fb139d221c5eb7697884204a"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/NativeConfiguration.swift": {
+    "source": "Sources/SpaceSnifferCore/NativeConfiguration.swift",
+    "sha256": "f7a44c1e9d825dd97b83737f9da8da690a1af56b8b5bdd7e2053f32f0af7892d"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/ExplorerSemantics.swift": {
+    "source": "Sources/SpaceSnifferCore/ExplorerSemantics.swift",
+    "sha256": "3769d11c801415e572db1a973a10dbe2077efe340ccd6432ae245c5367dd23a1"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/WindowsLegacyText.swift": {
+    "source": "Sources/SpaceSnifferCore/WindowsLegacyText.swift",
+    "sha256": "09a79aabe4f1554811e8984ba286b030df7f96306a65c815a2901f545d2ce36e"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/Filter.swift": {
+    "source": "Sources/SpaceSnifferCore/Filter.swift",
+    "sha256": "1fa382bb90f633b03b5ffab86307ebce3d409838cac904b2da1e5191df2d945d"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/NativeExportTemplate.swift": {
+    "source": "Sources/SpaceSnifferCore/NativeExportTemplate.swift",
+    "sha256": "d501d1eab515081a0d0bcbe43eee86591121377c753a06911d7ff13181bb0987"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/DUSnapshot.swift": {
+    "source": "Sources/SpaceSnifferCore/DUSnapshot.swift",
+    "sha256": "a116c6c23457f2e3c7cd5cab6cc8dae5233ed8054314ca5facfa3c3512db554e"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/Platform/LegacyCodePageDecoder.swift": {
+    "source": "Sources/SpaceSnifferCore/Platform/LegacyCodePageDecoder.swift",
+    "sha256": "693f2a89cae99777cb645b0d3b284ef92730eb631eedd5ea6a5d21da53e114e6"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerBackend/ScopedRescanCommand.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/ScopedRescanCommand.swift",
+    "sha256": "d4508eda4fe17d7f1a0b011c3caa57ed990ff344d1a945c7932389bc1b7eb06b"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerBackend/JSONValue.swift": {
+    "source": "Sources/SpaceSnifferAutomation/JSONValue.swift",
+    "sha256": "5d0d028afb9d3faf0f9201253d2692a7e0604b13d166efc1a39a47abe41bab0e"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerBackend/SubtreeQuerySession.swift": {
+    "source": "Sources/SpaceSnifferAutomation/SubtreeQuerySession.swift",
+    "sha256": "180cf5f077a2b4f2ebfb4c35244d6c1399082b92913cf41bc8a888d119b0cf41"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerBackend/SnapshotImport.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/SnapshotImport.swift",
+    "sha256": "d37bae151829f609c9436545cf1c2c3fe0c619804fd20b35da584160f36f92a2"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerBackend/WirePublication.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/Platform/WirePublication.swift",
+    "sha256": "a7283eeaa61e5be05cd562e647aa61106e7dc12eb1914dbc8849a994b2067bde"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerBackend/ParentLifetime.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/Platform/ParentLifetime.swift",
+    "sha256": "947bb4a17d96b091001394a220425e88a72db7c40ef9e36bfb8cd7665c026620"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerBackend/DocumentService.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/DocumentService.swift",
+    "sha256": "4ac8fa31f6c6569b6d71435864b4df12b59ac7d5ce14a91dc7b415f05c0a47a6"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerBackend/Queries.swift": {
+    "source": "Sources/SpaceSnifferAutomation/Queries.swift",
+    "sha256": "29e06e7bc606969bacc83babec8b82b520b941163bffb67b94767f4a2df2f453"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerBackend/WireSnapshot.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/WireSnapshot.swift",
+    "sha256": "be9928ac1ac4f0054f5065d66a67224e3f2cf204876ffe5a824e23cd7964981c"
+  },
+  "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerBackend/WireBinary.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/WireBinary.swift",
+    "sha256": "c5fcc70105c137abbd8b43ae048e92e0552beb215f37f246f43f75a46c1255a5"
+  },
+  "Sources/MacScanBridge/ScopedRescanCommand.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/ScopedRescanCommand.swift",
+    "sha256": "d4508eda4fe17d7f1a0b011c3caa57ed990ff344d1a945c7932389bc1b7eb06b"
+  },
+  "Sources/MacScanBridge/JSONValue.swift": {
+    "source": "Sources/SpaceSnifferAutomation/JSONValue.swift",
+    "sha256": "5d0d028afb9d3faf0f9201253d2692a7e0604b13d166efc1a39a47abe41bab0e"
+  },
+  "Sources/MacScanBridge/SubtreeQuerySession.swift": {
+    "source": "Sources/SpaceSnifferAutomation/SubtreeQuerySession.swift",
+    "sha256": "180cf5f077a2b4f2ebfb4c35244d6c1399082b92913cf41bc8a888d119b0cf41"
+  },
+  "Sources/MacScanBridge/SnapshotImport.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/SnapshotImport.swift",
+    "sha256": "d37bae151829f609c9436545cf1c2c3fe0c619804fd20b35da584160f36f92a2"
+  },
+  "Sources/MacScanBridge/WirePublication.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/Platform/WirePublication.swift",
+    "sha256": "a7283eeaa61e5be05cd562e647aa61106e7dc12eb1914dbc8849a994b2067bde"
+  },
+  "Sources/MacScanBridge/ParentLifetime.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/Platform/ParentLifetime.swift",
+    "sha256": "947bb4a17d96b091001394a220425e88a72db7c40ef9e36bfb8cd7665c026620"
+  },
+  "Sources/MacScanBridge/DocumentService.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/DocumentService.swift",
+    "sha256": "4ac8fa31f6c6569b6d71435864b4df12b59ac7d5ce14a91dc7b415f05c0a47a6"
+  },
+  "Sources/MacScanBridge/Queries.swift": {
+    "source": "Sources/SpaceSnifferAutomation/Queries.swift",
+    "sha256": "29e06e7bc606969bacc83babec8b82b520b941163bffb67b94767f4a2df2f453"
+  },
+  "Sources/MacScanBridge/WireSnapshot.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/WireSnapshot.swift",
+    "sha256": "be9928ac1ac4f0054f5065d66a67224e3f2cf204876ffe5a824e23cd7964981c"
+  },
+  "Sources/MacScanBridge/WireBinary.swift": {
+    "source": "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/WireBinary.swift",
+    "sha256": "c5fcc70105c137abbd8b43ae048e92e0552beb215f37f246f43f75a46c1255a5"
+  },
+  "Sources/MacPreviewSupport/QuickLook.swift": {
+    "source": "Sources/MacSpaceSniffer/QuickLook.swift",
+    "sha256": "1811341d8faf75dd12c346da1a623a3a819b70e05f68ceb8c7aa575ea7eadee1"
+  }
+}

@@ -1,0 +1,909 @@
+{
+  "pairs": 51,
+  "scope": "same selected-volume scope; release engine, reader retained; not GUI; fresh process, shared host, warm/unknown cache",
+  "variants": {
+    "before": {
+      "binary": "/private/tmp/sniffer-parallel-before",
+      "sha256": "981a9346e48234dc97442269e81251ed9991cf69bf3e0019ae3ad418c231db5b",
+      "mode": "automatic"
+    },
+    "serial": {
+      "binary": "/private/tmp/sniffer-delivery-v9",
+      "sha256": "5f3973377c988a09c7d641b687281e8effb0efe88bd35349d0de52bc4940c461",
+      "mode": "automatic"
+    },
+    "parallel2": {
+      "binary": "/private/tmp/sniffer-delivery-v9",
+      "sha256": "5f3973377c988a09c7d641b687281e8effb0efe88bd35349d0de52bc4940c461",
+      "mode": "parallel2"
+    }
+  },
+  "scenarios": {
+    "small1000": {
+      "variants": {
+        "before": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 3.996125,
+              "p95": 4.27025
+            },
+            "cpu_seconds": {
+              "p50": 0.0036810000000000002,
+              "p95": 0.003914000000000001
+            },
+            "peak_rss_mib": {
+              "p50": 4.921875,
+              "p95": 5.265625
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": null
+        },
+        "serial": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 3.953292,
+              "p95": 5.049667
+            },
+            "cpu_seconds": {
+              "p50": 0.003645,
+              "p95": 0.004427
+            },
+            "peak_rss_mib": {
+              "p50": 4.984375,
+              "p95": 5.609375
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        },
+        "parallel2": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 3.971833,
+              "p95": 4.365208
+            },
+            "cpu_seconds": {
+              "p50": 0.003638,
+              "p95": 0.0039510000000000005
+            },
+            "peak_rss_mib": {
+              "p50": 4.96875,
+              "p95": 5.34375
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        }
+      },
+      "comparisons": {
+        "serial_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": false,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": false,
+          "paired_improvement_pct": 0.4767502612330109,
+          "ci95": [
+            -1.2663872291090543,
+            1.887163837497606
+          ]
+        },
+        "parallel2_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 1.9228750248305815,
+          "ci95": [
+            0.9196887207406708,
+            2.7558010350488775
+          ]
+        },
+        "parallel2_vs_serial": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": -0.07175652043350518,
+          "ci95": [
+            -1.7925974403612546,
+            2.93262879788638
+          ]
+        }
+      }
+    },
+    "normal10000": {
+      "variants": {
+        "before": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 21.305958,
+              "p95": 24.008
+            },
+            "cpu_seconds": {
+              "p50": 0.020978999999999998,
+              "p95": 0.023605
+            },
+            "peak_rss_mib": {
+              "p50": 8.671875,
+              "p95": 9.25
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": null
+        },
+        "serial": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 20.470208,
+              "p95": 23.541666
+            },
+            "cpu_seconds": {
+              "p50": 0.020169,
+              "p95": 0.022465
+            },
+            "peak_rss_mib": {
+              "p50": 8.578125,
+              "p95": 9.421875
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        },
+        "parallel2": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 14.073959,
+              "p95": 16.391166
+            },
+            "cpu_seconds": {
+              "p50": 0.022959,
+              "p95": 0.025665
+            },
+            "peak_rss_mib": {
+              "p50": 9.171875,
+              "p95": 10.09375
+            }
+          },
+          "prefetch_used_range": [
+            50,
+            50
+          ],
+          "peak_directory_sections": 2
+        }
+      },
+      "comparisons": {
+        "serial_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 3.211128834242014,
+          "ci95": [
+            2.2908859085194733,
+            4.524588445123169
+          ]
+        },
+        "parallel2_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 33.477102578878274,
+          "ci95": [
+            32.6833436973737,
+            34.124369187137674
+          ]
+        },
+        "parallel2_vs_serial": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 31.258240157955086,
+          "ci95": [
+            29.71254335367324,
+            31.956186362233883
+          ]
+        }
+      }
+    },
+    "wide4100": {
+      "variants": {
+        "before": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 8.803708,
+              "p95": 11.0355
+            },
+            "cpu_seconds": {
+              "p50": 0.008471,
+              "p95": 0.010036999999999999
+            },
+            "peak_rss_mib": {
+              "p50": 7.046875,
+              "p95": 7.90625
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": null
+        },
+        "serial": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 8.482125,
+              "p95": 9.750709
+            },
+            "cpu_seconds": {
+              "p50": 0.008156,
+              "p95": 0.009137
+            },
+            "peak_rss_mib": {
+              "p50": 7.078125,
+              "p95": 8.625
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        },
+        "parallel2": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 8.466625,
+              "p95": 9.08175
+            },
+            "cpu_seconds": {
+              "p50": 0.008126,
+              "p95": 0.008781
+            },
+            "peak_rss_mib": {
+              "p50": 6.984375,
+              "p95": 8.171875
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        }
+      },
+      "comparisons": {
+        "serial_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 4.484692415906134,
+          "ci95": [
+            3.076132433198128,
+            4.960348006453109
+          ]
+        },
+        "parallel2_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 3.4398633034312316,
+          "ci95": [
+            2.14879297938682,
+            4.775179502453527
+          ]
+        },
+        "parallel2_vs_serial": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 0.4252097623811116,
+          "ci95": [
+            -1.9746234220465237,
+            1.3741128024119535
+          ]
+        }
+      }
+    },
+    "wide100000": {
+      "variants": {
+        "before": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 213.649333,
+              "p95": 222.94225
+            },
+            "cpu_seconds": {
+              "p50": 0.21280400000000002,
+              "p95": 0.22205999999999998
+            },
+            "peak_rss_mib": {
+              "p50": 69.671875,
+              "p95": 76.03125
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": null
+        },
+        "serial": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 220.023375,
+              "p95": 254.164917
+            },
+            "cpu_seconds": {
+              "p50": 0.2196,
+              "p95": 0.246051
+            },
+            "peak_rss_mib": {
+              "p50": 78.09375,
+              "p95": 85.96875
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        },
+        "parallel2": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 219.251834,
+              "p95": 244.672625
+            },
+            "cpu_seconds": {
+              "p50": 0.218438,
+              "p95": 0.242347
+            },
+            "peak_rss_mib": {
+              "p50": 78.21875,
+              "p95": 86.140625
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        }
+      },
+      "comparisons": {
+        "serial_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": false,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": false,
+          "paired_improvement_pct": -3.347294335639149,
+          "ci95": [
+            -4.229279662698589,
+            -1.732813588449014
+          ]
+        },
+        "parallel2_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": -2.268739966109309,
+          "ci95": [
+            -3.5430621048443216,
+            -1.7265974442902408
+          ]
+        },
+        "parallel2_vs_serial": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 0.3673565536847563,
+          "ci95": [
+            -1.0379165645739168,
+            2.276260333351754
+          ]
+        }
+      }
+    },
+    "overbudget131073": {
+      "variants": {
+        "before": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 276.66425,
+              "p95": 304.87425
+            },
+            "cpu_seconds": {
+              "p50": 0.275156,
+              "p95": 0.300313
+            },
+            "peak_rss_mib": {
+              "p50": 60.765625,
+              "p95": 64.765625
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": null
+        },
+        "serial": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 282.780375,
+              "p95": 301.667
+            },
+            "cpu_seconds": {
+              "p50": 0.28210599999999997,
+              "p95": 0.298701
+            },
+            "peak_rss_mib": {
+              "p50": 60.859375,
+              "p95": 64.3125
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        },
+        "parallel2": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 284.461208,
+              "p95": 313.535666
+            },
+            "cpu_seconds": {
+              "p50": 0.28342300000000004,
+              "p95": 0.30391
+            },
+            "peak_rss_mib": {
+              "p50": 60.734375,
+              "p95": 63.875
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        }
+      },
+      "comparisons": {
+        "serial_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": -1.892619853180287,
+          "ci95": [
+            -3.1563362948762737,
+            -1.0812088756850913
+          ]
+        },
+        "parallel2_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": -2.909986528442357,
+          "ci95": [
+            -3.690810230651657,
+            -1.9820599083682655
+          ]
+        },
+        "parallel2_vs_serial": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": -0.7817043232933089,
+          "ci95": [
+            -1.8848210558926572,
+            1.0240867287383546
+          ]
+        }
+      }
+    },
+    "tinyfolders1000": {
+      "variants": {
+        "before": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 13.643875,
+              "p95": 14.9295
+            },
+            "cpu_seconds": {
+              "p50": 0.0133,
+              "p95": 0.014313
+            },
+            "peak_rss_mib": {
+              "p50": 5.5,
+              "p95": 5.96875
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": null
+        },
+        "serial": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 13.663417,
+              "p95": 14.612833
+            },
+            "cpu_seconds": {
+              "p50": 0.013307,
+              "p95": 0.014226999999999998
+            },
+            "peak_rss_mib": {
+              "p50": 5.546875,
+              "p95": 6.109375
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        },
+        "parallel2": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 13.708083,
+              "p95": 14.756083
+            },
+            "cpu_seconds": {
+              "p50": 0.013348,
+              "p95": 0.014237000000000001
+            },
+            "peak_rss_mib": {
+              "p50": 5.65625,
+              "p95": 6.265625
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        }
+      },
+      "comparisons": {
+        "serial_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 0.3201902532374661,
+          "ci95": [
+            -0.9285442018525856,
+            1.5116824032785119
+          ]
+        },
+        "parallel2_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": -0.4882011459815093,
+          "ci95": [
+            -2.3165989656475756,
+            0.485785843920146
+          ]
+        },
+        "parallel2_vs_serial": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": -0.6905225921322912,
+          "ci95": [
+            -1.5404706306051172,
+            0.182362874528387
+          ]
+        }
+      }
+    },
+    "deep200": {
+      "variants": {
+        "before": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 5.773833,
+              "p95": 9.740917
+            },
+            "cpu_seconds": {
+              "p50": 0.005399000000000001,
+              "p95": 0.007291
+            },
+            "peak_rss_mib": {
+              "p50": 4.921875,
+              "p95": 5.625
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": null
+        },
+        "serial": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 5.618625,
+              "p95": 7.004625
+            },
+            "cpu_seconds": {
+              "p50": 0.0052629999999999994,
+              "p95": 0.006560000000000001
+            },
+            "peak_rss_mib": {
+              "p50": 4.96875,
+              "p95": 5.359375
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        },
+        "parallel2": {
+          "attempted": 51,
+          "valid": 51,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 5.597375,
+              "p95": 7.549708
+            },
+            "cpu_seconds": {
+              "p50": 0.005267,
+              "p95": 0.006669999999999999
+            },
+            "peak_rss_mib": {
+              "p50": 4.90625,
+              "p95": 5.453125
+            }
+          },
+          "prefetch_used_range": [
+            0,
+            0
+          ],
+          "peak_directory_sections": 1
+        }
+      },
+      "comparisons": {
+        "serial_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 3.587100070897041,
+          "ci95": [
+            1.6264228491702428,
+            5.945135205634291
+          ]
+        },
+        "parallel2_vs_before": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 2.7554618526815116,
+          "ci95": [
+            1.019588857283889,
+            5.597308863292804
+          ]
+        },
+        "parallel2_vs_serial": {
+          "gates": {
+            "complete": true,
+            "exact": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "passed": true,
+          "paired_improvement_pct": 0.9771149005756947,
+          "ci95": [
+            -1.7594114757783947,
+            2.36015089756812
+          ]
+        }
+      }
+    }
+  },
+  "adopted": [
+    "parallel2"
+  ],
+  "complete": true
+}

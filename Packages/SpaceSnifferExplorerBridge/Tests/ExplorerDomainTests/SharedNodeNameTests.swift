@@ -1,0 +1,1 @@
+../../../../Tests/SpaceSnifferCoreTests/SharedNodeNameTests.swift

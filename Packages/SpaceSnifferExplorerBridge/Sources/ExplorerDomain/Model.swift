@@ -1,0 +1,1 @@
+../../../../Sources/SpaceSnifferCore/Model.swift

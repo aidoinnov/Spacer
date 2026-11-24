@@ -1,0 +1,2629 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "target_path": "References/Windows/2.2.0.27/SpaceSniffer.exe",
+  "target_sha256": "192176a0ff46d84d27885e9d38e60157bc692eaf5d1e5b75ca56b3beaa0de7a6",
+  "baseline_findings": "docs/windows-optimization-findings.json",
+  "evidence_bundles": [
+    {
+      "path": "docs/windows-optimization-rea-evidence.json",
+      "sha256": "132b0a0de13ebee169818f23a8497b9a92bd15619dd260d5ec2efd37a72839a0",
+      "records": 139
+    },
+    {
+      "path": "docs/windows-optimization-coverage-rea-evidence.json",
+      "sha256": "aa7554ca5837373029b6ce46cb53fc55b2de75cf09e1f550c19d629f20be8c32",
+      "records": 6
+    }
+  ],
+  "total_unique_evidence_records": 145,
+  "status_definitions": {
+    "implemented": "현재 범위에서 대응 기법의 코드 존재. 원본 구현 동일/Windows runtime 동등성 완료는 아님",
+    "partial": "일부만 대응하며 남은 하위 기법 존재",
+    "missing": "조사한 Mac 경로에 해당 핵심 기법이 없음",
+    "platform": "플랫폼 대체가 있으나 원본 기법 동일 적용으로 체크하지 않음",
+    "review": "기능/플랫폼 차이로 적용 필요성부터 검토"
+  },
+  "summary": {
+    "implemented": 8,
+    "missing": 5,
+    "partial": 8,
+    "platform": 8,
+    "review": 1
+  },
+  "items": [
+    {
+      "id": "W01",
+      "title": "루트 데이터·리스너 공유 캐시",
+      "original_observation": "path segment와 agent GUID로 기존 root를 찾아 listener/refcount를 늘린다. 마지막 참조 해제 때 scan/watch를 정리한다.",
+      "original_limitations": "원본 비교 전에 항상 경로 정규화를 한다거나 자동 영구 캐시가 있다는 결론은 미확인.",
+      "original_evidence": [
+        {
+          "address": "0x43ec60",
+          "evidence_id": "ev_6366c304a1eaf0fc40d12e92df991085f4c5e4639b71efb9ea0474e9775c77be",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x43ec60.txt",
+          "payload_sha256": "17ba0a3c7616b6ddd0020bf6ce1f9f3615395b5d294e9e32129ae8c77308501a"
+        },
+        {
+          "address": "0x43f230",
+          "evidence_id": "ev_0fe0a5b05fbf18a8f75067894a76b6f9f86bf2c1d0aa36eb0eb6aa5afd63b10b",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x43f230.txt",
+          "payload_sha256": "1277dd5e40c7c24031f92eec85841425cb6b4eeb100276bb2161e65b72c8d456"
+        },
+        {
+          "address": "0x4559f0",
+          "evidence_id": "ev_ff81c0622cccc0dc08852b069fc6f24ba48dbaf40ab4f79e34779d07bbf2016e",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4559f0.txt",
+          "payload_sha256": "c2a179903718bc739cfb7c7d23270a67ff622f78536439963f8d7c8ba42423d0"
+        },
+        {
+          "address": "0x4574e0",
+          "evidence_id": "ev_a3e8bee60c15de6330bbd64cfeb4a679653ced0688a2dca828bfdae6374f60a4",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4574e0.txt",
+          "payload_sha256": "52ed40324068494f5b8cbfb2c7f1b0440c86362bb17e342b0b70af8f34518177"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "implemented",
+      "mac_assessment": "live root Entry와 listener를 공유하고 마지막 unsubscribe에 scan/watch/focus intent를 정리한다. offline SNS/DU는 창별 snapshot이다. 원본 raw path+agent GUID cache와 Mac standardized path 정책은 다르다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "R04의 case/trailing-separator/cache hit·재시작 동작은 실제 Windows 관찰이 필요하다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/ScanService.swift",
+          "anchor": "public func subscribe"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ScanService.swift",
+          "anchor": "public func unsubscribe"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/EngineTests.swift",
+          "anchor": "testSharedRootCacheReferenceLifecycle"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W02",
+      "title": "탐색 시 기존 필터 트리 재사용",
+      "original_observation": "setNewFocus는 view+0x798을 바꾸고 DrawTreeMap/zoom을 호출한다. DrawTreeMap→refreshBitmap 경로는 기존 TM node를 배치·paint한다.",
+      "original_limitations": "원본에 Swift Bool/Int64 배열 캐시가 있다는 의미가 아니며 모든 간접 경로 부재의 증명은 아니다.",
+      "original_evidence": [
+        {
+          "address": "0x428bb0",
+          "evidence_id": "ev_9b22e4002a554cb7851c86759c2f029061fb069e7bafad02df4363d5b0d6c33f",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x428bb0.txt",
+          "payload_sha256": "2e9ecfc68b6b791035c84c7483a0221a470d51a05f1ea6676a4932eb6d701974"
+        },
+        {
+          "address": "0x42a750",
+          "evidence_id": "ev_1c5d47c080ea44678b893013fe676fc062c070aac7bbc7560fb7954b964abc6c",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42a750.txt",
+          "payload_sha256": "14c501b836b6af2e89510d2b368dc438f165a82eb72b2e8b1d36f533102ffdb6"
+        },
+        {
+          "address": "0x4295a0",
+          "evidence_id": "ev_e118aa88696dc12d66060b7fd3dd91533537dfb764f65360b63ded093c1d183a",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4295a0.txt",
+          "payload_sha256": "9b63c952b61ec6d8bfecab73362ae8f439dcd8cdac97b91724bc25fbaa0ae589"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "implemented",
+      "mac_assessment": "ProjectionSession의 같은 판정 재사용과 작은 추적 경로/계층 lookup, ScanStore history lookup, bounded child order cache를 구현. 전체 path dictionary 없이 navigation oracle와 25만 파일 5쌍 측정. 실제 GUI 반복은 별도 acceptance에서 확인한다. R09 identity guard로 같은 path의 교체 노드에 selection/tag를 잘못 승계하지 않게 보강했다.",
+      "remaining_checks": [
+        "Windows 실제 동적 결과/타이밍 및 원본 내부 전체 상태 전이는 별도 R backlog와 coverage boundary에 남음.",
+        "실제 foreground/Space/창 수명 acceptance 완료 여부는 TODO의 해당 step과 최종 검증 기록을 따름."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/ProjectionSession.swift",
+          "anchor": "let reuse = !parsed.isTimeDependent"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/ScanStore.swift",
+          "anchor": "private func recalculate()"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ProjectionSessionTests.swift",
+          "anchor": "testNavigationReuseMatchesFullOracleAcrossFiltersModesAndHiddenState"
+        },
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ProjectionSessionTests.swift",
+          "anchor": "testZeroByteMembershipSurvivesCachedNavigation"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W03",
+      "title": "focus 우선 필터 후 중복 subtree 제외",
+      "original_observation": "ctor가 두 TM 인자를 +0x88/+0x90에 저장한다. Execute는 +0x90 먼저 처리하고 +0x88 처리 시 skip=+0x90을 넘긴다. updateFiltering은 this==skip이면 return한다. tag 재적용 호출은 root(+0x790),focus(+0x798)를 순서대로 전달한다.",
+      "original_limitations": "고정 크기 batch/페이지 알고리즘이나 임의 concurrency 수는 이 근거에 없다.",
+      "original_evidence": [
+        {
+          "address": "0x4590a0",
+          "evidence_id": "ev_908d01c963acf8a3796c395502f6706bfd33cf145ddc221fe80fbe113553c67b",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4590a0.txt",
+          "payload_sha256": "f73bc3d2f42c67be491888d18fee7de602b42c74e74624032c6f7f4736c2203c"
+        },
+        {
+          "address": "0x459170",
+          "evidence_id": "ev_562c3d17a1e6dc585f3b79fe82a30f627f6faef724f6fe654115a34899512532",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x459170.txt",
+          "payload_sha256": "4440e87558058fcd6fb1bc2b2a821b21d9283cb7a90299671b51ef0c174d166f"
+        },
+        {
+          "address": "0x46a490",
+          "evidence_id": "ev_2ca77b3b513bbe7a458b603e55564e044e7616d195d3d26386de64deb8fe409b",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x46a490.txt",
+          "payload_sha256": "f37dfdb9fb27c809f91f6939318fe2313beee58f5ea3b0995392c4a6b0d1766d"
+        },
+        {
+          "address": "0x42cba0",
+          "evidence_id": "ev_54626e5c9d021b058bdd218aec92c839b4cec312f8c66a80de8e19625937e9f1",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42cba0.txt",
+          "payload_sha256": "3fbb76479589a93dbebaf31ec365962d4b9bba1c91a5b22f1796582a470baebb"
+        },
+        {
+          "address": "0x430400",
+          "evidence_id": "ev_2af873cf5c31f442b5c1af60d4c4f1650b9c27ca8fd4158c34d13c1f0bee7baf",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x430400.txt",
+          "payload_sha256": "6e738734e7ef033a6915c4cdb5f71655b110e402fc079e525c2b1c80ab7daa32"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "missing",
+      "mac_assessment": "production은 full 또는 검증된 sparse delta/reuse 후 navigation을 계산하며 focus-first+skip 중간 publish는 없다. R05에서 270 samples/18cases/5pairs와 COW/frozen/cancel oracle를 평가했으나 large/root/empty 회귀 때문에 후보만 보존하고 미채택했다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "focus-first UI 부분 publish·전역/지역 합계 표시와 immutable COW 비용을 대표 입력에서 검증한 뒤 재선정한다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/FilterProjection.swift",
+          "anchor": "let membership: [Bool]?"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/Filter.swift",
+          "anchor": "for node in snapshot.nodes"
+        }
+      ],
+      "existing_test_sources": [],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W04",
+      "title": "조상 delta 누적",
+      "original_observation": "파일/트리맵 노드의 +0x30/+0x38에 변화량을 더하고 부모 포인터만 따라 올라간다.",
+      "original_limitations": "hard-link inode dedup 또는 폴더 메타데이터 기여를 추가하는 근거가 아니다.",
+      "original_evidence": [
+        {
+          "address": "0x405a00",
+          "evidence_id": "ev_e10ccfd2798296de840e3be50630adf85369438d8162a4dd4f73b75febf78557",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x405a00.txt",
+          "payload_sha256": "22ef510a5308c00a3da58c13e40f6c5d99d5f5f1ce2ad1cffd4245b707f32386"
+        },
+        {
+          "address": "0x405260",
+          "evidence_id": "ev_032ccc67fac395b2f3bb2fd4a444afd825737d761c3dd843dea2efd33330ebc0",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x405260.txt",
+          "payload_sha256": "af6608a1a11642e4fb631897ef90d7fb70e67d403de070458a329456009d1115"
+        },
+        {
+          "address": "0x4667a0",
+          "evidence_id": "ev_7152a894d66bd19b388f259f09e6d27edfdc2aa6b77b3388c6cac7f9656e869c",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4667a0.txt",
+          "payload_sha256": "2887216d8332f208c0a5006c309993f08e8ed03e1de91f4282e21b4497214e42"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "partial",
+      "mac_assessment": "COW page proof + opaque baseline/result로 검증한 sparse size/mtime/atime 변경에 leaf 기여 제거/추가와 조상 delta를 적용. flat 배열 COW는 남고 dense/시간/unknown metadata/topology는 full fallback. 원본 모든 mutation handler의 증분 동작 전체 이식은 아니다.",
+      "remaining_checks": [
+        "Windows 실제 동적 결과/타이밍 및 원본 내부 전체 상태 전이는 별도 R backlog와 coverage boundary에 남음."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/Scanner.swift",
+          "anchor": "var ancestor = parent"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/SnapshotTree.swift",
+          "anchor": "if sameTopology"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/Filter.swift",
+          "anchor": "func weights(in snapshot: ScanSnapshot, mode: SizeMode, included:"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ProjectionDelta.swift",
+          "anchor": "struct ProjectionDelta"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ScanProgressTests.swift",
+          "anchor": "testDeltaTotalsAndLightweightFinalProgressAgreeWithoutDoubleCounting"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W05",
+      "title": "기존 형제 정렬의 변경 항목 재배치",
+      "original_observation": "정렬 유지 옵션과 node+0x43 상태가 참이면 변경 자식 IndexOf 후 이웃 크기를 비교하여 TList.Exchange한다. 미정렬 분기는 전체 인접 비교 pass가 있다.",
+      "original_limitations": "IndexOf와 이동은 선형일 수 있다. O(logN) 업데이트라고 부르지 않는다.",
+      "original_evidence": [
+        {
+          "address": "0x4667a0",
+          "evidence_id": "ev_7152a894d66bd19b388f259f09e6d27edfdc2aa6b77b3388c6cac7f9656e869c",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4667a0.txt",
+          "payload_sha256": "2887216d8332f208c0a5006c309993f08e8ed03e1de91f4282e21b4497214e42"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "missing",
+      "mac_assessment": "GeometrySession은 같은 source/parent의 sibling order를 bounded cache로 재사용한다. 입력 weights/source가 바뀌면 해당 형제 정렬을 다시 수행하며 변경 child 주변 insertion/reposition은 없다. 모든 호출에서 항상 정렬한다고 표현하지 않는다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "변경 child 주변 정렬 복구는 별도 미구현. R14 hint/lookup 결과와 report의 reverse child-position 동률을 geometry comparator와 혼동하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/GeometrySession.swift",
+          "anchor": "if let cached = working.sorted[key]"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/Treemap.swift",
+          "anchor": "let sorted = items.filter"
+        }
+      ],
+      "existing_test_sources": [],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W06",
+      "title": "변경 의존성에 따른 재필터 제한",
+      "original_observation": "태그 재적용은 isTagInvolved일 때만 applyFilterTo한다. nodeModified는 포함 결과·재필터 필요 분기와 변경 범위를 사용한다.",
+      "original_limitations": "R13에서 modifiedAttributes는 tag byte+old/new 문자열 payload이며 high byte는 isIncluded 반환값의 subtree 요청임을 구분했다. filterID는 generation/paint marker이고 skip proof가 아니다. 모든 간접 alias/event/runtime 경로 완전성은 미확인.",
+      "original_evidence": [
+        {
+          "address": "0x430400",
+          "evidence_id": "ev_2af873cf5c31f442b5c1af60d4c4f1650b9c27ca8fd4158c34d13c1f0bee7baf",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x430400.txt",
+          "payload_sha256": "6e738734e7ef033a6915c4cdb5f71655b110e402fc079e525c2b1c80ab7daa32"
+        },
+        {
+          "address": "0x42df10",
+          "evidence_id": "ev_066d0b220907c4089dc1e4ebffdda389c8d5d922892f2ea0d3d88a0db84271dc",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42df10.txt",
+          "payload_sha256": "8b39ec9f37ae452f352a23a6be92bf4b8f274bcc3fb502c7c3b427f1131c773b"
+        },
+        {
+          "address": "0x444870",
+          "evidence_id": "ev_15b7982c3b5ee3b855894ab93563f7ca51e6e0afd0fd02ea8e78354a89962a41",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x444870.txt",
+          "payload_sha256": "db9aa1a69a18659f6ac097997ceb65ee9fc1d8059e08cc43daedec9a513ea1d6"
+        },
+        {
+          "address": "0x408300",
+          "evidence_id": "ev_cf754e05743b2202732f58afc73f7f3eee5c1a81ff172a8fb66dc9eb40dc0f84",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x408300.txt",
+          "payload_sha256": "5537947866b24eaab395409305af80ecedcd96e4f2fb906c7074896df2147909"
+        },
+        {
+          "address": "0x445400",
+          "evidence_id": "ev_57add3519c8918b372867073079df54b0cfd15c9c8881c98319374ebfbbc8409",
+          "bundle": "docs/windows-optimization-coverage-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x445400.txt",
+          "payload_sha256": "1f1e74ed0d1e58826ca5833b3dda3eb3d9fb17ff26e806ad855118ab220c48e5"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "partial",
+      "mac_assessment": "입력 의존 matrix를 적용: 같은 문자열 parse, tag 비의존 동일 COW nodes의 membership/weights 재사용, metadata/공개 revision 갱신. 시간 조건·filter/mode/hidden/unknown 변경은 full. 원본 모든 dirty/bitmap option bit 동일 이식 주장은 아니다.",
+      "remaining_checks": [
+        "Windows 실제 동적 결과/타이밍 및 원본 내부 전체 상태 전이는 별도 R backlog와 coverage boundary에 남음."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/ScanService.swift",
+          "anchor": "public func setTag"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/ScanStore.swift",
+          "anchor": "self.accept(update.snapshot)"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/ScanStore.swift",
+          "anchor": "func updateView"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/AutomationHub.swift",
+          "anchor": "store.updateView {"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/EngineTests.swift",
+          "anchor": "testSameUnderlyingTagAndEmptyClearDoNotAdvanceSnapshotRevision"
+        },
+        {
+          "file": "scripts/mcp/integration_smoke.py",
+          "anchor": "after_combined"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W07",
+      "title": "상속 태그 context의 재귀 전달",
+      "original_observation": "subtree 시작의 inherited tag를 구하고 updateFiltering 재귀에 ownTag|inheritedMask를 넘긴다.",
+      "original_limitations": "원본의 folder matcher는 부모 재귀가 남는다. 모든 폴더 조건 사전 계산·1byte 배열 자체는 Mac 구현이다.",
+      "original_evidence": [
+        {
+          "address": "0x459170",
+          "evidence_id": "ev_562c3d17a1e6dc585f3b79fe82a30f627f6faef724f6fe654115a34899512532",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x459170.txt",
+          "payload_sha256": "4440e87558058fcd6fb1bc2b2a821b21d9283cb7a90299671b51ef0c174d166f"
+        },
+        {
+          "address": "0x46a490",
+          "evidence_id": "ev_2ca77b3b513bbe7a458b603e55564e044e7616d195d3d26386de64deb8fe409b",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x46a490.txt",
+          "payload_sha256": "f37dfdb9fb27c809f91f6939318fe2313beee58f5ea3b0995392c4a6b0d1766d"
+        },
+        {
+          "address": "0x406ad0",
+          "evidence_id": "ev_09bfe0b650b6ea3b8345bd98f827d05d8bf5724ec6c9c2b0fe535084d58eb287",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x406ad0.txt",
+          "payload_sha256": "283ab149b61a10f8567ac086a236602a67fd63057117b5708a5ec3039d58dc81"
+        },
+        {
+          "address": "0x408670",
+          "evidence_id": "ev_676b548ba467b73830a9e7a9dc67a42f115c3106f416421be0b8cd1e49ebd68a",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x408670.txt",
+          "payload_sha256": "c04af567c9efd7bd867446c8f038e34fdd989d4ff7c194e76e32669295b666b4"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "implemented",
+      "mac_assessment": "bulk filter의 packed inherited-tag OR context와 R15 subtree cursor frame의 같은 tag mask 전달을 구현했다. offset query의 파일별 ancestor walk는 유지한다. Mac cursor/token/budget은 원본에 없던 플랫폼 확장이다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "STDIO notification 선점/disconnect cancellation과 hard deadline은 미지원. subtree frame/step 상한을 전체 query wall-time/RSS 상한으로 확대하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/Filter.swift",
+          "anchor": "if needsContext {"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/Filter.swift",
+          "anchor": "inheritedTagMask: Int(state & 15)"
+        },
+        {
+          "file": "Sources/SpaceSnifferAutomation/SubtreeQuerySession.swift",
+          "anchor": "let tags = frame.tags |"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ResourceOptimizationTests.swift",
+          "anchor": "testPackedAncestorContextAgreesWithIndependentPerFileEvaluation"
+        },
+        {
+          "file": "Tests/SpaceSnifferAutomationTests/SubtreeQueryTests.swift",
+          "anchor": "final class SubtreeQueryTests"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W08",
+      "title": "오래된 필터 작업 취소·교체",
+      "original_observation": "새 필터 전에 Terminate→WaitFor→해제한다. 재귀/노드 갱신 사이에서 취소 flag와 detached 상태를 확인한다.",
+      "original_limitations": "원본은 WaitFor를 사용한다. lock-free나 실행1/대기1 mailbox 자체가 원본 기법이라는 근거는 없다.",
+      "original_evidence": [
+        {
+          "address": "0x42cba0",
+          "evidence_id": "ev_54626e5c9d021b058bdd218aec92c839b4cec312f8c66a80de8e19625937e9f1",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42cba0.txt",
+          "payload_sha256": "3fbb76479589a93dbebaf31ec365962d4b9bba1c91a5b22f1796582a470baebb"
+        },
+        {
+          "address": "0x429020",
+          "evidence_id": "ev_f1287c10b10a8905e1eed9b2ad3fe3110864f9297e7923bab2491d89fc63530f",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x429020.txt",
+          "payload_sha256": "dd4f78dccb29d75bb3d05241613d6ee6fa458e644e3884d51aed0628c0bf10e6"
+        },
+        {
+          "address": "0x46a490",
+          "evidence_id": "ev_2ca77b3b513bbe7a458b603e55564e044e7616d195d3d26386de64deb8fe409b",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x46a490.txt",
+          "payload_sha256": "f37dfdb9fb27c809f91f6939318fe2313beee58f5ea3b0995392c4a6b0d1766d"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "implemented",
+      "mac_assessment": "오래된 control 취소·최신 대기 작업 교체·오래된 publish 차단 대응.",
+      "remaining_checks": [
+        "큰 sorted 작업 도중 취소 지연을 별도 계측한다. 원본 WaitFor 구현 복제는 아님."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/LatestWorker.swift",
+          "anchor": "bufferingPolicy: .bufferingNewest(1)"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/ScanStore.swift",
+          "anchor": "guard renderGeneration == token"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/EngineTests.swift",
+          "anchor": "testLatestWorkerHasOnePendingJobAndRunsOffMainThread"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W09",
+      "title": "변경 요청 중복·조상 packing과 FIFO",
+      "original_observation": "TList 뒤에 요청을 추가하고 중첩 전체쌍 비교로 중복/덮이는 하위 요청을 제거한다. 조상 판정은 부모 포인터를 따른다. dequeue는 index0 Get/Delete다.",
+      "original_limitations": "이 본문은 고속 trie/hash가 아니다. 원본 큐의 점근적 우월성이나 실제 Windows 처리 시간을 주장하지 않는다.",
+      "original_evidence": [
+        {
+          "address": "0x42e130",
+          "evidence_id": "ev_489afac4d740e9ebddf2a3df7d3385bc7ef52460fde09b7242f6a416adb440e1",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42e130.txt",
+          "payload_sha256": "e8470d01a82123ff94986d500170fb05c5cac678bbd8e103254ce836fc563808"
+        },
+        {
+          "address": "0x408260",
+          "evidence_id": "ev_3f7f9c040cecda8594db39b54ed88de17b48892062eb4e51ee29e48e86115c73",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x408260.txt",
+          "payload_sha256": "dfaab5c4d2aa17e0a4cf0c24f744d87f6b1530b5b60a465cc170b2c024ab701d"
+        },
+        {
+          "address": "0x42c9e0",
+          "evidence_id": "ev_08ce7fbb1815faa493ee978928cd9fd2a6396356f2b44f9af339240caf0a1d25",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42c9e0.txt",
+          "payload_sha256": "439adaccfbdf2b94a2f8ea59c09992cd7dddc081a21a1b4b40613cb4266b8f6b"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "implemented",
+      "mac_assessment": "packing/FIFO는 기존 배열 oracle과 연산별 대조. B08은 작은 큐 배열/큰 큐 Character radix index와 FIFO 저장소 분리로 비용을 낮춘 Mac 선택. 원본 TList가 trie라는 근거로 보지 않음. 2026-11-09 queue metadata 전후 측정과 실제 FSEvents burst는 REFRESH_QUEUE_VALIDATION.md 참조.",
+      "remaining_checks": [
+        "trie/radix는 플랫폼 추가 P01. 원본 큐가 trie라서 가져오는 것으로 표시하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/RefreshQueue.swift",
+          "anchor": "mutating func insert"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/RefreshQueue.swift",
+          "anchor": "mutating func popFirst"
+        }
+      ],
+      "existing_test_sources": [],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W10",
+      "title": "repaint 병합·간격 조절·가려진 창 생략",
+      "original_observation": "requestRepaint는 요청 강도를 max로 병합하고 layout dirty를 유지한다. timer는 pending과 visible region 조건을 확인한다. DynaSmooth는 갱신 간격을 조절한다.",
+      "original_limitations": "DynaSmooth는 위치 보간 자체가 아니다. 실제 Windows 프레임율·모든 refresh interval은 미측정.",
+      "original_evidence": [
+        {
+          "address": "0x429140",
+          "evidence_id": "ev_0e61104ae6c66269d8f23f10e721133304922f0cdf486e740bdfe6663c0286e3",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x429140.txt",
+          "payload_sha256": "1e7adcd1dc25a65adf2acfb7f880c77e449d30d5920cc40c128c4501bee1df13"
+        },
+        {
+          "address": "0x42c760",
+          "evidence_id": "ev_13bfacca86b66bc7212b944368cab6dfffbc4d6e7d12b72973b0233c6262a4a0",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42c760.txt",
+          "payload_sha256": "92845714b744b3b11a2f2b90c66f6b4fb0334cf84656172ff18cdfb6e39f07ac"
+        },
+        {
+          "address": "0x42cd00",
+          "evidence_id": "ev_bb3b2f1661f47a2e96685ba226182f1756ad30f3e5da65172076cb7caa81bc36",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42cd00.txt",
+          "payload_sha256": "6df678ec4312402d7e4df2c27757909c2abc452f77c23f2ca81587e14882e317"
+        },
+        {
+          "address": "0x42c6a0",
+          "evidence_id": "ev_e4ad33b85df34a6d89533468f27a4a9f38eeb6fc6f0515e1d84881a6c7c597a1",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42c6a0.txt",
+          "payload_sha256": "b02bdbb2b4125c654d6fef4944df8160704251ec8526de53f9bbe48c4150c641"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "platform",
+      "mac_assessment": "AppKit visibility/occlusion/miniaturize/window close 경계에서 geometry·timer·중간 presentation을 정리하고 복귀 최신 상태/명시적 capture를 준비한다. 원본 repaint interval/paint scheduler를 그대로 옮긴 것이 아니며 과거 native Space/가림 측정은 FINAL_OPTIMIZATION_VALIDATION.md에 보존했다. 이번 R 실행의 최신 package/native QA와 Windows 비교는 별도다.",
+      "remaining_checks": [
+        "Windows 실제 동적 결과/타이밍 및 원본 내부 전체 상태 전이는 별도 R backlog와 coverage boundary에 남음.",
+        "실제 foreground/Space/창 수명 acceptance 완료 여부는 TODO의 해당 step과 최종 검증 기록을 따름."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+          "anchor": "func updateNSView"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+          "anchor": "Timer(timeInterval: 1.0 / 60"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/MapWindowLifecycle.swift",
+          "anchor": "final class MapWindowLifecycle"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+          "anchor": "func stopVisualWork"
+        }
+      ],
+      "existing_test_sources": [],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W11",
+      "title": "layout/paint 분리와 표시 재귀 제한",
+      "original_observation": "force-layout flag일 때 setCoords/layout하고 그렇지 않으면 저장된 기하를 paint한다. depth·선택 경로·크기·visible/expanded 상태로 재귀를 제한한다.",
+      "original_limitations": "모든 작은 양수 항목을 배치 입력에서 버려도 된다는 근거가 아니다.",
+      "original_evidence": [
+        {
+          "address": "0x4295a0",
+          "evidence_id": "ev_e118aa88696dc12d66060b7fd3dd91533537dfb764f65360b63ded093c1d183a",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4295a0.txt",
+          "payload_sha256": "9b63c952b61ec6d8bfecab73362ae8f439dcd8cdac97b91724bc25fbaa0ae589"
+        },
+        {
+          "address": "0x468db0",
+          "evidence_id": "ev_dc6466e30198d13b3d07a6dbc875d9ac35aa12a1be06834e99d52851e5e55d1d",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x468db0.txt",
+          "payload_sha256": "d91214b579eccd55b2a4dce839c0d0dd9037e6c006c00f47b22e55fbf7f24960"
+        },
+        {
+          "address": "0x469770",
+          "evidence_id": "ev_d68cea8a9e63cb7c1c08f47f663240d4e5c0dbf163e79a4ab04019bf48d5e345",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x469770.txt",
+          "payload_sha256": "dc8a4028f3031460d6bcf848e51cb3db9044c019c7e9294d88400c053f22519a"
+        },
+        {
+          "address": "0x468360",
+          "evidence_id": "ev_3464fb48d47b5cb78cc1f281dc465bfa300653247d9bf3f3fc4eee5954d2ed80",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x468360.txt",
+          "payload_sha256": "2549fdf975c2fbc30cc1360f542a0c182b3044ae2af8a5ccde4357199578ef53"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "partial",
+      "mac_assessment": "원래 Double comparator/rect/selection-path 상세화/양수 면적 참여를 보존한 GeometrySession 정렬·rect 재사용. scope/weights/bounds/depth/selection key 분리, 65536 sort 슬롯/50000 rect tile 예산. 원본 filtered TM 객체·branch 변경 재배치 전체 이식은 아니다.",
+      "remaining_checks": [
+        "Windows 실제 동적 결과/타이밍 및 원본 내부 전체 상태 전이는 별도 R backlog와 coverage boundary에 남음.",
+        "실제 foreground/Space/창 수명 acceptance 완료 여부는 TODO의 해당 step과 최종 검증 기록을 따름."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+          "anchor": "guard key != geometryKey"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/Treemap.swift",
+          "anchor": "let revealChildren = level < depth"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/GeometrySession.swift",
+          "anchor": "final class GeometrySession"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ReferenceContractTests.swift",
+          "anchor": "testSelectionRevealsOneMoreLevelWithoutChangingRootOrSiblings"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W12",
+      "title": "palette 포인터 캐시와 명시적 무효화",
+      "original_observation": "paint는 node+0x50가 null일 때 palette를 얻어 보관한다. resetCache는 포인터를 비우고 자식 재귀, configChanged는 대응 virtual slot을 호출한다.",
+      "original_limitations": "cache pointer가 픽셀 전체 또는 node geometry cache라는 뜻은 아니다.",
+      "original_evidence": [
+        {
+          "address": "0x469770",
+          "evidence_id": "ev_d68cea8a9e63cb7c1c08f47f663240d4e5c0dbf163e79a4ab04019bf48d5e345",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x469770.txt",
+          "payload_sha256": "dc8a4028f3031460d6bcf848e51cb3db9044c019c7e9294d88400c053f22519a"
+        },
+        {
+          "address": "0x46bb00",
+          "evidence_id": "ev_3601438fc640a8f94699d8606e70810192d08f6146b5314ebb8cfc0dc56f1efa",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x46bb00.txt",
+          "payload_sha256": "c899b559ec0cc6b1dd7e351055ad978d2cbbddb2b9d7c5c66583450937b784d6"
+        },
+        {
+          "address": "0x427ff0",
+          "evidence_id": "ev_b83c37db5be1e53f3553930daf7d225b6b44c8320790690574e78938dad2712e",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x427ff0.txt",
+          "payload_sha256": "e45ea1adce91e83d5122d0f7b5299e86f3fa1824901f27f998dfc6999bb5606b"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "implemented",
+      "mac_assessment": "현재 UI 옵션의 key 기반 palette 캐시 대응. 원본 pointer reset 모델과 동일 구조는 아님.",
+      "remaining_checks": [
+        "Windows 전체 theme/config를 화면에 적용하는 flow는 아직 미연결이며 도입 시 palette invalidation key를 확장해야 한다.",
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+          "anchor": "private struct PaletteKey"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+          "anchor": "if let cached = paletteCache[key]"
+        }
+      ],
+      "existing_test_sources": [],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W13",
+      "title": "문자열 치수 memoization",
+      "original_observation": "TTextBox.setText는 다른 문자열일 때만 dirty(+0x18)를 켠다. getSize는 dirty/font size/bold 변경 때만 TextExtent하고 저장된 size를 반환한다.",
+      "original_limitations": "검사 key는 관찰된 font size와 bold bit다. 모든 font 속성을 포함한 완전한 key라고 확대하지 않는다.",
+      "original_evidence": [
+        {
+          "address": "0x4352c0",
+          "evidence_id": "ev_da10aa7510cfde41bfe062643b44ca73d832d00bba267e1a607f618652e92191",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4352c0.txt",
+          "payload_sha256": "f8cf263dba0380758fbc92b8cc8aad3cd65d15ec9f731ea6571332f50e3a2359"
+        },
+        {
+          "address": "0x435340",
+          "evidence_id": "ev_7e6ae2c7dd953543513ad0faf492c9f1590cdf59a0a301ebda9fea5d3f27b00e",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x435340.txt",
+          "payload_sha256": "64b7da79d35fd2a8fb60bd284bc6302fe954c2801341c4aa206c8271e4e20c3e"
+        },
+        {
+          "address": "0x468db0",
+          "evidence_id": "ev_dc6466e30198d13b3d07a6dbc875d9ac35aa12a1be06834e99d52851e5e55d1d",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x468db0.txt",
+          "payload_sha256": "d91214b579eccd55b2a4dce839c0d0dd9037e6c006c00f47b22e55fbf7f24960"
+        },
+        {
+          "address": "0x469770",
+          "evidence_id": "ev_d68cea8a9e63cb7c1c08f47f663240d4e5c0dbf163e79a4ab04019bf48d5e345",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x469770.txt",
+          "payload_sha256": "dc8a4028f3031460d6bcf848e51cb3db9044c019c7e9294d88400c053f22519a"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "partial",
+      "mac_assessment": "현재 presentation의 title/size/NSString width와 font/style 조합을 MapTextCache에서 재사용. path·정확 UTF8 name·dir/link·bytes·point size에 따라 갱신하며 4096 entry/추정 UTF8 1MiB 제한. 원본 node 문자열 치수 저장 구조 전체를 복제한 것은 아니다.",
+      "remaining_checks": [
+        "Windows 실제 동적 결과/타이밍 및 원본 내부 전체 상태 전이는 별도 R backlog와 coverage boundary에 남음.",
+        "실제 foreground/Space/창 수명 acceptance 완료 여부는 TODO의 해당 step과 최종 검증 기록을 따름."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/MacSpaceSniffer/MapTransition.swift",
+          "anchor": "var sizeWidth: CGFloat"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+          "anchor": "let next = textCache.prepare(raw)"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/MapTextCache.swift",
+          "anchor": "func prepare"
+        }
+      ],
+      "existing_test_sources": [],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W14",
+      "title": "지속 tooltip 객체와 dirty rebuild",
+      "original_observation": "view+0x7f0의 tooltip 객체를 계속 사용한다. setRows는 rows를 저장하고 +0x40 dirty를 켠다. rebuild는 dirty가 아니면 return한다. Paint는 이 객체를 그린다.",
+      "original_limitations": "setRows는 같은 rows인지 비교하지 않고 dirty를 켠다. Paint 일부 TextExtent도 남아 있어 모든 측정을 생략한다고 말하지 않는다.",
+      "original_evidence": [
+        {
+          "address": "0x429aa0",
+          "evidence_id": "ev_7bfcf25248b748ed36ba74fd008daff038dc70ae7e9c0ec717253444c54537a3",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x429aa0.txt",
+          "payload_sha256": "9128e5f0cbeea808c82117011662ace013d364513b22b73f8aaa949a17552845"
+        },
+        {
+          "address": "0x450420",
+          "evidence_id": "ev_97d4735ba4aa74ad29faa501c06ed973150ae050758662f30d613487bc49bec0",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x450420.txt",
+          "payload_sha256": "c1163096440e8b9fa1ab4233cca31044ae99ad025cc4a171060445f391d74a08"
+        },
+        {
+          "address": "0x450590",
+          "evidence_id": "ev_b07efc8e74afb867610413a3da0f184319b314ec077c0cb80cc98802ecd2dbd8",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x450590.txt",
+          "payload_sha256": "3a54cee41578343d10328d899c0817ed54c484739a14c86efb81912b3bbafad0"
+        },
+        {
+          "address": "0x450b10",
+          "evidence_id": "ev_86a23fdc9f416ce8a863c3c8ac7c04dade24bebf1ed7978d799141d8b4734115",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x450b10.txt",
+          "payload_sha256": "5ff00561a0e112861d1527287d48c27ad3c813b3df0c180d981216eb5a6fdf32"
+        },
+        {
+          "address": "0x4295a0",
+          "evidence_id": "ev_e118aa88696dc12d66060b7fd3dd91533537dfb764f65360b63ded093c1d183a",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4295a0.txt",
+          "payload_sha256": "9b63c952b61ec6d8bfecab73362ae8f439dcd8cdac97b91724bc25fbaa0ae589"
+        },
+        {
+          "address": "0x4274b0",
+          "evidence_id": "ev_f7be6c494836ec2b1ac759d9c6149f0f829c90b3937dfcd60a46b294d8c763d7",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4274b0.txt",
+          "payload_sha256": "e2dd37b01fc7fde36643cbf38539b2144ce4d14d49ec2dc624074a23dddae866"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "platform",
+      "mac_assessment": "MapTooltipRegistry로 native 등록 영역 수명을 분리. 같은 presentation은 유지, 움직이는 rect는 재등록하며 live content/current path를 검증한다. AppKit 대체로 원본 TTooltip bitmap/치수 cache 동일 구현이 아니다.",
+      "remaining_checks": [
+        "AppKit registry/AX 수명은 기존 native 회귀에서 확인했으나 원본 bitmap/TextExtent cache와 Windows runtime 동등성은 미검증."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/MacSpaceSniffer/MapTooltipRegistry.swift",
+          "anchor": "guard self.view !== view || areas != next"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+          "anchor": "tooltipRegistry.node(for: tag"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/MacSpaceSnifferTests/MapTooltipTests.swift",
+          "anchor": "func testTransitionFramesAndInterruptedTransitionUseCurrentPresentationRects"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W15",
+      "title": "노드 재활용 pool과 busy 참조 제외",
+      "original_observation": "FS file node와 TM file node newNode는 recycle can을 먼저 확인한다. 없으면 각각 0x70/200 bytes 객체를 할당한다. pool은 연결 포인터로 보관하며 busy 목록의 객체를 건너뛴다.",
+      "original_limitations": "전역 allocator 전체가 이 pool이라는 의미가 아니며 retained pool 크기/실측 절감량은 미측정.",
+      "original_evidence": [
+        {
+          "address": "0x404ee0",
+          "evidence_id": "ev_0128c32f876e1350caf06dccbb243e1be8b69f2fbaab1ce7e02f5bad7668c658",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x404ee0.txt",
+          "payload_sha256": "478bc5d49c3a9f10440b124ea4bef1c678796693458eaa26eb602f1a67c9a60e"
+        },
+        {
+          "address": "0x4658e0",
+          "evidence_id": "ev_5223c2505a0ed0ceb433714bb710d7033b2503e29e175359ce0a98b36c5a4523",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4658e0.txt",
+          "payload_sha256": "7e6d4eaed1bd046ba5557a926dcdcaf6a0d92fa204635ac4ee5e730b533ff437"
+        },
+        {
+          "address": "0x448380",
+          "evidence_id": "ev_74ccb65ee0b3cf0b415752fe5a17dc6568c927bcb36f2e801a070a427b0c0eeb",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x448380.txt",
+          "payload_sha256": "cef4606da1785d1c08f3f02c70596960cc22e1ad5ca35629be14ba7b2ca54ae3"
+        },
+        {
+          "address": "0x448450",
+          "evidence_id": "ev_588535e7866871de4f8796550d56df3b28cee68869dd4aa8b96ff155b954e216",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x448450.txt",
+          "payload_sha256": "a311e302cbc589d63c598177239d61a9f2d309e21a789b9f2801daaea84e002f"
+        },
+        {
+          "address": "0x447fb0",
+          "evidence_id": "ev_780313d44d1a6969e68ce56aab8fa501a1325419cff4498ef6a43d866fc3f42f",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x447fb0.txt",
+          "payload_sha256": "74022d97156574c4bd7069033a2a12ca264eead45c1d7e2ba9f252145fe04758"
+        },
+        {
+          "address": "0x448050",
+          "evidence_id": "ev_2f18e534601445166c81850a63c69d47be9c6d303f538171b6cf1f5f9248d9ee",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x448050.txt",
+          "payload_sha256": "2d9916bdd40260dff067429c39baa22b9a41a5268247d844de4cd17cb8b25685"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "platform",
+      "mac_assessment": "값 타입 NodeTable COW를 유지하고 private ancestor context만 owner1MiB/global idle charge4MiB/pressure epoch로 재사용. reader-free page 및 실제 node object pool을 prototype·frozen reader·reset·adapter·RSS/CPU로 비교하고 미채택. 원본 busy-ref node pool 동일 구현이 아니다.",
+      "remaining_checks": [
+        "Windows 실제 동적 결과/타이밍 및 원본 내부 전체 상태 전이는 별도 R backlog와 coverage boundary에 남음."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/NodeTable.swift",
+          "anchor": "private static let pageSize = 1024"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/LatestWorker.swift",
+          "anchor": "self.payload = nil"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/FilterScratch.swift",
+          "anchor": "class FilterScratch"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ScratchBudget.swift",
+          "anchor": "final class ScratchBudget"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/MemoryLifetimeTests.swift",
+          "anchor": "testIdleWorkerReleasesCompletedOperationCaptures"
+        },
+        {
+          "file": "Tests/SpaceSnifferCoreTests/FilterScratchTests.swift",
+          "anchor": "testScratchCannotMutateFrozenPublishedEvaluationAndEvictsOversizedStorage"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W16",
+      "title": "상한 있는 스캔 스레드 pool·event 대기",
+      "original_observation": "working count를 maxConcurrency와 비교한다. pooled thread가 있으면 재설정하고 event로 깨운다. 완료 worker는 pooled list로 돌아가고 Execute는 event wait한다.",
+      "original_limitations": "고정 원본 data maxConcurrency의 4 bytes는 01 00 00 00이다. 기본부터 여러 스레드가 병렬 스캔한다고 주장하지 않는다.",
+      "original_evidence": [
+        {
+          "address": "0x45a7c0",
+          "evidence_id": "ev_472c33e96ae7d779feca421b4927a9248646059d585e5918c5a1ca0eec5cac56",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x45a7c0.txt",
+          "payload_sha256": "d7a7d2ebb83a05b229a42e32afe90533b2003ddf88672f8c096e63edebf9791a"
+        },
+        {
+          "address": "0x459e30",
+          "evidence_id": "ev_f862eeb2003afa1d1090d17f1b3d9e8b0366df49c159a733ad09ea731ead6828",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x459e30.txt",
+          "payload_sha256": "cd7bc7e0eb2dcc77e7cf2d04555bb509385ad6caab5a11a548342722eb85c308"
+        },
+        {
+          "address": "0x459a00",
+          "evidence_id": "ev_bb8f9153ddb74c4edd6f6708d358954c7441019000426b85247f622a65cfb24c",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x459a00.txt",
+          "payload_sha256": "97c40f12f7b54818e85ff98e8eb9c036987ee32dcdfb94b48fb80e4ff0343c0e"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "platform",
+      "mac_assessment": "native ScanAdmission running8/pending64와 별도 metadata/artifact/metrics serial lane. actual waiting thread8개·1000submit·queued capture 해제·stale generation·CPU/query 응답을 확인. Dispatch thread 재사용이며 고정 전용 OS thread8개/모든 volume 처리시간/전체 thread ceiling이 아니다.",
+      "remaining_checks": [
+        "Windows 실제 동적 결과/타이밍 및 원본 내부 전체 상태 전이는 별도 R backlog와 coverage boundary에 남음."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/ScanService.swift",
+          "anchor": "private let admission: ScanAdmission"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/LatestWorker.swift",
+          "anchor": "for await job in channel.stream"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ScanAdmission.swift",
+          "anchor": "class ScanAdmission"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ScanService.swift",
+          "anchor": "entry.job = try admission.submit"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/PathIO.swift",
+          "anchor": "enum PathIO"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ScanAdmissionTests.swift",
+          "anchor": "testRunningCancellationKeepsSlotUntilOperationActuallyReturns"
+        },
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ScanSchedulingTests.swift",
+          "anchor": "testQueuedRootUnsubscribeAndNewGenerationCannotPublishOldCancellation"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W17",
+      "title": "OS 디렉터리 열거의 큰 버퍼 경로",
+      "original_observation": "global branch에서 FindFirstFileExW(FindExInfoBasic,...,flags=2)를 호출하고 FindNextFileW로 이어간다. 다른 branch에는 FindFirstFileW가 있다.",
+      "original_limitations": "실행 중 어느 branch가 선택됐는지나 모든 파일시스템에서 더 빠른지는 미확인.",
+      "original_evidence": [
+        {
+          "address": "0x455be0",
+          "evidence_id": "ev_c4d89b45eb9e66208230dc7096e4c43e638dd01b9af05b0b7fb33d1c50e56fda",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x455be0.txt",
+          "payload_sha256": "3c5cc18219765496c245b9e5b75baf312a7239a8fcd1cc04741cba69e5314081"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "platform",
+      "mac_assessment": "default Scanner는 POSIX opendir/readdir 경로다. R14에서 private fd/64KiB/4096entries·추정4MiB의 all-or-nothing bulk metadata 및 count-hint adaptive 후보를 구현·필드 oracle/오류/취소/5pairs로 평가했다. wide에서 회귀하여 opt-in만 유지하고 기본 활성화하지 않았다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "APFS 외 동작·root count 비용·실제 분포 end-to-end를 재측정해야 한다. adaptive v2 wide median 약19% 회귀를 해결됐다고 보고하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/Scanner.swift",
+          "anchor": "static let defaultMetadataBackend: MetadataBackend = .posix"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/NativeDirectoryMetadata.swift",
+          "anchor": "private static let bufferBytes = 64 * 1024"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/NativeDirectoryMetadataTests.swift",
+          "anchor": "final class NativeDirectoryMetadataTests"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W18",
+      "title": "경로 segment 저장·필요 시 full path 조합",
+      "original_observation": "init은 부모(+0x10)와 segment(+0x20)를 저장한다. getFullPath는 부모를 재귀 호출하고 separator와 현재 segment를 합친다.",
+      "original_limitations": "full path 조합 CPU·깊은 경로 비용도 있다. 프로그램 전체에 full path cache가 전혀 없다는 증명은 아니다.",
+      "original_evidence": [
+        {
+          "address": "0x405260",
+          "evidence_id": "ev_032ccc67fac395b2f3bb2fd4a444afd825737d761c3dd843dea2efd33330ebc0",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x405260.txt",
+          "payload_sha256": "af6608a1a11642e4fb631897ef90d7fb70e67d403de070458a329456009d1115"
+        },
+        {
+          "address": "0x4061b0",
+          "evidence_id": "ev_53fbba43bea5272f19c68739b36d4836b54fd700ca4215f2d2d3207543f20840",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4061b0.txt",
+          "payload_sha256": "7b767925881e066291a9535e2f12327cbeced8f12cdb87ed8c00f0473740bd4d"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "missing",
+      "mac_assessment": "parent/name과 함께 전체 path 문자열을 각 node에 저장. R14 actual 709만-node 경로/stride attribution과 lazy/segment 후보 비용을 별도 조사했으나 production path compression은 미도입.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "identity/tag/query/SNS/rename/frozen reader 경계와 materialization 비용을 검증해야 한다. 문자열 모델 추정치를 실제 heap attribution으로 주장하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/Model.swift",
+          "anchor": "public var path: String"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/Model.swift",
+          "anchor": "public var name: String"
+        }
+      ],
+      "existing_test_sources": [],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W19",
+      "title": "파일 stream에 순차 export",
+      "original_observation": "SNS writer는 FILE*에 필드별 fwrite, 종료 writer는 end bytes를 쓴다. TXT exportNode는 FILE*가 있으면 행을 UTF8로 fprintf하고 별도 string destination이 있으면 거기에 append한다.",
+      "original_limitations": "원본에도 행 buffer/정렬 TList/재귀와 string destination 경로가 있다. 전체 O(1) 메모리라고 주장하지 않는다. SNS decompiler warning도 보존한다.",
+      "original_evidence": [
+        {
+          "address": "0x408a80",
+          "evidence_id": "ev_5600410e604de05627fef9296308e383109246c061535bfd5820f2ebea6d9efd",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x408a80.txt",
+          "payload_sha256": "69625cc7821fa2e3962e65c1f378e786711b5dd2bb3bc2cd6dd2614c74edc0a2"
+        },
+        {
+          "address": "0x408a10",
+          "evidence_id": "ev_464e3bbb8fe25861c64950e95c54f00bdf24112a148f75b6854fcaf7d70d1b89",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x408a10.txt",
+          "payload_sha256": "f8769af56d26488235a288762e4de3d6d71f13b14c425701d2dede541b20ef04"
+        },
+        {
+          "address": "0x415eb0",
+          "evidence_id": "ev_84fc56940ebeb03eec09865d84070300b313fea98b778d6bf137e1a95b032e08",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x415eb0.txt",
+          "payload_sha256": "f2641de546e782a599c84fdd0615c58ad9d6b30344c3f62b36e4d26db74026c0"
+        },
+        {
+          "address": "0x416650",
+          "evidence_id": "ev_a6d1af9a96f7cb3db3ef2c664531f49545eb7c920954c459730b1e99719be895",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x416650.txt",
+          "payload_sha256": "ad3b23ae0c2d89e77bb390f9d418c89bb3e872fab0398c41a69641d5026fad09"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "implemented",
+      "mac_assessment": "SNS/TXT를 bounded sink와 atomic transaction으로 순차 출력한다. R11 원본 wb+·&br 근거로 TXT UTF8/LF와 reverse child-array-position 동률을 정정했고 CRLF filename data는 보존한다. historical LegacyArtifactReference/40표본 hash는 그 당시 writer 증거이며 원본 newline 증명이 아니다. SNS 및 decode batch autoreleasepool과 bitset validation은 Mac 메모리 최적화이며 전체 tree/정렬/selection은 남는다. configured export는 template·weights를 재사용하고 행별 streaming/cancel/output cap을 적용한다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "실제 큰 최종 버전 scan/export의 장시간 peak/reader lifetime 관찰과 Windows locale/파일 왕복이 필요하다.",
+        "namespace atomicity는 fsync/crash durability 보장이 아니다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/SNSSnapshot.swift",
+          "anchor": "public static func write<S: ArtifactByteSink>"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/Report.swift",
+          "anchor": "public static func write<S: ArtifactByteSink>"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ArtifactFileTransaction.swift",
+          "anchor": "struct ArtifactFileSink"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ArtifactSelection.swift",
+          "anchor": "enum ArtifactSelection"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ConfiguredReport.swift",
+          "anchor": "public static func write<S: ArtifactByteSink>"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ConfiguredExportOptions.swift",
+          "anchor": "struct ConfiguredExportFileIO"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ArtifactStreamingTests.swift",
+          "anchor": "testStreamingCodecsMatchFrozenWritersAcrossFiltersScopesUnicodeAndHiddenState"
+        },
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ArtifactStreamingTests.swift",
+          "anchor": "testExclusivePublicationRaceCannotOverwriteAnotherWritersOutput"
+        },
+        {
+          "file": "Tests/SpaceSnifferCoreTests/NativeReportLineEndingTests.swift",
+          "anchor": "testFilenameCRLFBytesRemainDataAndOnlyTheRecordDelimiterIsLF"
+        },
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ConfiguredExportIntegrationTests.swift",
+          "anchor": "testCancellationDuringFinalFlushPreventsAtomicPublish"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W20",
+      "title": "확대 bitmap 재사용과 옵션별 재렌더",
+      "original_observation": "zoom은 시작/목표 bitmap을 준비해 변환해서 그리는 경로가 있고 real-zoom flag일 때는 loop에서 refreshBitmap을 한다. 같은 depth focus 변경은 zoom을 생략하는 분기가 있다.",
+      "original_limitations": "일반 재배치의 모든 rect 위치 보간은 아직 입증하지 못했다. Mac 일반 애니메이션은 사용자 요청 UI 구현이다.",
+      "original_evidence": [
+        {
+          "address": "0x428bb0",
+          "evidence_id": "ev_9b22e4002a554cb7851c86759c2f029061fb069e7bafad02df4363d5b0d6c33f",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x428bb0.txt",
+          "payload_sha256": "2e9ecfc68b6b791035c84c7483a0221a470d51a05f1ea6676a4932eb6d701974"
+        },
+        {
+          "address": "0x42bb40",
+          "evidence_id": "ev_06ba8eff222c5a22a09dbc4ec8b1bf1ef1d87d14b56c530cd1d60c950e67432b",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42bb40.txt",
+          "payload_sha256": "1875e477dd8fe62608692081e39807f689005c3b131c45f603675ec048a00283"
+        }
+      ],
+      "added_after_first_list": false,
+      "mac_status": "partial",
+      "mac_assessment": "원본 곡선/500ms 적용. Mac은 rect 보간으로 매 draw paint하며 bitmap 재사용은 없음.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "R03의 일반 재배치 시간/옵션과 zoom·강조를 구분해야 한다. bitmap reuse 및 realZoom 동일-depth 동작은 미이식."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/TreemapMotion.swift",
+          "anchor": "public enum TreemapMotion"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/MapTransition.swift",
+          "anchor": "func items(at time: TimeInterval)"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ReferenceContractTests.swift",
+          "anchor": "testNativeZoomCurveConstantsAndRectangleInterpolation"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W21",
+      "title": "기존 filtered TM 노드 보존·차이만 생성/제거",
+      "original_observation": "기존 children의 FS pointer를 새 포함 목록과 대조한다. 계속 포함되는 TM node는 유지하고 빠진 노드만 제거, 새 항목만 생성한다.",
+      "original_limitations": "focus-first 순서와 독립적인 filtered-tree reconciliation. page COW만으로 동일 기법 적용이라고 보지 않는다.",
+      "original_evidence": [
+        {
+          "address": "0x46a490",
+          "evidence_id": "ev_2ca77b3b513bbe7a458b603e55564e044e7616d195d3d26386de64deb8fe409b",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x46a490.txt",
+          "payload_sha256": "f37dfdb9fb27c809f91f6939318fe2313beee58f5ea3b0995392c4a6b0d1766d"
+        }
+      ],
+      "added_after_first_list": true,
+      "mac_status": "partial",
+      "mac_assessment": "ProjectionDelta가 opaque baseline/result와 same-topology proof에 한해 기존 included/weights를 COW 공유하고 바뀐 leaf와 조상 delta만 갱신한다. dense/시간/unknown metadata/topology는 full fallback이다. 기존 filtered TM 객체를 FS pointer별 유지/생성/삭제하는 원본 reconciliation 전체는 아니므로 부분 대응이다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "topology add/remove/rename의 filtered-object reconciliation은 미구현이며 flat included/weights COW 비용이 남는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/ProjectionDelta.swift",
+          "anchor": "var included = previous.included; var weights = previous.weights"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ProjectionSession.swift",
+          "anchor": "ProjectionDelta("
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/OptimizationMatrixTests.swift",
+          "anchor": "testSparsePositiveNegativeBoundaryAndZeroDeltasAgainstFullPass"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W22",
+      "title": "감시 buffer/event 재사용·batch 직접 변경",
+      "original_observation": "watch buffer를 없을 때 malloc(0x7fff)하고 overlapped ReadDirectoryChangesW/event wait를 사용한다. 완료 batch를 root write lock 안에서 순회해 elementChange에 전달하고 rename record를 연결한다.",
+      "original_limitations": "Mac의 FSEvents 부모 재검사와 같은 직접 mutation 구현은 아니다. syscall callback와 해당 batch의 동작을 관찰한 것이며 Windows 변경 폭주 성능 실측은 아니다.",
+      "original_evidence": [
+        {
+          "address": "0x45bc60",
+          "evidence_id": "ev_9778ab7ce4a66e14343508f818cc7440b6464df05fe3a61071a8b6dd46d8da91",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x45bc60.txt",
+          "payload_sha256": "d538c2555da0348448fa64ea4b6ca555cb503f0cf30d7c758e1fcea7d2287719"
+        },
+        {
+          "address": "0x406d30",
+          "evidence_id": "ev_0261955c96dd41d366b16dd99d82ddb93d6095e970b18bada004c3a605e160ac",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x406d30.txt",
+          "payload_sha256": "4d9c66e7a1ecb463ac3db2c627e24a62629ad2ed50321414f74ed0f6413db0ed"
+        }
+      ],
+      "added_after_first_list": true,
+      "mac_status": "partial",
+      "mac_assessment": "FSEvents batch를 RefreshQueue에서 scope packing하고 immutable 부모/whole-root 재스캔으로 수렴시킨다. R07/R08의 취소 baseline·부분 탐색 보존·issue truncation root 승격과 watch overflow/focus 순서 회귀를 추가했다. Windows 직접 mutable elementChange·rename-pair/buffer/event-thread를 그대로 복제하지 않았다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "Windows producer action/order/overflow와 동일 fixture 동적 비교가 필요하다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/DirectoryMonitor.swift",
+          "anchor": "let handler: FSEventStreamCallback"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ScanService.swift",
+          "anchor": "private func changed"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ScanRecoveryTests.swift",
+          "anchor": "final class ScanRecoveryTests"
+        },
+        {
+          "file": "Tests/SpaceSnifferCoreTests/FocusScanLifecycleTests.swift",
+          "anchor": "testQueuedFocusDoesNotConsumeWatchOverflowAndFinalRootConverges"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W23",
+      "title": "열거 metadata 재사용·조건부 추가 size query",
+      "original_observation": "일반 속성·invalid file handle 분기에서는 전달된 high/low size를 그대로 사용한다. handle이 있으면 GetFileSizeEx, compressed/sparse 분기에서는 GetCompressedFileSizeW를 사용한다.",
+      "original_limitations": "모든 파일에서 size 조회 syscall을 추가한다는 구조가 아니다. 모든 metadata가 추가 I/O 없이 수집된다는 주장도 아니다.",
+      "original_evidence": [
+        {
+          "address": "0x405d30",
+          "evidence_id": "ev_1e98ac00952a5174c430247667a58a41553cdf32837c9c1cf9152fc267075c88",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x405d30.txt",
+          "payload_sha256": "39b96940f6a7637aac42ac5f26303b5ff7b075e465f92abe416db9403bfd621d"
+        },
+        {
+          "address": "0x455be0",
+          "evidence_id": "ev_c4d89b45eb9e66208230dc7096e4c43e638dd01b9af05b0b7fb33d1c50e56fda",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x455be0.txt",
+          "payload_sha256": "3c5cc18219765496c245b9e5b75baf312a7239a8fcd1cc04741cba69e5314081"
+        }
+      ],
+      "added_after_first_list": true,
+      "mac_status": "platform",
+      "mac_assessment": "기본 POSIX는 한 lstat 결과를 size/identity/times/attributes에 재사용한다. opt-in NativeDirectoryMetadata는 getAttrListBulk 결과의 실제 필수 metadata를 쓰고 누락·mount/firmlink/unknown에 lstat fallback한다. all-or-nothing directory 수집과 oracle는 있으나 wide 회귀 때문에 기본 POSIX다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "현재 opt-in의 field 동등성/오류 회귀를 유지하며 대표 filesystem/분포에서 syscall·시간·peak를 비교한 뒤 활성화 여부를 판단한다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/NativeDirectoryMetadata.swift",
+          "anchor": "struct NativeFileMetadata"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/Scanner.swift",
+          "anchor": "case .posix: batch = nil"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/NativeDirectoryMetadataTests.swift",
+          "anchor": "final class NativeDirectoryMetadataTests"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W24",
+      "title": "필터 조건 사전 분류·숫자 변환·빠른 조건 판정",
+      "original_observation": "생성자/토큰 파서에서 mask·태그·속성·크기/기간을 분류하고 숫자 경계를 저장한다. 개별 노드 판정은 파싱된 필드를 사용하며 조건별 조기 실패/성공 분기가 있다.",
+      "original_limitations": "원본의 regex precompile이나 Mac ASCII 단축 경로 자체를 확인한 것으로 확대하지 않는다. isVoidFilter의 세 list 검사만으로 모든 scalar 조건 부재까지 증명하지 않는다.",
+      "original_evidence": [
+        {
+          "address": "0x43f450",
+          "evidence_id": "ev_b340ec2251e42716776f166b0d7651f762b80ed76095edcbbc60f1516fa58b70",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x43f450.txt",
+          "payload_sha256": "409bc44327a39285573a68241b1ad0bc25bf87929401d9eb5037968bd50c745c"
+        },
+        {
+          "address": "0x43fd20",
+          "evidence_id": "ev_1217ed943e0cbcfb7907636a583b2c1bc3d154ed5f96287af8b678207488cb34",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x43fd20.txt",
+          "payload_sha256": "fdafcf45799e4ee3d3e63127bb227c7b13f8dfcf744b45461c7f215f7b3362c3"
+        },
+        {
+          "address": "0x440810",
+          "evidence_id": "ev_983b78fe08d9e35a1841106a7858fccfbd7d161ddc9d52a53fedd2ffe5b2cb1f",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x440810.txt",
+          "payload_sha256": "d16c36362c5e8f99b700c19d3474212edaca23b023cb1ed2f6dcfe4d6f6c6955"
+        },
+        {
+          "address": "0x441b00",
+          "evidence_id": "ev_2977aca93823701d69367063d47c16594e636684a33fca3db6b63eadffc240f2",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x441b00.txt",
+          "payload_sha256": "96d3cfe126a52c0f89d47e9c67c37227c7f12412fd04bb876338701b6468bbfb"
+        },
+        {
+          "address": "0x4455b0",
+          "evidence_id": "ev_34e62ff1ab992628370be1dbe6489f60350d87296224d0047f46eaa3b01f310c",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4455b0.txt",
+          "payload_sha256": "c01c52cb0d9059f7b744d96221af39427cd6619dbf323588222b51719348800c"
+        },
+        {
+          "address": "0x4422a0",
+          "evidence_id": "ev_f61041bfdb06452d997c99e4a5afab1ef25e3ae65d3649f96e6b263df8302aba",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4422a0.txt",
+          "payload_sha256": "ef745b043fdb2ea6a7a53ffe98c68bb6bcbf294fea588e634f1938489f209cc3"
+        },
+        {
+          "address": "0x445bd0",
+          "evidence_id": "ev_7f58443b378a4e2945e0022b9dc49a78081aa1fc4700e7936925cba52d94cc63",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x445bd0.txt",
+          "payload_sha256": "77c272c404f3aa60f3b911e5654960a3fb79fab4b2c8b853d0e9014de30b1547"
+        },
+        {
+          "address": "0x445050",
+          "evidence_id": "ev_5821b63db0bab9ebb2054359e2130f0430de878255a70fb5f5c524270b4ec35a",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x445050.txt",
+          "payload_sha256": "4815b81311b9bb81a2d3433c1aa4f2788a4fba70ace0f449a310d02599eb45c6"
+        },
+        {
+          "address": "0x444870",
+          "evidence_id": "ev_15b7982c3b5ee3b855894ab93563f7ca51e6e0afd0fd02ea8e78354a89962a41",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x444870.txt",
+          "payload_sha256": "db9aa1a69a18659f6ac097997ceb65ee9fc1d8059e08cc43daedec9a513ea1d6"
+        },
+        {
+          "address": "0x4447b0",
+          "evidence_id": "ev_7b1bab80099932557f3486309dc62c3be40f52d480dd85a84abd34ac6511128c",
+          "bundle": "docs/windows-optimization-coverage-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4447b0.txt",
+          "payload_sha256": "f590e284cb36061c89ede20e078245d982295320c360406d1f49bfe56d3baeab"
+        }
+      ],
+      "added_after_first_list": true,
+      "mac_status": "implemented",
+      "mac_assessment": "filter 생성 시 mask/수치 경계/태그/속성 분류. 노드마다 문자열 조건을 다시 파싱하지 않는다. R09에서 native glob LF/CRLF 끝·빈 조건·age 소수초/zero 경계를 보강했다. Mac Unicode/ACP equivalence 전체는 남는다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "R13 filterID와 isIncluded 반환 high byte를 조건 파싱 최적화/skip 증명으로 혼동하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/Filter.swift",
+          "anchor": "public init(_ text: String) throws"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/Filter.swift",
+          "anchor": "private func evaluate"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ReferenceContractTests.swift",
+          "anchor": "testNativeSizeBoundariesFuzzyPrefixAndFirstBound"
+        },
+        {
+          "file": "Tests/SpaceSnifferCoreTests/FilterBoundaryFollowupTests.swift",
+          "anchor": "final class FilterBoundaryFollowupTests"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W25",
+      "title": "사각형·가시성으로 계층형 hit-test 가지치기",
+      "original_observation": "보이지 않거나 좌표가 node rect 밖이면 null을 반환한다. 포함된 노드에서만 자식에 재귀하고 첫 일치 하위 노드를 반환한다.",
+      "original_limitations": "quadtree/이진 탐색 또는 O(logN) 보장은 아니다. 렌더 재귀 제한과 별도의 포인터 입력 처리 기법이다.",
+      "original_evidence": [
+        {
+          "address": "0x4680b0",
+          "evidence_id": "ev_2f2fb97da2edd1dab0b781416134bb994aa0c67571ae9183a20fd794af8b936c",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4680b0.txt",
+          "payload_sha256": "2807b857b9954878f239d7527aaf8423757838593f8d91b80706766aaf45bebd"
+        }
+      ],
+      "added_after_first_list": true,
+      "mac_status": "missing",
+      "mac_assessment": "현재 presentation flat 목록을 뒤에서 검사. 계층형 hit-test 아님. R14에서 작은22rect overhead/큰 synthetic 이득과 parent 밖 child 반례를 비교해 후보만 보존했다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "transition/reparent containment 또는 flat fallback을 증명하고 실제 presentation 분포·index build/retained bytes까지 평가해야 한다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+          "anchor": "private func hit"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+          "anchor": "return presentation().last(where:"
+        }
+      ],
+      "existing_test_sources": [],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W26",
+      "title": "동일 FS 노드의 중복 스캔 진입 방지",
+      "original_observation": "node+0x6a bit2가 설정되어 있으면 root read lock을 놓고 Sleep(10) 후 재획득/취소 검사한다. 진입 시 bit2와 조상 bit1을 설정하고 완료 후 지운다.",
+      "original_limitations": "중복 작업 억제와 동시성 정확성 guard다. busy wait 자체를 이상적인 새 최적화로 권장하지 않는다.",
+      "original_evidence": [
+        {
+          "address": "0x406b10",
+          "evidence_id": "ev_fca4c5988706237015101927b74fb4af1d28da1d7371ebcc2daab8cf167762d5",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x406b10.txt",
+          "payload_sha256": "f22cc02cf18b2d9b710b8f5f62337f0be8a0a16cac97d6b26b07f7df1fc9ae5d"
+        }
+      ],
+      "added_after_first_list": true,
+      "mac_status": "platform",
+      "mac_assessment": "root별 직렬 worker/admission/generation에 더해 R06 owner별 latest focus intent/FIFO/정확 ticket·root incarnation·pre/post lstat identity/realpath guard를 연결했다. 동일 owner만 교체 취소하고 master/다른 owner는 취소하지 않으며 terminal까지 slot을 drain한다. 원본 node bit busy guard나 별도 병렬 worker 동일 구현은 아니다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "disjoint parallel focus worker는 미구현이며 동시 merge·공정성 이득 없이 단순 thread 추가하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/ScanService.swift",
+          "anchor": "public func requestFocusRescan"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/FocusScanRequests.swift",
+          "anchor": "mutating func cancel(_ request:"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/FocusScanTarget.swift",
+          "anchor": "static func matches"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/FocusScanLifecycleTests.swift",
+          "anchor": "testMasterIsNotCancelledAndOwnersMergeFromLatestSerializedBaseline"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W27",
+      "title": "설정 객체 lazy 생성·메모리 재사용",
+      "original_observation": "저장된 config pointer가 null일 때만 TConfig를 만들고 XML/default 설정을 읽는다. pointer가 있으면 그 객체를 반환한다.",
+      "original_limitations": "설정 dirty flag만으로 모든 변경을 자동 rebuild한다는 근거는 아니다. XML codec 기능 구현과 singleton/lazy cache 정책 도입은 다른 작업이다.",
+      "original_evidence": [
+        {
+          "address": "0x40c420",
+          "evidence_id": "ev_86f67da6a9992450f34db568f0a50b8b60362308208a676a458c1c1af56fb2ae",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x40c420.txt",
+          "payload_sha256": "b5039f6584c0b5aac6518cadaf945a8e904fb91ac34d25ba3b27ef2215805594"
+        }
+      ],
+      "added_after_first_list": true,
+      "mac_status": "review",
+      "mac_assessment": "NativeConfiguration/NativeExportTemplate/ConfiguredReport와 bounded ConfigurationFile, CLI/MCP inspection·명시 index 선택·atomic configured export를 구현했다. 설정은 explicit immutable job 값이며 UI 기본값을 자동 적용하거나 config singleton/lazy cache를 추가하지 않았다. 전역 UI 설정/file-class palette 편집·적용은 미연결이므로 lazy cache 필요성은 계속 검토 대상이다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "Mac locale formatter/strict malformed boundaries를 Windows와 동일하다고 하지 않는다. 실제 XML read/write·template 왕복과 UI settings/class integration은 별도다.",
+        "lazy config cache는 반복 사용 profile과 소유/무효화 경계가 필요할 때 평가하며 codec 존재로 도입 완료 처리하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/NativeConfiguration.swift",
+          "anchor": "public struct NativeConfiguration"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/NativeExportTemplate.swift",
+          "anchor": "public struct NativeExportTemplate"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ConfigurationFile.swift",
+          "anchor": "public enum ConfigurationFile"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ConfiguredReport.swift",
+          "anchor": "public enum ConfiguredReport"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/NativeConfigurationTests.swift",
+          "anchor": "final class NativeConfigurationTests"
+        },
+        {
+          "file": "Tests/SpaceSnifferCoreTests/ConfiguredExportIntegrationTests.swift",
+          "anchor": "final class ConfiguredExportIntegrationTests"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W28",
+      "title": "SNS 입력의 record 단위 stream 읽기",
+      "original_observation": "FILE*에서 fread로 record와 필드를 읽고 고정 길이 제한의 이름 buffer를 사용해 노드를 만든다.",
+      "original_limitations": "입력 전부를 먼저 JSON/String으로 만들지는 않지만 최종 전체 tree는 생성한다. O(1) 전체 메모리나 mapped Data보다 항상 유리함은 미확인.",
+      "original_evidence": [
+        {
+          "address": "0x408ef0",
+          "evidence_id": "ev_f761ae2de7fd81aac2ac871d8b655e0bce8eab6ea08ab6595b1b50d16334f3d0",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x408ef0.txt",
+          "payload_sha256": "79ee7ac1295f09d3b66078b8166d4e7d0d9deb72020640af9df9c88097270e35"
+        },
+        {
+          "address": "0x4093c0",
+          "evidence_id": "ev_4b2b9372d4bd56a040303817e975ebaab6d8aacef0cf192a4d0f3e16da29efc6",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4093c0.txt",
+          "payload_sha256": "a6425c3119070ba069211da8945e4006c28af83e3490985bc0f123709d44f6a6"
+        },
+        {
+          "address": "0x4576f0",
+          "evidence_id": "ev_9fa18b4756026a3f5cafe6042941109dba66a1b2c5233051366764267e1b5f0b",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4576f0.txt",
+          "payload_sha256": "7dcdba1ec835066bb109e20475328d8e73f579cbacbf0f0a2745e95e23673bc3"
+        }
+      ],
+      "added_after_first_list": true,
+      "mac_status": "platform",
+      "mac_assessment": "SNS는 mapped-if-safe Data를 record 단위로 decode하고 1024-record autoreleasepool·cancellation/validation bitset을 사용하나 모든 tree를 만든다. inspectRoots도 decodeAll이므로 metadata-only constant memory가 아니다. DU는 canonical0x4547f0 근거의 bounded strict text adapter로 파일 전체 text/line views를 만들며 native FILE*/fgetws와 동일 streaming 구조가 아니다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "대형 multi-root의 metadata inspection/선택 root decode peak를 순수 stream reader와 비교해야 한다. DU unsupported escaping/UNC/모호 residual을 임의 성공 처리하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/ArtifactTransfer.swift",
+          "anchor": "options: .mappedIfSafe"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/SNSSnapshot.swift",
+          "anchor": "public static func decodeAll"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/DUSnapshot.swift",
+          "anchor": "public enum DUSnapshot"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/DUSnapshotTests.swift",
+          "anchor": "final class DUSnapshotTests"
+        },
+        {
+          "file": "Tests/SpaceSnifferCoreTests/LegacySNSCodePageTests.swift",
+          "anchor": "final class LegacySNSCodePageTests"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W29",
+      "title": "자식 이름 조회의 hint 주변 양방향 검색",
+      "original_observation": "주어진 hint가 유효하면 그 근처에서 앞/뒤로 검색한다. 범위 밖 hint는 자식 수/2로 대체한다. 이름 일치와 유효 노드 조건을 확인한다.",
+      "original_limitations": "이번 추가 decompile로 확인했다. 사전 순서의 대소 비교가 없으므로 이진 탐색/해시 lookup이라 부르면 안 된다.",
+      "original_evidence": [
+        {
+          "address": "0x4068a0",
+          "evidence_id": "ev_80dfb3903a3bb1c34d48622754ea7f8f43be6a8c775f407beb617aeee8997f43",
+          "bundle": "docs/windows-optimization-coverage-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4068a0.txt",
+          "payload_sha256": "620233d9657a410a71dd38e49a6dba9575698a3dc6ad6b230584f48701414be7"
+        },
+        {
+          "address": "0x455be0",
+          "evidence_id": "ev_c4d89b45eb9e66208230dc7096e4c43e638dd01b9af05b0b7fb33d1c50e56fda",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x455be0.txt",
+          "payload_sha256": "3c5cc18219765496c245b9e5b75baf312a7239a8fcd1cc04741cba69e5314081"
+        },
+        {
+          "address": "0x406d30",
+          "evidence_id": "ev_0261955c96dd41d366b16dd99d82ddb93d6095e970b18bada004c3a605e160ac",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x406d30.txt",
+          "payload_sha256": "4d9c66e7a1ecb463ac3db2c627e24a62629ad2ed50321414f74ed0f6413db0ed"
+        }
+      ],
+      "added_after_first_list": true,
+      "mac_status": "missing",
+      "mac_assessment": "SnapshotTree/QueryContext는 각 level children을 앞에서 찾고 hint 주변 양방향 탐색은 없다. R15 subtree continuation은 path 재탐색을 피하지만 이름 lookup hint 알고리즘과는 다르다. R14 localized hint는 이득, random lookup은 회귀·duplicate name first-match 반례가 있어 미채택했다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "hint locality·duplicate-name 첫 결과·정확 UTF16/path 계약과 index build/retained bytes를 실제 호출에서 검증해야 한다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/SnapshotTree.swift",
+          "anchor": "children.first(where:"
+        },
+        {
+          "file": "Sources/SpaceSnifferAutomation/Queries.swift",
+          "anchor": "for (position, child) in snapshot.nodes[id].children.enumerated()"
+        }
+      ],
+      "existing_test_sources": [],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    },
+    {
+      "id": "W30",
+      "title": "전체 스캔과 별도 focus 재스캔 worker 경로",
+      "original_observation": "rescanCurrentFocus는 view의 별도 thread slot을 정리하고 focus FS node 대상으로 pool 인자 0인 TSnifThread를 만들어 Start한다. master root 재스캔 경로와 분리되어 있다.",
+      "original_limitations": "별도 worker 구조를 확인했으며 실제 동시 실행/우선순위/성능은 미측정이다. pool static cap=1을 전체 프로세스의 스레드 상한으로 오해하면 안 된다.",
+      "original_evidence": [
+        {
+          "address": "0x430270",
+          "evidence_id": "ev_36f8a538a6a5256fa9ffee3a9b4a60be5a13b0796ddbc5ec34f204e4f9bd8e0d",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x430270.txt",
+          "payload_sha256": "92fce2e66dde470093d810f916b8216d55f4965f98042d8a44cea01a1fb2b594"
+        },
+        {
+          "address": "0x459a00",
+          "evidence_id": "ev_bb8f9153ddb74c4edd6f6708d358954c7441019000426b85247f622a65cfb24c",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x459a00.txt",
+          "payload_sha256": "97c40f12f7b54818e85ff98e8eb9c036987ee32dcdfb94b48fb80e4ff0343c0e"
+        },
+        {
+          "address": "0x43e4c0",
+          "evidence_id": "ev_92c4d974627c8677bbc1ec4e922be8a40095f09b8b0a34d17b699dba62c63b9d",
+          "bundle": "docs/windows-optimization-rea-evidence.json",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x43e4c0.txt",
+          "payload_sha256": "ae447aad51e0d8f7abb34fd1a6289f9ca7da60f0f0f1c57adbfad52ebef4c088"
+        }
+      ],
+      "added_after_first_list": true,
+      "mac_status": "partial",
+      "mac_assessment": "R06 owner-scoped focus intent/ticket/incarnation/target guard를 existing serialized root admission에 연결했고 Store.rescanFocus/nonroot automationRescan이 이를 사용한다. master와 다른 owner를 취소하지 않고 obsolete partial/terminal을 버리며 watcher overflow를 보존한다. 원본 pool=0 별도 focus thread와 병렬 master/focus worker는 미구현이다.",
+      "remaining_checks": [
+        "Windows 실제 옵션/동시성/타이밍 및 SNS 왕복은 미실행이며 runtime 동등성으로 체크하지 않는다.",
+        "parallel job/merge·공정성·대표 focus latency 측정은 별도다. source/cancel lifetime 개선만으로 병렬 기법 전체 완료라고 하지 않는다."
+      ],
+      "mac_sources": [
+        {
+          "file": "Sources/SpaceSnifferCore/FocusScanRequests.swift",
+          "anchor": "struct FocusScanRequests"
+        },
+        {
+          "file": "Sources/SpaceSnifferCore/ScanService.swift",
+          "anchor": "public func requestFocusRescan"
+        },
+        {
+          "file": "Sources/MacSpaceSniffer/ScanStore.swift",
+          "anchor": "func rescanFocus"
+        }
+      ],
+      "existing_test_sources": [
+        {
+          "file": "Tests/SpaceSnifferCoreTests/FocusScanLifecycleTests.swift",
+          "anchor": "final class FocusScanLifecycleTests"
+        }
+      ],
+      "reviewed": true,
+      "runtime_equivalence_verified": false
+    }
+  ],
+  "baseline_unselected_pseudocode_audit": [
+    {
+      "address": "0x406d30",
+      "evidence_id": "ev_0261955c96dd41d366b16dd99d82ddb93d6095e970b18bada004c3a605e160ac",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W22",
+        "W29"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x406d30.txt"
+    },
+    {
+      "address": "0x42da80",
+      "evidence_id": "ev_0cb13e5b649eeda804fcd572e43a02a5da65fe4747e405dc5a523ba9567e41fc",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W11"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "기존 상세 깊이 감소 handler와 다시 그리기 호출",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x42da80.txt"
+    },
+    {
+      "address": "0x43fd20",
+      "evidence_id": "ev_1217ed943e0cbcfb7907636a583b2c1bc3d154ed5f96287af8b678207488cb34",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W24"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x43fd20.txt"
+    },
+    {
+      "address": "0x40c2b0",
+      "evidence_id": "ev_164d2de07b4e706afbce700553997a8598bc233af4be8a1725e9f2a59a7adbed",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W27"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "설정 form 생성과 메모리 config 수명 보강",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x40c2b0.txt"
+    },
+    {
+      "address": "0x405d30",
+      "evidence_id": "ev_1e98ac00952a5174c430247667a58a41553cdf32837c9c1cf9152fc267075c88",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W23"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x405d30.txt"
+    },
+    {
+      "address": "0x441b00",
+      "evidence_id": "ev_2977aca93823701d69367063d47c16594e636684a33fca3db6b63eadffc240f2",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W24"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x441b00.txt"
+    },
+    {
+      "address": "0x436390",
+      "evidence_id": "ev_2ac560ac2927ff07c6b0a32dff3747f6407995ce994559222f767f0ed74e9626",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "legacy Base64 decode 의미/실패 처리. 독립 최적화 확정 근거 아님",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x436390.txt"
+    },
+    {
+      "address": "0x4680b0",
+      "evidence_id": "ev_2f2fb97da2edd1dab0b781416134bb994aa0c67571ae9183a20fd794af8b936c",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W25"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x4680b0.txt"
+    },
+    {
+      "address": "0x468360",
+      "evidence_id": "ev_3464fb48d47b5cb78cc1f281dc465bfa300653247d9bf3f3fc4eee5954d2ed80",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W11"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x468360.txt"
+    },
+    {
+      "address": "0x4455b0",
+      "evidence_id": "ev_34e62ff1ab992628370be1dbe6489f60350d87296224d0047f46eaa3b01f310c",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W24"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x4455b0.txt"
+    },
+    {
+      "address": "0x40a220",
+      "evidence_id": "ev_36e44c8ce3841045a7573b9f119d7cbc7d3803c15a2722f12f75b879ce71b806",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W18"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "folder init의 부모/segment 연결 wrapper",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x40a220.txt"
+    },
+    {
+      "address": "0x430270",
+      "evidence_id": "ev_36f8a538a6a5256fa9ffee3a9b4a60be5a13b0796ddbc5ec34f204e4f9bd8e0d",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W30"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x430270.txt"
+    },
+    {
+      "address": "0x43ea50",
+      "evidence_id": "ev_466536e8dbc4d54d9fffb1976e96225d17a539255775244ccb73bda032ec7c54",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W01"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "cache 소멸 시 scan/watch/루트 해제",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x43ea50.txt"
+    },
+    {
+      "address": "0x4051a0",
+      "evidence_id": "ev_47afa82c3aecb891c68d0ceeaa5cd554e66737d955cb7afe3d8f251d385a3946",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W04"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "FS init overload의 크기 초기화 경로",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x4051a0.txt"
+    },
+    {
+      "address": "0x42ee60",
+      "evidence_id": "ev_488903a7a14ad961914c864e99d000cbe202220edf6befb327a3cf25fae15c5f",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "제거된 focus/selection/history의 정확성 복구. 별도 성능 기법으로 세지 않음",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x42ee60.txt"
+    },
+    {
+      "address": "0x4093c0",
+      "evidence_id": "ev_4b2b9372d4bd56a040303817e975ebaab6d8aacef0cf192a4d0f3e16da29efc6",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W28"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x4093c0.txt"
+    },
+    {
+      "address": "0x408770",
+      "evidence_id": "ev_526c70ffe269e23cb173a3dce2beb98518a6878ad93a9e64e5840d85a8db275e",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "ADS flag getter. 저장 형식/필터 의미를 보강",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x408770.txt"
+    },
+    {
+      "address": "0x445050",
+      "evidence_id": "ev_5821b63db0bab9ebb2054359e2130f0430de878255a70fb5f5c524270b4ec35a",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W24"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x445050.txt"
+    },
+    {
+      "address": "0x42c590",
+      "evidence_id": "ev_60bd512d041306341ca0265e3370bb6d460878351d0b4bbb8d9692dbd0a59ebe",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W02",
+        "W20"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "double click focus/zoom 호출과 선택 보호",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x42c590.txt"
+    },
+    {
+      "address": "0x4353e0",
+      "evidence_id": "ev_726bb27a728de39a40ec7c96480a3a21d1b644ed87464415d45213ad2dac5d66",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W19"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "SNS Base64 writer helper wrapper",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x4353e0.txt"
+    },
+    {
+      "address": "0x42d7a0",
+      "evidence_id": "ev_75078f38a36a51a14cd404e722270154fa8ccaf33aafaaf54be51317d92d27d9",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W01",
+        "W16"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "기존 cache 연결·초기 scanner 시작 호출",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x42d7a0.txt"
+    },
+    {
+      "address": "0x445bd0",
+      "evidence_id": "ev_7f58443b378a4e2945e0022b9dc49a78081aa1fc4700e7936925cba52d94cc63",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W24"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x445bd0.txt"
+    },
+    {
+      "address": "0x457220",
+      "evidence_id": "ev_7fa1e79dfb9a19c91c780af8b697fb06cc162fc589ca9eea802184553690950e",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "SNS agent의 파일/경로/식별 설정. 별도 cache 최적화로 세지 않음",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x457220.txt"
+    },
+    {
+      "address": "0x406380",
+      "evidence_id": "ev_80c5aac66e4eb0309e6abc90e96a56555897c774e4a490385b4006117d064cdd",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "할당량 cluster 반올림 계산. OS 의미 계약이며 독립 재사용 최적화로 세지 않음",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x406380.txt"
+    },
+    {
+      "address": "0x42f0a0",
+      "evidence_id": "ev_85b1b030d743ec963d75f37b506f8c303a400fc568b624bd4baf78d77c8e9e85",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W06"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "키보드 tag toggle/필터 재적용 호출",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x42f0a0.txt"
+    },
+    {
+      "address": "0x40c420",
+      "evidence_id": "ev_86f67da6a9992450f34db568f0a50b8b60362308208a676a458c1c1af56fb2ae",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W27"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x40c420.txt"
+    },
+    {
+      "address": "0x43e4c0",
+      "evidence_id": "ev_92c4d974627c8677bbc1ec4e922be8a40095f09b8b0a34d17b699dba62c63b9d",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W30"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x43e4c0.txt"
+    },
+    {
+      "address": "0x42b5c0",
+      "evidence_id": "ev_9628f3fe03a7656cb8fe6f31c0ece8585b026ce740a950807d6ce819459313d4",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W11"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "선택 경로 상세화와 paint 호출",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x42b5c0.txt"
+    },
+    {
+      "address": "0x45bc60",
+      "evidence_id": "ev_9778ab7ce4a66e14343508f818cc7440b6464df05fe3a61071a8b6dd46d8da91",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W22"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x45bc60.txt"
+    },
+    {
+      "address": "0x440810",
+      "evidence_id": "ev_983b78fe08d9e35a1841106a7858fccfbd7d161ddc9d52a53fedd2ffe5b2cb1f",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W24"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x440810.txt"
+    },
+    {
+      "address": "0x43d9d0",
+      "evidence_id": "ev_98a577ed1000873e0471ab072d93427a911379905a5393427a524dcbe5eb59ea",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W16"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "root scanner pool과 watch worker 시작 호출",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x43d9d0.txt"
+    },
+    {
+      "address": "0x4576f0",
+      "evidence_id": "ev_9fa18b4756026a3f5cafe6042941109dba66a1b2c5233051366764267e1b5f0b",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W28"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x4576f0.txt"
+    },
+    {
+      "address": "0x46b290",
+      "evidence_id": "ev_a327f51e1f45d204b8d1c12f7eca1f64c4fae8d9e88f59cb3c9fb29814a07618",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W04",
+        "W06"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "TM 수정 operation→부분 변경 호출",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x46b290.txt"
+    },
+    {
+      "address": "0x413b30",
+      "evidence_id": "ev_abe6411d7e45cf5c63347fba533d5d3bfd2c23595a3cfba1c2e526aa41a5287d",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "export UI/default preset 초기화와 형식 설정",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x413b30.txt"
+    },
+    {
+      "address": "0x43f450",
+      "evidence_id": "ev_b340ec2251e42716776f166b0d7651f762b80ed76095edcbbc60f1516fa58b70",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W24"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x43f450.txt"
+    },
+    {
+      "address": "0x4460a0",
+      "evidence_id": "ev_b8673f5d06f58a497cf641a29fbfdd1ddc31a974e187d56af394618105142d95",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "fuzzy wildcard 재귀 의미. 새로운 효율 기법/성능 우월성은 미확인",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x4460a0.txt"
+    },
+    {
+      "address": "0x468320",
+      "evidence_id": "ev_bd3d566052a1765540843623ea69ae82a27d3f2c6aac70b51ccdf0545e7bd345",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W11"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "node rect 직접 기록/기하 수명 보강",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x468320.txt"
+    },
+    {
+      "address": "0x445420",
+      "evidence_id": "ev_c0b3f42e5241941fc2dd328b1b2e971377fe9e92303d0b57167c12015fda82d1",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "fuzzy entry의 변환·재귀 호출. 의미 보강과 비용 후보",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x445420.txt"
+    },
+    {
+      "address": "0x43e940",
+      "evidence_id": "ev_c15866d79cdb22a5987ed410bf72fe8bbd0fdfd00509b3351407d95abcffe4f3",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W01"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "cache lock·root 목록 생성",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x43e940.txt"
+    },
+    {
+      "address": "0x42db80",
+      "evidence_id": "ev_c331807ec0452f9ad8653c60504ca2beb5f372966fd676211440e92ab8d5d4c8",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W14"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "기존 tooltip 포인터의 flag/표시 초기화",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x42db80.txt"
+    },
+    {
+      "address": "0x46b640",
+      "evidence_id": "ev_ca216e5da33340bc4c8860170ccfd6d2fc4a9bbe82a93700757efce72c1d8d19",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W06"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "TM tag 전달 wrapper",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x46b640.txt"
+    },
+    {
+      "address": "0x42dad0",
+      "evidence_id": "ev_cde04603fb04d9f57fed37997169827108ce273d5054b04aa082488f101a47e1",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W11"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 깊이 증가 handler",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x42dad0.txt"
+    },
+    {
+      "address": "0x408300",
+      "evidence_id": "ev_cf754e05743b2202732f58afc73f7f3eee5c1a81ff172a8fb66dc9eb40dc0f84",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W06"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x408300.txt"
+    },
+    {
+      "address": "0x45a470",
+      "evidence_id": "ev_d077cbe403553be5bcc51edce7a29b642afc158296fbc7d27f168884af635b5c",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W16"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "working/pooled 목록 생성·최초 thread 접수",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x45a470.txt"
+    },
+    {
+      "address": "0x40bc20",
+      "evidence_id": "ev_d2756464e7973d465692912ed91b0c60ace88d5d909ce7e58fe61b2fa01964b0",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "TConfig 기본 객체·클래스 목록 생성. lazy cache의 직접 증거는 getConfig에 분리",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x40bc20.txt"
+    },
+    {
+      "address": "0x45b650",
+      "evidence_id": "ev_d7068b17cd8c72dcf31d9f860039252fded9fe3647f3588c6a787267114a9ef0",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W16"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "대기 working thread 시작 루프",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x45b650.txt"
+    },
+    {
+      "address": "0x435410",
+      "evidence_id": "ev_dbd0e91d0fe9a4d67e913c2d52db2972b495e54cd0d45a5d7fb9afd24b66aaa9",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "Base64 인코딩 byte 형식·이름 길이 처리",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x435410.txt"
+    },
+    {
+      "address": "0x43d7e0",
+      "evidence_id": "ev_de1f83d45b0f76c7273a2dcaded9b3eab21591b5e3f410a02644f0da8af955ee",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W01",
+        "W16"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "root/cache/scan pool/watch worker 소유 관계",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x43d7e0.txt"
+    },
+    {
+      "address": "0x455440",
+      "evidence_id": "ev_e25699e6d3af9f5a103bcfc9b313d91872c7a1d59378736b4d0e4a4195535296",
+      "classification": "unresolved",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "과거 selector0x455440은 canonical DU parser0x4547f0의 non-contiguous body 내부 주소다. DU/SNF 혼용을 정정했고 R07/R10/R13에서 문법·missing 회계와 strict adapter를 분석했다. native streaming/Windows runtime 전체 동등성은 미확인.",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x455440.txt",
+      "supplemental_review": "docs/DU_SNAPSHOT_READER_FINDINGS.md"
+    },
+    {
+      "address": "0x415590",
+      "evidence_id": "ev_f089241eb3028c818bc4ac39c31ce903fc80575cf4df0b8b4a6c81c313100115",
+      "classification": "behavior_or_format",
+      "linked_items": [],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "export 설정 선택 반영. XML config 전체 기능과 별개 최적화로 세지 않음",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x415590.txt"
+    },
+    {
+      "address": "0x4422a0",
+      "evidence_id": "ev_f61041bfdb06452d997c99e4a5afab1ef25e3ae65d3649f96e6b263df8302aba",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W24"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x4422a0.txt"
+    },
+    {
+      "address": "0x46b6b0",
+      "evidence_id": "ev_f7241835086216e065b4271bf41b08adc12b51a0d432ce343c58143186b73fa6",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W05",
+        "W19"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "형제 정렬의 비교 규칙. 별도 고속 정렬 알고리즘은 아님",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x46b6b0.txt"
+    },
+    {
+      "address": "0x408ef0",
+      "evidence_id": "ev_f761ae2de7fd81aac2ac871d8b655e0bce8eab6ea08ab6595b1b50d16334f3d0",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W28"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x408ef0.txt"
+    },
+    {
+      "address": "0x4274b0",
+      "evidence_id": "ev_f7be6c494836ec2b1ac759d9c6149f0f829c90b3937dfcd60a46b294d8c763d7",
+      "classification": "mechanism_support",
+      "linked_items": [
+        "W14"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x4274b0.txt"
+    },
+    {
+      "address": "0x406b10",
+      "evidence_id": "ev_fca4c5988706237015101927b74fb4af1d28da1d7371ebcc2daab8cf167762d5",
+      "classification": "new_mechanism_source",
+      "linked_items": [
+        "W26"
+      ],
+      "review_depth": "retained pseudocode role/relationship review; not instruction-level exhaustive verification",
+      "reason": "상세 원문을 해당 체크리스트 항목에 연결",
+      "pseudocode_path": "docs/validation/windows-optimization-functions/0x406b10.txt"
+    }
+  ],
+  "coverage_boundary": {
+    "baseline_records": 139,
+    "baseline_pseudocode_records": 108,
+    "baseline_selected_pseudocode": 53,
+    "baseline_previously_unselected_pseudocode": 55,
+    "supplement_records": 6,
+    "supplement_new_pseudocode": 3,
+    "new_independent_findings": 10,
+    "original_binary_exhaustive": false,
+    "scope": "기존 20개와 미참조 pseudocode 55개의 누락 관점 감사, 이름조회/필터 getter 추가 조회. 모든 procedure/간접 호출/실행 옵션 완전 감사가 아님",
+    "baseline_non_pseudocode_records": 31,
+    "note": "55개 미참조 pseudocode에 누락 관점 처리 상태를 부여했다. 모든 instruction·모든 procedure·모든 runtime 경로를 감사한 것은 아니다."
+  },
+  "open_questions": [
+    {
+      "id": "Q01",
+      "question": "미분석 native procedure와 간접/vtable 경로에 추가 기법이 있는가?",
+      "status": "open"
+    },
+    {
+      "id": "Q02",
+      "question": "Windows 실행 옵션·concurrency·CPU/RSS·cache hit와 전후 성능은?",
+      "status": "open"
+    },
+    {
+      "id": "Q03",
+      "question": "일반 재배치 rectangle 시간 보간·자동 영구 disk cache가 존재하는가?",
+      "status": "open"
+    },
+    {
+      "id": "Q04",
+      "question": "filterID·modifiedAttributes(tag byte+old/new strings)·isIncluded 반환 high byte의 정적 invalidation 경계 이후, 간접 alias/event/runtime 전체 동작은?",
+      "status": "partial",
+      "review_reference": "docs/R13_INVALIDATION_FINDINGS.md",
+      "resolved_static_scope": "high byte는 payload가 아니라 isIncluded 반환의 subtree 요청이며 filterID는 generation/paint marker다. skip proof로 사용하지 않는다."
+    },
+    {
+      "id": "Q05",
+      "question": "canonical DU parser0x4547f0(body 내부 과거 selector0x455440)의 지원 밖 경로/escaping·실제 fixture/CRT locale·Windows runtime 의미는?",
+      "status": "partial",
+      "review_reference": "docs/DU_SNAPSHOT_READER_FINDINGS.md",
+      "resolved_static_scope": ".DU 수용/space delimiter/dot grouping/KiB/backslash/missing 회계와 bounded strict adapter 확보. SNF 또는 모든 원본 grammar 지원으로 확대하지 않는다."
+    }
+  ],
+  "mac_only_candidates": [
+    {
+      "id": "P01",
+      "title": "trie/radix/별도 index로 이벤트 큐 구현",
+      "source_item": "W09",
+      "implemented": true,
+      "implementation_scope": "RefreshPathIndex small-array/radix/FIFO platform policy; source W09"
+    },
+    {
+      "id": "P02",
+      "title": "접근성 element 재사용/lazy 500개 제한",
+      "source_item": "W14",
+      "implemented": true,
+      "implementation_scope": "MapAccessibilityCache target invalidation + bounded lazy accessibility elements; W14 platform extension"
+    },
+    {
+      "id": "P03",
+      "title": "MCP subtree cursor·budget·취소 연동 및 context 재사용",
+      "source_item": "W07",
+      "implemented": true,
+      "implementation_scope": "SubtreeQuerySession bounded DFS/context lease/one-use cursor/explicit cancel/epoch+terminal shutdown; STDIO notification 선점 미지원"
+    },
+    {
+      "id": "P04",
+      "title": "view_set 동일 값·복합 변경 batching",
+      "source_item": "W06",
+      "implemented": true,
+      "implementation_scope": "ScanStore.updateView + Hub view_set batching/same-value gates; native source mechanism과 구분"
+    }
+  ],
+  "related_mac_only_policy": "P 항목은 원본 미구현 항목 수에 포함하지 않는 Mac 전용 후보",
+  "reviewed_source_sha256": {
+    "Package.swift": "e5dc271342d9ff1f444e05baa9ee27331be58c42762235f336191fe49814e2f3",
+    "Sources/MacSpaceSniffer/App.swift": "152644ac5716525c78ba50ee1cb0b7d2f8c5f95e8f240dd9ca586dc84fb37426",
+    "Sources/MacSpaceSniffer/AutomationHub.swift": "6d00695fd315fd2023e3769b148fd85433302c6f725a83ae27f642e77feadf09",
+    "Sources/MacSpaceSniffer/ContentView.swift": "253d7f056af9e9a41152a9528286642ac92a58c44fd519739fed28f807055618",
+    "Sources/MacSpaceSniffer/ExplicitWindowRetention.swift": "ccec0178dfa1d57fa49d9ba0d751ee4c12264dafd597bef42e2364b386ea642f",
+    "Sources/MacSpaceSniffer/HeadlessCommand.swift": "c1a9d32b2d65b891501450b7988ec7b0cd4aa7fbc5ee678bd159bcb8e12d4ed8",
+    "Sources/MacSpaceSniffer/HeadlessConfiguration.swift": "975b462fac8a0c6a96af0229a9dbe8f312e56eb4414020f60135b8f199ef21b2",
+    "Sources/MacSpaceSniffer/MapAccessibilityCache.swift": "c648d305837c6ca3fe1d2fc409ce5d24e01ed4f14b952b4fdfa6934190b1a382",
+    "Sources/MacSpaceSniffer/MapTextCache.swift": "9101db893336dab761fccbf3cf76bec6fcab47668a7d43d43b312859ab00294f",
+    "Sources/MacSpaceSniffer/MapTooltipRegistry.swift": "7dd1e7ca9fa8cb262e60fd8309922d13cf5ff3760b70825a619f7a9c8c0f41ba",
+    "Sources/MacSpaceSniffer/MapTransition.swift": "7a47b40d18b7e0e8632cd978d9e545cc8b6a34cd2f73a6e1b91679bf734c3bcd",
+    "Sources/MacSpaceSniffer/MapWindowLifecycle.swift": "8ddafce3db7b9ad293604ef7fb4a4eee00e24e5e86ce6e077dde43d2a16b75de",
+    "Sources/MacSpaceSniffer/QuickLook.swift": "1811341d8faf75dd12c346da1a623a3a819b70e05f68ceb8c7aa575ea7eadee1",
+    "Sources/MacSpaceSniffer/ScanStore.swift": "735e2b7054642f0ba0187d67e249a99e977e90d5bd54ca29c2c81619c6504aa8",
+    "Sources/MacSpaceSniffer/SnapshotOpenOptions.swift": "6a389562cb435de21ac49b1ec31c1ac198d686a3ee9e8fab932e27219c165403",
+    "Sources/MacSpaceSniffer/TreemapView.swift": "64c0b920c437ded1bf8b623057acdfd68f92b6a53ec99a819b9dfd84aa4f3df4",
+    "Sources/SpaceSnifferAutomation/ConfigurationPayload.swift": "e57d950a9adf893d8b1d554ef56af28a168b3f5b2083029f22996956af125d84",
+    "Sources/SpaceSnifferAutomation/JSONValue.swift": "5d0d028afb9d3faf0f9201253d2692a7e0604b13d166efc1a39a47abe41bab0e",
+    "Sources/SpaceSnifferAutomation/LocalControlServer.swift": "b52a72ccf1847d45b5e5143092bc242a9617bd370692e79d5a34590d0eeb2bd0",
+    "Sources/SpaceSnifferAutomation/ProcessMetrics.swift": "7bb8d8b9d1033b329966933d5406c71872f48a9081d639bbb63e952211204c41",
+    "Sources/SpaceSnifferAutomation/Queries.swift": "170659dff44014b94d8b8172151f1057675ad357e34b018a5850f8f7f9dce39a",
+    "Sources/SpaceSnifferAutomation/SpaceAccountingPayload.swift": "f28a6d4bb22fd18d7afe4a72427e2dd53d398d01f393a2775faebdd518a3fda2",
+    "Sources/SpaceSnifferAutomation/SubtreeQuerySession.swift": "07872a6ae61ff313310e68074777ab36da564efbd25859c4057b1b6285054b9e",
+    "Sources/SpaceSnifferCore/ArtifactByteSink.swift": "18f691af7fe67b76de6c94dc6c8a2a070ca34c96fb139d221c5eb7697884204a",
+    "Sources/SpaceSnifferCore/ArtifactFileTransaction.swift": "acf8086457ee5a2af52f9064c2538f14f9e5ac0a37ac777856c24d5ad1641d5d",
+    "Sources/SpaceSnifferCore/ArtifactIOExecutor.swift": "c5d6cb9099b3b152ab1a621c857d2742d34c54b99f2230d22355db4841ef2519",
+    "Sources/SpaceSnifferCore/ArtifactSelection.swift": "f4fc549c4daf8858e763d4c205eadc27b412d8f51b1e38e267132a4ba2c14def",
+    "Sources/SpaceSnifferCore/ArtifactTransfer.swift": "026e6776e62c25862771cffbeda4bf5ef3081ec56926ae81c9d54264ea6bf6c7",
+    "Sources/SpaceSnifferCore/ArtifactWorker.swift": "4a17877c1ce1f441bd06841ca9ee07eec0b5e82057af633ceb6f06d12284f282",
+    "Sources/SpaceSnifferCore/ConfigurationFile.swift": "fbbb356d2a7cba01800d8b8223818b2be43f39921ddff36413ac64e0152b05a0",
+    "Sources/SpaceSnifferCore/ConfiguredExportOptions.swift": "1d80fa9994d2426d5a7d2c646d8bf6ada0e7f9576f837120cebf98a3b7593b43",
+    "Sources/SpaceSnifferCore/ConfiguredReport.swift": "5a04e5fe7f694704fb1baec55c38a84a7e1f63955d925b5dddd4bd5a1a27a1b4",
+    "Sources/SpaceSnifferCore/DUSnapshot.swift": "a116c6c23457f2e3c7cd5cab6cc8dae5233ed8054314ca5facfa3c3512db554e",
+    "Sources/SpaceSnifferCore/DesktopFileActions.swift": "c85f9823da912618b0bd15a1c8b8606c783288a2f15f879e09e821c476e135c6",
+    "Sources/SpaceSnifferCore/DirectoryMonitor.swift": "7d2102c3b9751fb2a087342544f04bcc0addd98466765bcc1c5772df5dfda76b",
+    "Sources/SpaceSnifferCore/Filter.swift": "1fa382bb90f633b03b5ffab86307ebce3d409838cac904b2da1e5191df2d945d",
+    "Sources/SpaceSnifferCore/FilterProjection.swift": "d65eb35fdf3c4cd3cc9652652856c6112752108af154d2e3e38ee1bb98843f8f",
+    "Sources/SpaceSnifferCore/FilterScratch.swift": "c2ae54555e811835fca22457c990b8e570cfacc917cfdaa030829b1d333d280b",
+    "Sources/SpaceSnifferCore/FocusScanRequests.swift": "263f37c1c820794127331347bb91172ed9a902dc28ccbaf46cc3cfeafd3349cd",
+    "Sources/SpaceSnifferCore/FocusScanTarget.swift": "e25bc94847b37b2f2af662e6fd77a02dc3f285606f15548ecfb7878cefaf40df",
+    "Sources/SpaceSnifferCore/GeometrySession.swift": "7c33c3ec0e1e950d4663d1ce1649f22ec2cc9c57134b81387c29370c69a24cc0",
+    "Sources/SpaceSnifferCore/LatestWorker.swift": "193c7dae2d72fd8aca86ae3810f95fa3f5531306fbdc6c876d8d978278c3fb9a",
+    "Sources/SpaceSnifferCore/Model.swift": "37335f959dfd5191d9bf0f5c6abe8a412690d3fb93c6a469cbe624a8c72108e7",
+    "Sources/SpaceSnifferCore/NativeConfiguration.swift": "bf93f0b93d25415d0c5ad75326f432353a203317cabf2ec4f04f6200a2e68041",
+    "Sources/SpaceSnifferCore/NativeDirectoryMetadata.swift": "b78b8f5318710a04df66b6f0d6ea64c617351cbfda51350839bbe2809e72fdf3",
+    "Sources/SpaceSnifferCore/NativeExportTemplate.swift": "d501d1eab515081a0d0bcbe43eee86591121377c753a06911d7ff13181bb0987",
+    "Sources/SpaceSnifferCore/NavigationState.swift": "b2fb5c7f07026a9cc50730c756bc43370a77edee6888d40b826f9dbf1b702f85",
+    "Sources/SpaceSnifferCore/NodeTable.swift": "76de8d669c4694c3889bd15ea583a6f55380a94bddee9dbec1eea898943bc821",
+    "Sources/SpaceSnifferCore/PathIO.swift": "f5a285275c8ecbaf7e09da6372af61fce08f6d886120cc408079bcf946ed3315",
+    "Sources/SpaceSnifferCore/ProjectionDelta.swift": "88e9e929b3174c1ddca1d63353299634d854732c0b96751b5fe4ad133301b6db",
+    "Sources/SpaceSnifferCore/ProjectionSession.swift": "b698d26d257276213face1d0acbd9ca2dfc2710dd28d231237be663d214b4f85",
+    "Sources/SpaceSnifferCore/RefreshPathIndex.swift": "5191c043ec9b32755133f072f4fbabb60bab063eb5bea69fb2323377fb252a10",
+    "Sources/SpaceSnifferCore/RefreshQueue.swift": "d100815f2d8e6d93db092e2c2a17e92cb463e15d407c349e61d78482a5f37fed",
+    "Sources/SpaceSnifferCore/Report.swift": "88068a036b1a8265d6078320e3f43c40fc6fb0b3407d609061d7330e7141eb6b",
+    "Sources/SpaceSnifferCore/SNSSnapshot.swift": "9de095bd800327e7a72d52b3045678af28c805b1ad0c16834577f7db5b16b978",
+    "Sources/SpaceSnifferCore/ScanAdmission.swift": "a7bc5af3da3aff1c37a65f72c5ff10d7336d6505357c46fb61c78274f4474d63",
+    "Sources/SpaceSnifferCore/ScanService.swift": "eb75945e2f7368d3a08ecbc3674c80995b27a92a880291208a2a39455b5908eb",
+    "Sources/SpaceSnifferCore/ScanWork.swift": "cd42cccdcb4acea2f1f1fdba4b4b976e1a986d2d790c4f70aeaa0d1232c52932",
+    "Sources/SpaceSnifferCore/Scanner.swift": "18c4361097a20cd4b73ba762c7998ee61f3f8cfa2c60b70bc2174dafd97410f0",
+    "Sources/SpaceSnifferCore/ScratchBudget.swift": "956f477ccbb2b7133eaccd5bf169a1d3b754394697d66022ff8b7622a4d16469",
+    "Sources/SpaceSnifferCore/SnapshotTree.swift": "678aff6dfc731ed432d3801732d7df54b51571e9e3a70767bbb9088dddcceae2",
+    "Sources/SpaceSnifferCore/SpaceAccounting.swift": "eda08aa4005ac3b0dea8a29c7a14796878de7a70ed8d8c8865f9f2fe8c97ce8d",
+    "Sources/SpaceSnifferCore/TagPolicy.swift": "9880e92dce5eb856794c4e0b0ea9d74e7609d6f0c72f62707bf62537b7feb28d",
+    "Sources/SpaceSnifferCore/Treemap.swift": "e5af8ce30260c697b7a35dd4a69ba96a5d0127357813337931ed311237f8cda3",
+    "Sources/SpaceSnifferCore/TreemapMotion.swift": "28ecefdd9e06be22d7b9ffac0b5e0097e7a2e0fff950dfd5bced01032f91de03",
+    "Sources/SpaceSnifferCore/WindowsLegacyText.swift": "26c7a7f5dd2ac373eedec90b08f0aa1d35e1f6ba261179be7351b4404665a49e",
+    "Sources/SpaceSnifferCore/WorkerTelemetry.swift": "f3c41709b7c6fc2e3edf39783178ff9b88cf78e0c8560a91052aed8b798cdc6e",
+    "Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift": "cea484e1338ec7fd61e9b6bedef1f9fd9124e6af66f6ecb127231af208ca7db4",
+    "Tests/MacSpaceSnifferTests/FrozenPresentationReadersTests.swift": "1374ef610bbd931a74ac2e20ae99c7e99c9a32a93a63c1f52cf90357b22b8d3f",
+    "Tests/MacSpaceSnifferTests/HeadlessConfigurationTests.swift": "303925f489242ee114488a7618e5be35f32b8b85f15916824279d86ba3eebff4",
+    "Tests/MacSpaceSnifferTests/LegacyMapCanvas.swift": "4d9a24267dd06e9c431bf4b964bf175fc396b46e19aba120f66fd548823d64ec",
+    "Tests/MacSpaceSnifferTests/MapAccessibilityTests.swift": "0a4ea6adfd5d5a68910cc8b9f66326cc01a703748e33c22f623adcb3046c422a",
+    "Tests/MacSpaceSnifferTests/MapMotionTests.swift": "0c88bd54e5177c186336f26d56475b89f3641123de5b1284ebba41a558ea2376",
+    "Tests/MacSpaceSnifferTests/MapRenderingTests.swift": "be95da7ef5f603441034ea4c524aca63d3b41a2462f8bc62bf96cf4c2ac397e3",
+    "Tests/MacSpaceSnifferTests/MapTooltipTests.swift": "d9964eb934ed6a85bf6280578485318557b6aa490c3cb652d4c033cd8e79d68f",
+    "Tests/MacSpaceSnifferTests/QueryCursorLifetimeTests.swift": "52619488fc461a8e1aa0cefb4f8e1a7f9661f06ad4d9c4ab057ff4c24116c1a7",
+    "Tests/MacSpaceSnifferTests/RescanNavigationTests.swift": "e5d03da996b2bc1cc236ed1495e3824eaa6e9acbfdc4428baf0239a348bfe3e3",
+    "Tests/SpaceSnifferAutomationTests/AutomationTests.swift": "9edd8fd06818e5909701cacb27562293f401430a28c154a6dfe3c40aa0ad1d51",
+    "Tests/SpaceSnifferAutomationTests/IntegratedResourceTests.swift": "9430f7a321978ad4e7291c7a866af35e6a47380322196ceb122ae05e1713fe9e",
+    "Tests/SpaceSnifferAutomationTests/SpaceAccountingPayloadTests.swift": "8ea552226f5f239906172e8062da0cd48fe268d9baff99937ba5fc965193878a",
+    "Tests/SpaceSnifferAutomationTests/SubtreeQueryTests.swift": "f0902f54e673920ffe07d3e897d34534d852b1502dfbe595767580360e0133e2",
+    "Tests/SpaceSnifferCoreTests/ArtifactExecutorTests.swift": "8c8a6ca863bf3fac3be89de16ab9fff0f0f7ef16476b7774f73aaa8e0bf46071",
+    "Tests/SpaceSnifferCoreTests/ArtifactImportTests.swift": "de08677c16c5dd1c568bb4f268fce3be9e77eb2573db2671015dc55497a5b69f",
+    "Tests/SpaceSnifferCoreTests/ArtifactStreamingTests.swift": "6b88bc9124f58aebd55dab5061f64a80172dd7f78dfe6cf402ee8e857772a193",
+    "Tests/SpaceSnifferCoreTests/ConfiguredExportIntegrationTests.swift": "8cc896c45186d7347ec3c43b60df0a76be743052a3e4ec843e7a273e5e982529",
+    "Tests/SpaceSnifferCoreTests/ConfiguredReportTests.swift": "83e7597b1a1061c9397db945fafadc7e4e994c2df6fc251d637e0cc047551037",
+    "Tests/SpaceSnifferCoreTests/CoreTests.swift": "c33628fba8f0f91ed6230475fbcfece6a8e74317678022dbe3bbc1c22004c63d",
+    "Tests/SpaceSnifferCoreTests/DUSnapshotTests.swift": "828f23c6d08741350d906e9ea4708efec2d3fe84c212d00658254a6e95131b96",
+    "Tests/SpaceSnifferCoreTests/EngineTests.swift": "48fdcd36a5fb89cd545408a190ef10923d117e708e20f1629aa2faa2bdde5a7e",
+    "Tests/SpaceSnifferCoreTests/FilterBoundaryFollowupTests.swift": "8088c54ef014ba117feaa6656823040cf74452ff2931f1942b79213c82328bd8",
+    "Tests/SpaceSnifferCoreTests/FilterScratchTests.swift": "8ad0347a12189d8361aea46265ae795529d05e0af3eed7cc2d496fa57c413e0e",
+    "Tests/SpaceSnifferCoreTests/FocusScanLifecycleTests.swift": "65496df58296a853c681fc42d4dfd30ef46f0bcd0a73e489228c29bbb8142fd0",
+    "Tests/SpaceSnifferCoreTests/FocusScanRequestsTests.swift": "ed77ac28f41c8dcc8ef97eaad2c721a8b4a82704c576b55e0e6b828b61e7d1a9",
+    "Tests/SpaceSnifferCoreTests/FrozenSnapshotValidationOracle.swift": "12884f0823294b6b69470c9718f50d52334894632cb95c2a587dd37e1e8f0d37",
+    "Tests/SpaceSnifferCoreTests/LegacyArtifactReference.swift": "b45a17edb27df8c2694fdacd0fa2e30c76916efbba3234f988bdac0ef9d64f94",
+    "Tests/SpaceSnifferCoreTests/LegacyNavigationState.swift": "890b3067bddba1dde2b142c6737637afeb803566a9429ae59ca878cbcfd096f1",
+    "Tests/SpaceSnifferCoreTests/LegacyRefreshQueue.swift": "107befae24521f05f709444335762f9cd3d448128e6d236949cf12ab4244b184",
+    "Tests/SpaceSnifferCoreTests/LegacySNSCodePageTests.swift": "c313f4f04e354f07ed07a147c0800aea384bdc5d9009cea023cf5b10a2c9d243",
+    "Tests/SpaceSnifferCoreTests/LegacyTreemap.swift": "9977e8f4e7a81d22180a7e741a65dcd56e60c2d642f1cc5dc2b6649b213345d1",
+    "Tests/SpaceSnifferCoreTests/MemoryLifetimeTests.swift": "efb1561695a6074e08b18f9f82ee23211683c0e5598a8cbf59ef683bfc3e167b",
+    "Tests/SpaceSnifferCoreTests/NativeConfigurationTests.swift": "e74ecbdde10131e76edc2d724a22039b4fb20df090bf8c51b4ac28703d9e3e8d",
+    "Tests/SpaceSnifferCoreTests/NativeDirectoryMetadataTests.swift": "aa003d6b416ab382801e052eb86387026faf0cb23c4a6589f305a1982e171d94",
+    "Tests/SpaceSnifferCoreTests/NativeExportTemplateTests.swift": "f93af46b3370eb9619e68123f57d1cbb138d11afed0830e1405e5176093076aa",
+    "Tests/SpaceSnifferCoreTests/NativeReportLineEndingTests.swift": "83069e79639b06f548e1a9503954bda9901708cd10665cd8693c53ee6e5de1b9",
+    "Tests/SpaceSnifferCoreTests/NavigationTests.swift": "dc740d963b84732e31bf9db0da3a3cc3b8cde41567ef7142b73ff1e54b66485d",
+    "Tests/SpaceSnifferCoreTests/OptimizationMatrixTests.swift": "1846b13b5ac1d3949c7a7f2596c5d54aaf2ec0d6e2af0933be4a47dd668f2918",
+    "Tests/SpaceSnifferCoreTests/PathIdentityFollowupTests.swift": "9d6ecd3161443cf5c06f98d5389bc6eccb07951e0bbe7da12e273359a8548cca",
+    "Tests/SpaceSnifferCoreTests/PoolCandidates.swift": "1e4219662870831e1f759e0b7d7e557e6dbc81f3d140b3a19edf61295559341e",
+    "Tests/SpaceSnifferCoreTests/PoolOwnershipTests.swift": "e68e7acb1e8e6dacb227fcf4ae134908c214cda6d40f5f6ce71f2d16e94c1934",
+    "Tests/SpaceSnifferCoreTests/ProjectionSessionTests.swift": "89994ace9b674409340f89b7d51f1c50f7eb82d15c8f1395bc8e3bfd775ce669",
+    "Tests/SpaceSnifferCoreTests/ReferenceContractTests.swift": "02c03d6fd197c2fd0908fdcc23807a45edbad26f61876c2b9a1147f96ce1c21f",
+    "Tests/SpaceSnifferCoreTests/RefreshIndexTests.swift": "5ac8016940800c74a249ebdb9bc4feefb9a0cdb28efceb0843fa40657bb4f23b",
+    "Tests/SpaceSnifferCoreTests/RefreshLifecycleTests.swift": "0acd7c09609d4382cdecbf0038acb6846dd0633556cbadf74cf3c39632380407",
+    "Tests/SpaceSnifferCoreTests/RefreshQueueTests.swift": "0721fd8f20b0a26a26d7fff6666a9823c71c55f0fc2021af8c4274b5164cb9ae",
+    "Tests/SpaceSnifferCoreTests/ResourceOptimizationTests.swift": "e81306a786b89e3c7c503d31f018b9ad4e8b3498f38404f751eab7ca4d87f9d3",
+    "Tests/SpaceSnifferCoreTests/SNSVolumeWireContractTests.swift": "fb939d1e1fe6bc781a1dbb34dccb403fd7cddee7a9d475fd32fdfa2f9aee280f",
+    "Tests/SpaceSnifferCoreTests/ScanAdmissionTests.swift": "6229edc9a18c23399fdbbd4e32114a59fae0c61493a25cedae8af0d5acbe3883",
+    "Tests/SpaceSnifferCoreTests/ScanProgressTests.swift": "278049e49bb32052e93c44288aabe174767da306df51a860be90fb7e4ed803bd",
+    "Tests/SpaceSnifferCoreTests/ScanRecoveryTests.swift": "76cde85a0ba46dc833da7ca59503fcaf6cf33b6b861ef8f993662f650eb1bc04",
+    "Tests/SpaceSnifferCoreTests/ScanSchedulingTests.swift": "a0b3e95ddca6d9e5687e28a89773f52b39f74859aa13e6bce237b4824f35486f",
+    "Tests/SpaceSnifferCoreTests/SnapshotValidationBitsetTests.swift": "becc381d69c06dcc546e1c279c7c99eb90744a4c4e9711263755f3e7cd1a21e8",
+    "Tests/SpaceSnifferCoreTests/SpaceAccountingTests.swift": "193e22cee6a36031c9e55f854d53061aca920e2375db9027e377907dfbd7d09c",
+    "Tests/SpaceSnifferCoreTests/WeightCancellationTests.swift": "9db28190cfd1d2d0a92a89aa902a106bb530777cd37ff11e5233671285fb2a50",
+    "Tests/TestSupport/OptimizationFixture.swift": "cda1763168fa20997b678a595461e0ef25ce09c7bf8c314b88201a74005c2e7a"
+  },
+  "baseline_findings_sha256": "444deaf4f5f56b650715e25a2a8c79f6d1d7aa4c659b83888e6914fbdbda3f2c",
+  "source_review": {
+    "date": "2026-11-09",
+    "scope": "Original84-file set reconciled against current source; hash-identical65 reuse prior bounded review;19 changed paths re-read at affected contracts;16 new production files and24 new test sources reviewed against R reports/actual API callers. Not instruction-complete or Windows runtime verification.",
+    "prior_sources": 84,
+    "prior_hash_identical": 65,
+    "prior_hash_changed": 19,
+    "new_sources": 40,
+    "current_sources": 124,
+    "references": [
+      "docs/R_BACKLOG_REVIEW_2026-11-09.md",
+      "docs/R05_FOCUS_FIRST_EVALUATION.md",
+      "docs/R06_FOCUS_LIFECYCLE_IMPLEMENTATION.md",
+      "docs/R07_R08_SCAN_FOLLOWUP.md",
+      "docs/R09_FILTER_FOLLOWUP.md",
+      "docs/DU_SNAPSHOT_READER_FINDINGS.md",
+      "docs/R11_CONFIG_EXPORT_FINDINGS.md",
+      "docs/R13_INVALIDATION_FINDINGS.md",
+      "docs/R14_ADAPTIVE_V2.md",
+      "docs/R15_QUERY_FOLLOWUP.md"
+    ],
+    "before_manifest": "docs/validation/r-backlog-2026-11-09/checklist-review/before-optimization-checklist.json"
+  },
+  "supplemental_review_evidence": [
+    {
+      "path": "docs/validation/r-backlog-2026-11-09/r13/native-evidence-bundle-complete.json",
+      "sha256": "34a101e461847d612fc3c817f3ef05cb57b25e8d4c2c428908354803c03aa5e9",
+      "records": 30,
+      "scope": "Supplemental R static evidence; original_evidence and145-record baseline remain unchanged. Heterogeneous dossier/read_bytes/pseudocode; not inserted into legacy pseudocode-only references."
+    },
+    {
+      "path": "docs/validation/r-backlog-2026-11-09/r11/rea-evidence-final.json",
+      "sha256": "7133c3e43f09cc678c1ae253339248413cbf95eb42541f9abe7155f6331cadf9",
+      "records": 52,
+      "scope": "Supplemental R static evidence; original_evidence and145-record baseline remain unchanged. Heterogeneous dossier/read_bytes/pseudocode; not inserted into legacy pseudocode-only references."
+    },
+    {
+      "path": "docs/validation/r-backlog-2026-11-09/r10-du/native-evidence-bundle.json",
+      "sha256": "84d2dc01b02aad4e0c83d5e1e0f0eafadf0f083ef12aeda68d48159600064f7c",
+      "records": 8,
+      "scope": "Supplemental R static evidence; original_evidence and145-record baseline remain unchanged. Heterogeneous dossier/read_bytes/pseudocode; not inserted into legacy pseudocode-only references."
+    }
+  ]
+}

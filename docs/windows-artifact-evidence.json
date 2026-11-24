@@ -1,0 +1,21 @@
+{
+  "evidence_id": "ev_e672548c621fa28dcb8f46903f36b91e3e617476d1a90e9df5e489ef557adf66",
+  "operation": "inspect_pe_resources",
+  "artifact": {
+    "path": "/Volumes/develop/Code/Products/mac-space-sniffer/References/Windows/2.2.0.27/SpaceSniffer.exe",
+    "sha256": "192176a0ff46d84d27885e9d38e60157bc692eaf5d1e5b75ca56b3beaa0de7a6",
+    "bytes": 8691097
+  },
+  "format": "pe32-plus",
+  "machine": 34404,
+  "coverage": {
+    "status": "complete",
+    "examined_entries": 159,
+    "resources": 75
+  },
+  "limitations": [
+    "Static PE32/PE32+ type/name/language resource inventory; payloads other than RT_GROUP_ICON remain opaque.",
+    "Icon candidates are resource-table relationships. Language fallback, image decoding and actual shell/window loading are not observed.",
+    "Exact shared byte ranges are retained; non-identical overlapping resource structures or payloads are rejected."
+  ]
+}

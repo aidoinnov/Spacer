@@ -1,0 +1,860 @@
+{
+  "source": "scripts/mcp/space_sniffer_mcp.py",
+  "source_sha256": "efb566d385f2cd6d035ec0f66eaca754f78332bae6297b81f52410a4c05f63a3",
+  "serverInfo": {
+    "name": "mac-space-sniffer",
+    "version": "1.0.0"
+  },
+  "tools": [
+    {
+      "name": "app_instances",
+      "description": "List running app controller instances. Does not launch or scan anything.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "app_status",
+      "description": "Get window IDs, scan phase/progress/current path, counts/bytes, volume capacity/free, focus/selection/history, filter and projection state, errors and artifact jobs.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "app_resources",
+      "description": "Read real app RSS/physical footprint/virtual memory, cumulative CPU seconds, shared root/cache counts and worker runs. CPU values are totals, not utilization percentages.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "volumes_list",
+      "description": "List mounted volume names and paths.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "volume_info",
+      "description": "Read filesystem total/free and derived system-used bytes without scanning. These are not a sum of pathname file allocations.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "scan_start",
+      "description": "Start a live scan in the UI. Returns accepted; poll app_status. An active scan is replaced only with replace=true.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          },
+          "watching": {
+            "type": "boolean",
+            "description": "Monitor changes after/during the scan."
+          },
+          "replace": {
+            "type": "boolean",
+            "description": "Explicitly replace an active scan.",
+            "default": false
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "scan_stop",
+      "description": "Request cancellation, retaining currently readable partial results. Poll app_status for the settled phase.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "scan_rescan",
+      "description": "Rescan the live root or an existing folder. Requires an idle live scan.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "node_info",
+      "description": "Get exact logical/allocated/filtered bytes, parent/ancestors, children count, timestamps, attributes and own/inherited tags.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          },
+          "revision": {
+            "type": "string",
+            "description": "Pin pagination to snapshot_revision."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "tree_children",
+      "description": "Page immediate children in snapshot order, optionally excluding filtered/zero-weight rows. next_offset is a child-array cursor, not a row count.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Rows per page (maximum 500).",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Snapshot index cursor returned by the preceding page.",
+            "minimum": 0,
+            "maximum": 10000000,
+            "default": 0
+          },
+          "revision": {
+            "type": "string",
+            "description": "Pin pagination to snapshot_revision."
+          },
+          "path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          },
+          "filtered": {
+            "type": "boolean",
+            "description": "Use the current view filter.",
+            "default": true
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "query_nodes",
+      "description": "Search files using the original SpaceSniffer filter grammar (; OR masks, size/time/tag/folder conditions). Each page examines at most budget nodes; an empty page may still have next_offset.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Rows per page (maximum 500).",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Snapshot index cursor returned by the preceding page.",
+            "minimum": 0,
+            "maximum": 10000000,
+            "default": 0
+          },
+          "revision": {
+            "type": "string",
+            "description": "Pin pagination to snapshot_revision."
+          },
+          "path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          },
+          "expression": {
+            "type": "string",
+            "description": "Native filter expression.",
+            "maxLength": 4096
+          },
+          "budget": {
+            "type": "integer",
+            "description": "Snapshot mode: node inspections. Subtree mode: total node/edge/unwind traversal steps.",
+            "minimum": 1,
+            "maximum": 100000,
+            "default": 50000
+          },
+          "traversal": {
+            "type": "string",
+            "description": "snapshot preserves global array offsets; subtree uses bounded one-use server cursors.",
+            "enum": [
+              "snapshot",
+              "subtree"
+            ],
+            "default": "snapshot"
+          },
+          "cursor": {
+            "type": "string",
+            "description": "Opaque next_cursor from the previous subtree page. Consumed on a successful page; do not blindly retry.",
+            "maxLength": 36
+          },
+          "cancel_cursor": {
+            "type": "boolean",
+            "description": "Cancel and release a subtree cursor; requires traversal=subtree and cursor.",
+            "default": false
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "largest_nodes",
+      "description": "Find the largest files/folders within a scope using a bounded top-K heap. Uses current view weights unless filtered=false.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Rows per page (maximum 500).",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          },
+          "revision": {
+            "type": "string",
+            "description": "Pin pagination to snapshot_revision."
+          },
+          "filtered": {
+            "type": "boolean",
+            "description": "",
+            "default": true
+          },
+          "kind": {
+            "type": "string",
+            "description": "",
+            "enum": [
+              "files",
+              "folders",
+              "all"
+            ],
+            "default": "files"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "scan_issues",
+      "description": "Page stored access/scan errors. Reports total vs stored count and explicit truncation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Rows per page (maximum 500).",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Snapshot index cursor returned by the preceding page.",
+            "minimum": 0,
+            "maximum": 10000000,
+            "default": 0
+          },
+          "revision": {
+            "type": "string",
+            "description": "Pin pagination to snapshot_revision."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "view_set",
+      "description": "Set UI filter, size mode, hidden visibility, detail depth/list mode/watch mode or navigate by path/up/back/forward/root. Returns accepted; poll projection_pending.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          },
+          "action": {
+            "type": "string",
+            "description": "",
+            "enum": [
+              "up",
+              "back",
+              "forward",
+              "root"
+            ]
+          },
+          "expression": {
+            "type": "string",
+            "description": "",
+            "maxLength": 4096
+          },
+          "size_mode": {
+            "type": "string",
+            "description": "",
+            "enum": [
+              "logical",
+              "allocated"
+            ]
+          },
+          "show_hidden": {
+            "type": "boolean",
+            "description": ""
+          },
+          "depth": {
+            "type": "integer",
+            "description": "",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "list_mode": {
+            "type": "boolean",
+            "description": ""
+          },
+          "watching": {
+            "type": "boolean",
+            "description": ""
+          },
+          "width": {
+            "type": "integer",
+            "description": "",
+            "minimum": 640,
+            "maximum": 4096
+          },
+          "height": {
+            "type": "integer",
+            "description": "",
+            "minimum": 480,
+            "maximum": 4096
+          },
+          "window_state": {
+            "type": "string",
+            "description": "",
+            "enum": [
+              "normal",
+              "minimized",
+              "hidden"
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "node_tag",
+      "description": "Apply the native tag toggle to a node: 1 red, 2 yellow, 3 green, 4 blue, 0 clear. Applying the same color clears it.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          },
+          "color": {
+            "type": "integer",
+            "description": "",
+            "minimum": 0,
+            "maximum": 4
+          }
+        },
+        "required": [
+          "path",
+          "color"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "snapshot_load",
+      "description": "Open a native SNS snapshot or the documented DU text subset offline in the app. Returns job_id; poll task_status and projection_pending.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          },
+          "replace": {
+            "type": "boolean",
+            "description": "Explicitly replace an active scan.",
+            "default": false
+          },
+          "legacy_code_page": {
+            "type": "integer",
+            "description": "Original Windows ANSI code page for non-ASCII SNS v2 or DU names; never guessed.",
+            "minimum": 1,
+            "maximum": 65535
+          },
+          "inspect_only": {
+            "type": "boolean",
+            "description": "Return root metadata in the job result without changing this window.",
+            "default": false
+          },
+          "root_index": {
+            "type": "integer",
+            "description": "Zero-based top-level SNS root; required when a file contains several roots.",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "snapshot_save",
+      "description": "Save the current focused/filtered tree in native SNS v4. Output must not exist. Returns job_id.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "output": {
+            "type": "string",
+            "description": "New absolute .sns output path.",
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "output"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "report_export",
+      "description": "Export focused/filtered UTF8/LF .txt, optionally using an explicit native export configuration. inspect_only reads configuration metadata without changing the window. Returns job_id.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "output": {
+            "type": "string",
+            "description": "New absolute .txt output path; required unless inspect_only.",
+            "maxLength": 4096
+          },
+          "configuration_path": {
+            "type": "string",
+            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "maxLength": 4096
+          },
+          "configuration_index": {
+            "type": "integer",
+            "description": "Required zero-based export index for a full SpaceSnifferConfig; standalone exportConfig defaults to zero.",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "inspect_only": {
+            "type": "boolean",
+            "description": "Inspect configuration_path without exporting or changing the window.",
+            "default": false
+          },
+          "config_legacy_code_page": {
+            "type": "integer",
+            "description": "Original Windows ANSI page for legacy template data.",
+            "minimum": 1,
+            "maximum": 65535
+          },
+          "config_xml_code_page": {
+            "type": "integer",
+            "description": "Explicit Windows ANSI boundary for non-ASCII XML fields.",
+            "minimum": 1,
+            "maximum": 65535
+          },
+          "max_output_bytes": {
+            "type": "integer",
+            "description": "Configured-export output cap; default 1 GiB.",
+            "minimum": 1,
+            "maximum": 1073741824
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "task_status",
+      "description": "Read an asynchronous snapshot/export job by job_id (last 32 jobs retained).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "job_id": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "view_capture",
+      "description": "Capture this app window content as a bounded PNG (up to 1600x1200); does not capture other apps or require screen recording.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    }
+  ]
+}

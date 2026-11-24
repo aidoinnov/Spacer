@@ -1,0 +1,146 @@
+{
+  "scope": "V01 V2 combined fixed initial20 + predeclared supplement80; all attempted rows retained",
+  "binaries": {
+    "before": "790a2290760ee9824f7a8811ad15c7e15984bc5221d07e7ef077642d09120337",
+    "after": "5dd4b88fe019041df9ce030371e9e565e9184c6263fabee8e372c56cfc029837"
+  },
+  "sources": [
+    "docs/validation/scan-retry-2026-11-19/comparison-v2-20.json",
+    "docs/validation/scan-retry-2026-11-19/comparison-v2-supplement80.json"
+  ],
+  "summary": {
+    "denied20": {
+      "attempted_runs": 200,
+      "valid_pairs": 100,
+      "failed_runs": 0,
+      "before": {
+        "scan_complete_ms": {
+          "p50": 2301.3065625,
+          "p95": 2636.209167
+        },
+        "cpu_seconds": {
+          "p50": 0.0481855,
+          "p95": 0.0537
+        },
+        "peak_rss_mib": {
+          "p50": 8.6875,
+          "p95": 8.8125
+        }
+      },
+      "after": {
+        "scan_complete_ms": {
+          "p50": 56.0460205,
+          "p95": 136.904125
+        },
+        "cpu_seconds": {
+          "p50": 0.035722500000000004,
+          "p95": 0.042411000000000004
+        },
+        "peak_rss_mib": {
+          "p50": 8.640625,
+          "p95": 8.8125
+        }
+      },
+      "paired_improvement_pct": 97.52342397506766,
+      "paired_ci95": [
+        97.21836147364903,
+        97.76511843102162
+      ],
+      "counts": {
+        "before": {
+          "openDirectoryCalls": [
+            201
+          ],
+          "openRetryDecisions": [],
+          "requestedRetryDelaySeconds": []
+        },
+        "after": {
+          "openDirectoryCalls": [
+            21
+          ],
+          "openRetryDecisions": [
+            0
+          ],
+          "requestedRetryDelaySeconds": [
+            0
+          ]
+        }
+      },
+      "gates": {
+        "valid": true,
+        "denied_p95_le_200ms": true,
+        "one_open_per_denied_no_wait": true,
+        "rss": true,
+        "cpu_p95_regression_le_20pct": true
+      },
+      "point_gate_pass": true
+    },
+    "normal-10000": {
+      "attempted_runs": 200,
+      "valid_pairs": 100,
+      "failed_runs": 0,
+      "before": {
+        "scan_complete_ms": {
+          "p50": 66.515042,
+          "p95": 150.649834
+        },
+        "cpu_seconds": {
+          "p50": 0.053719499999999996,
+          "p95": 0.064922
+        },
+        "peak_rss_mib": {
+          "p50": 10.109375,
+          "p95": 10.265625
+        }
+      },
+      "after": {
+        "scan_complete_ms": {
+          "p50": 71.243604,
+          "p95": 157.109292
+        },
+        "cpu_seconds": {
+          "p50": 0.055292999999999995,
+          "p95": 0.065597
+        },
+        "peak_rss_mib": {
+          "p50": 10.078125,
+          "p95": 10.234375
+        }
+      },
+      "paired_improvement_pct": -3.4698071990628403,
+      "paired_ci95": [
+        -14.506532475838899,
+        4.250655838470166
+      ],
+      "counts": {
+        "before": {
+          "openDirectoryCalls": [
+            101
+          ],
+          "openRetryDecisions": [],
+          "requestedRetryDelaySeconds": []
+        },
+        "after": {
+          "openDirectoryCalls": [
+            101
+          ],
+          "openRetryDecisions": [
+            0
+          ],
+          "requestedRetryDelaySeconds": [
+            0
+          ]
+        }
+      },
+      "gates": {
+        "valid": true,
+        "normal_p50_p95_regression_le_10pct": true,
+        "paired_median_ci_not_crossing_minus10": false,
+        "rss": true,
+        "cpu_p95_regression_le_20pct": true
+      },
+      "point_gate_pass": false
+    }
+  },
+  "gate_pass": false
+}

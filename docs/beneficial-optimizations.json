@@ -1,0 +1,436 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "source_checklist": "docs/optimization-checklist.json",
+  "source_checklist_sha256": "f0f51f5b381bacc9e9fb72cefc552fd91d6be7880e90f64800497051c494a5f6",
+  "selection_policy": "원본이 줄이는 중복 작업을 기준으로 하되 Mac에서 남은 비용·적용 조건·변경 위험을 평가. 실제 이득을 보장하거나 Windows 내부 구조를 문자 그대로 복제하지 않는다.",
+  "work_packages": [
+    {
+      "id": "B01",
+      "title": "탐색 전용 projection에서 기존 판정·합계 재사용",
+      "source_items": [
+        "W02"
+      ],
+      "phase": "first",
+      "benefit_evidence_level": "measured_prototype",
+      "benefit_condition": "폴더 진입·상위·뒤로/앞으로 이동. 같은 snapshot/filter/hidden/mode인 경우.",
+      "expected_benefit": "전체 membership/weights 재계산과 임시 배열 할당 감소.",
+      "mac_adaptation": "Mac의 snapshot 입력 identity와 filter/mode/hidden/tag revision으로 무효화 키를 만든다. navigation/history 복구는 기존 경로를 사용한다.",
+      "available_measurement": "25만 파일에서 이동 10회: 전체 projection 320.733ms, 재사용 probe 12.707ms. 초기 계산·geometry/paint는 제외한 실험이다.",
+      "preservation_constraints": [
+        "시간 의존 필터는 우선 기존 경로로 fallback하거나 정확한 만료 기준을 설계한다.",
+        "weights>0로 membership을 대체하지 않는다. 0바이트 selection을 보존한다.",
+        "공개 snapshot_revision/projection_pending·삭제/rename·scope 변경의 일관성을 유지한다."
+      ],
+      "acceptance_gate": "전체 projection oracle과 결과가 같고 실제 navigation p50/p95·할당·RSS를 전후 비교한다.",
+      "implemented": true,
+      "original_mechanism": true,
+      "platform_extension_note": "원본의 작업 축소 원칙을 Mac 구조에 맞게 구현",
+      "implementation_status": "implemented_with_recorded_limits",
+      "implementation_report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+      "implementation_note": "변경 matrix·full oracle·native 수명·실제 IPC/CLI를 해당 step 범위에서 확인. Windows 전체 동등성·모든 volume 성능을 의미하지 않음."
+    },
+    {
+      "id": "B02",
+      "title": "변경 종류별로 필요한 계산만 다시 실행",
+      "source_items": [
+        "W06"
+      ],
+      "phase": "first",
+      "benefit_evidence_level": "source_confirmed_redundancy",
+      "benefit_condition": "태그를 표시만 바꾸거나 동일 값/설정 조합을 반복 적용할 때.",
+      "expected_benefit": "불필요한 전체 filter pass·중복 submit·취소되는 초기 작업 감소.",
+      "mac_adaptation": "membership 의존 변경, 합계 의존 변경, paint-only 변경을 분리한다. tag 비의존 filter는 색 갱신만 요청하는 경로를 둔다.",
+      "available_measurement": "현재 tag 변경은 revision/broadcast→전체 projection 경로다. 제거 가능한 호출은 확인했지만 전체 앱 개선율은 미측정이다.",
+      "preservation_constraints": [
+        "태그가 filter에 쓰이면 inherited membership까지 갱신한다.",
+        "동일 filter 문자열 재적용이 시간 조건 재평가를 의도할 수 있어 무조건 생략하지 않는다.",
+        "색상·notice·MCP 상태가 갱신되지 않는 일이 없어야 한다."
+      ],
+      "acceptance_gate": "같은 입력의 최종 결과를 기존 경로와 비교하고 projection 시작/취소/완료 수·응답 지연을 측정한다.",
+      "implemented": true,
+      "original_mechanism": true,
+      "platform_extension_note": "원본의 작업 축소 원칙을 Mac 구조에 맞게 구현",
+      "implementation_status": "implemented_with_recorded_limits",
+      "implementation_report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+      "implementation_note": "변경 matrix·full oracle·native 수명·실제 IPC/CLI를 해당 step 범위에서 확인. Windows 전체 동등성·모든 volume 성능을 의미하지 않음."
+    },
+    {
+      "id": "B03",
+      "title": "작은 파일 변경의 filtered 합계·포함 상태 증분 갱신",
+      "source_items": [
+        "W04",
+        "W21"
+      ],
+      "phase": "second",
+      "benefit_evidence_level": "source_supported_requires_change_contract",
+      "benefit_condition": "같은 topology에서 일부 파일 크기/속성이 바뀌는 반복 변경.",
+      "expected_benefit": "매 변경마다 전체 N의 membership·filtered weights를 만드는 비용 감소.",
+      "mac_adaptation": "안정적인 node ID와 dirty 범위를 이용해 변한 leaf·영향받는 ancestors만 갱신한다. 입력 변화가 불명확하면 전체 projection으로 fallback한다.",
+      "available_measurement": "FS same-topology delta는 이미 있고 filtered weights는 여전히 전체 계산한다. 새 증분 projection 구현의 개선율은 미측정이다.",
+      "preservation_constraints": [
+        "변경 ID/속성·새 snapshot의 연결 계약을 먼저 정의한다.",
+        "필터 경계 통과, 부모 tag/숨김, 0바이트, 삭제·추가·rename은 보수적으로 처리한다.",
+        "단순 size-only delta로 모든 조건을 갱신한 것으로 처리하지 않는다."
+      ],
+      "acceptance_gate": "전체 membership/weights oracle과 파일별·조상별 결과를 비교하고 작은 변경당 시간·RSS·변경 폭주 수렴을 측정한다.",
+      "implemented": true,
+      "original_mechanism": true,
+      "platform_extension_note": "원본의 작업 축소 원칙을 Mac 구조에 맞게 구현",
+      "implementation_status": "implemented_with_recorded_limits",
+      "implementation_report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+      "implementation_note": "변경 matrix·full oracle·native 수명·실제 IPC/CLI를 해당 step 범위에서 확인. Windows 전체 동등성·모든 volume 성능을 의미하지 않음."
+    },
+    {
+      "id": "B04",
+      "title": "기존 형제 순서·변하지 않은 배치 재사용",
+      "source_items": [
+        "W05",
+        "W11"
+      ],
+      "phase": "second",
+      "benefit_evidence_level": "source_confirmed_redundancy",
+      "benefit_condition": "selection·resize와 소수 파일 변경에서 같은 형제 집합을 반복 배치할 때.",
+      "expected_benefit": "전체 형제 정렬과 동일 branch geometry 계산 반복 감소.",
+      "mac_adaptation": "weights/revision/scope/bounds/depth/selection에 따라 정렬 순서와 배치 결과를 구분해 재사용한다. cache 수명은 현재/직전 입력 정도로 제한한다.",
+      "available_measurement": "projection과 Treemap.layout의 전체 sorted 경로를 확인했다. 해당 cache의 실제 CPU/RSS 이득은 미측정이다.",
+      "preservation_constraints": [
+        "Int64/Double 변환·동률·양수 면적 참여 규칙을 보존한다.",
+        "선택 경로 상세화 때문에 selection을 무시한 geometry key를 만들지 않는다.",
+        "원본 tiny chunk 표시 정책을 UI에 무조건 복제하지 않는다."
+      ],
+      "acceptance_gate": "동일 입력의 rect/순서·선택 경로 결과를 비교하고 selection/resize p95와 cache 보유 메모리를 측정한다.",
+      "implemented": true,
+      "original_mechanism": true,
+      "platform_extension_note": "원본의 작업 축소 원칙을 Mac 구조에 맞게 구현",
+      "implementation_status": "implemented_with_recorded_limits",
+      "implementation_report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+      "implementation_note": "변경 matrix·full oracle·native 수명·실제 IPC/CLI를 해당 step 범위에서 확인. Windows 전체 동등성·모든 volume 성능을 의미하지 않음."
+    },
+    {
+      "id": "B05",
+      "title": "문자열·툴팁의 수명을 paint와 분리",
+      "source_items": [
+        "W13",
+        "W14"
+      ],
+      "phase": "first",
+      "benefit_evidence_level": "source_confirmed_allocation_churn",
+      "benefit_condition": "애니메이션·hover·같은 geometry의 반복 draw.",
+      "expected_benefit": "글자 치수/문자열/tooltip 등록의 반복 처리·할당 감소.",
+      "mac_adaptation": "text/font/값이 바뀔 때 측정하고 같은 항목의 tooltip 정보를 재사용한다. AX element 재사용은 별도의 AppKit 플랫폼 확장으로 표시한다.",
+      "available_measurement": "draw마다 tooltip 제거/재등록, 최대 500개 AX 객체 재생성을 확인했다. 실제 frame/할당 개선율은 아직 측정하지 않았다.",
+      "preservation_constraints": [
+        "전환 중 tooltip/hit/clip rect가 현재 화면 위치와 같아야 한다.",
+        "VoiceOver frame·활성 상태·이름과 snapshot ID 재배치를 검증한다.",
+        "표시 외형·500ms 곡선·Reduce Motion을 유지한다."
+      ],
+      "acceptance_gate": "실제 draw p50/p95·allocation을 전후 비교하고 tooltip/VoiceOver/중단 전환을 QA한다.",
+      "implemented": true,
+      "original_mechanism": true,
+      "platform_extension_note": "원본의 작업 축소 원칙을 Mac 구조에 맞게 구현",
+      "implementation_status": "implemented_with_recorded_limits",
+      "implementation_report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+      "remaining_validation": "text/font cache, aggregate frame/last-window timer/tooltip/AX lifecycle and Reduce Motion/VoiceOver full suite remain",
+      "implementation_note": "변경 matrix·full oracle·native 수명·실제 IPC/CLI를 해당 step 범위에서 확인. Windows 전체 동등성·모든 volume 성능을 의미하지 않음."
+    },
+    {
+      "id": "B06",
+      "title": "필요한 paint만 요청하고 가려진 창의 시각 작업 유예",
+      "source_items": [
+        "W10"
+      ],
+      "phase": "conditional",
+      "benefit_evidence_level": "visibility_specific_benefit",
+      "benefit_condition": "창이 최소화·완전히 가려져 있거나 표시 내용 변화가 없는 update가 반복될 때.",
+      "expected_benefit": "실제로 보이지 않는 geometry/paint와 불필요한 redraw 감소.",
+      "mac_adaptation": "AppKit needsDisplay의 기본 병합을 활용한다. visibility/dirty 상태를 구분하고 다시 보일 때 최신 표시 작업을 반영한다.",
+      "available_measurement": "모든 representable update가 needsDisplay를 세우는 코드는 확인했다. 실제 visibility별 CPU 차이는 미측정이다.",
+      "preservation_constraints": [
+        "원본 DynaSmooth 타이머를 문자 그대로 복제하지 않는다.",
+        "스캔·데이터 projection·MCP 조회 상태는 표시 visibility와 분리한다.",
+        "view_capture 요청과 복귀 시 최신 화면을 보장하고 animation timer 수명을 정리한다."
+      ],
+      "acceptance_gate": "보이는/가려진/최소화 상태의 draw/geometry 실행 수와 CPU를 비교한다. 이득이 없는 상태에는 추가 scheduler를 강제하지 않는다.",
+      "implemented": true,
+      "original_mechanism": true,
+      "platform_extension_note": "원본의 작업 축소 원칙을 Mac 구조에 맞게 구현",
+      "implementation_status": "implemented_with_recorded_limits",
+      "implementation_report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+      "implementation_note": "변경 matrix·full oracle·native 수명·실제 IPC/CLI를 해당 step 범위에서 확인. Windows 전체 동등성·모든 volume 성능을 의미하지 않음."
+    },
+    {
+      "id": "B07",
+      "title": "한 번 판정하고 SNS/TXT를 순차 기록",
+      "source_items": [
+        "W19"
+      ],
+      "phase": "first",
+      "benefit_evidence_level": "source_confirmed_redundancy_and_buffering",
+      "benefit_condition": "큰 SNS 저장·TXT export, 또는 큰 트리의 작은 focus export.",
+      "expected_benefit": "중복 membership 계산과 전체 lines/String/Data 동시 보유 감소.",
+      "mac_adaptation": "같은 판정 시각의 membership을 공유하고 기존 순회/인코더에 Data sink와 file sink를 나눈다. Actor I/O와 exclusive/atomic 정책을 보존한다.",
+      "available_measurement": "25만 파일 중 한 폴더의 현재 export 계산 구간은 54.161ms였다. membership 중복과 전체 출력 buffer는 확인했지만 streaming 구현의 개선량은 미측정이다.",
+      "preservation_constraints": [
+        "파일 우선·크기/동률 정렬·UTF8/CRLF·SNS golden bytes를 보존한다.",
+        "파일 오류·동일 output 경합·부분 파일·취소 정리 정책을 정의한다.",
+        "부모 포함 처리한 membership을 leaf weights에 잘못 재사용하지 않는다."
+      ],
+      "acceptance_gate": "기존 writer와 바이트가 같고 큰 export peak RSS/시간이 줄어드는지 측정한다. 기존 파일 덮어쓰기 거부도 검사한다.",
+      "implemented": true,
+      "original_mechanism": true,
+      "platform_extension_note": "원본의 작업 축소 원칙을 Mac 구조에 맞게 구현",
+      "implementation_status": "implemented_with_recorded_limits",
+      "implementation_report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+      "implementation_note": "변경 matrix·full oracle·native 수명·실제 IPC/CLI를 해당 step 범위에서 확인. Windows 전체 동등성·모든 volume 성능을 의미하지 않음."
+    },
+    {
+      "id": "B08",
+      "title": "중복·조상 packing 계약을 유지하는 이벤트 큐 index",
+      "source_items": [
+        "W09"
+      ],
+      "phase": "first",
+      "benefit_evidence_level": "measured_current_bottleneck_platform_implementation",
+      "benefit_condition": "서로 독립된 폴더의 이벤트가 한꺼번에 누적될 때.",
+      "expected_benefit": "반복 prefix 검색과 actor 점유 시간 감소.",
+      "mac_adaptation": "원본의 중복/조상 병합·독립 FIFO 의미는 유지하면서 Mac 경로 component index나 동등한 구조를 선택한다.",
+      "available_measurement": "2026-11-09 최종 5쌍 release queue metadata 비교는 docs/REFRESH_QUEUE_VALIDATION.md 및 validation/refresh-queue-2026-11-09.json. 이전 audit 수치는 당시 보존 기록.",
+      "preservation_constraints": [
+        "trie/hash가 원본에 있다는 근거로 표시하지 않는다.",
+        "새 ancestor는 기존 descendant 위치로 당기지 않고 원래 append 순서를 지킨다.",
+        "/a와 /ab 경계·감시 세대·취소·removeCovered를 유지한다."
+      ],
+      "acceptance_gate": "기존 큐를 oracle로 임의 시퀀스 결과를 대조하고 같은 폭주 입력에서 시간·메모리를 비교한다.",
+      "implemented": true,
+      "original_mechanism": false,
+      "platform_extension_note": "원본 packing 계약의 Mac 자료구조 개선",
+      "implementation_status": "implemented_with_recorded_limits",
+      "implementation_report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+      "implementation_note": "변경 matrix·full oracle·native 수명·실제 IPC/CLI를 해당 step 범위에서 확인. Windows 전체 동등성·모든 volume 성능을 의미하지 않음."
+    }
+  ],
+  "all_30_dispositions": [
+    {
+      "id": "W01",
+      "title": "루트 데이터·리스너 공유 캐시",
+      "disposition": "retain_existing",
+      "reason": "공유 root/cache 수명 대응이 이미 있음. 다시 구현할 항목 아님."
+    },
+    {
+      "id": "W02",
+      "title": "탐색 시 기존 필터 트리 재사용",
+      "disposition": "selected",
+      "reason": "선택 작업 B01의 원본 근거"
+    },
+    {
+      "id": "W03",
+      "title": "focus 우선 필터 후 중복 subtree 제외",
+      "disposition": "defer",
+      "reason": "focus-first는 첫 결과를 앞당길 수 있지만 전체 CPU 감소 보장이 없고 중간 publish·추가 snapshot 비용이 든다. 우선 실제 지연을 측정한다."
+    },
+    {
+      "id": "W04",
+      "title": "조상 delta 누적",
+      "disposition": "selected",
+      "reason": "선택 작업 B03의 원본 근거"
+    },
+    {
+      "id": "W05",
+      "title": "기존 형제 정렬의 변경 항목 재배치",
+      "disposition": "selected",
+      "reason": "선택 작업 B04의 원본 근거"
+    },
+    {
+      "id": "W06",
+      "title": "변경 의존성에 따른 재필터 제한",
+      "disposition": "selected",
+      "reason": "선택 작업 B02의 원본 근거"
+    },
+    {
+      "id": "W07",
+      "title": "상속 태그 context의 재귀 전달",
+      "disposition": "retain_existing",
+      "reason": "bulk inherited tag context가 이미 있음. MCP의 추가 비용은 별도 후보."
+    },
+    {
+      "id": "W08",
+      "title": "오래된 필터 작업 취소·교체",
+      "disposition": "retain_existing",
+      "reason": "최신 작업 교체/취소가 이미 있음. 취소 지연만 해당 경로에서 계측."
+    },
+    {
+      "id": "W09",
+      "title": "변경 요청 중복·조상 packing과 FIFO",
+      "disposition": "existing_contract_with_platform_work",
+      "reason": "packing/FIFO는 유지. 추가 이득 후보 B08은 Mac index 선택이며 원본 trie 복제가 아니다."
+    },
+    {
+      "id": "W10",
+      "title": "repaint 병합·간격 조절·가려진 창 생략",
+      "disposition": "selected",
+      "reason": "선택 작업 B06의 원본 근거"
+    },
+    {
+      "id": "W11",
+      "title": "layout/paint 분리와 표시 재귀 제한",
+      "disposition": "selected",
+      "reason": "선택 작업 B04의 원본 근거"
+    },
+    {
+      "id": "W12",
+      "title": "palette 포인터 캐시와 명시적 무효화",
+      "disposition": "retain_existing",
+      "reason": "현재 UI palette key 캐시가 이미 있음."
+    },
+    {
+      "id": "W13",
+      "title": "문자열 치수 memoization",
+      "disposition": "selected",
+      "reason": "선택 작업 B05의 원본 근거"
+    },
+    {
+      "id": "W14",
+      "title": "지속 tooltip 객체와 dirty rebuild",
+      "disposition": "selected",
+      "reason": "선택 작업 B05의 원본 근거"
+    },
+    {
+      "id": "W15",
+      "title": "노드 재활용 pool과 busy 참조 제외",
+      "disposition": "evaluate_first",
+      "reason": "E01 선행 평가: node/page/scratch 재사용을 allocation·retained bytes와 함께 비교한다. Swift COW snapshot의 reader 수명을 지키고 이득이 입증된 단위만 채택한다."
+    },
+    {
+      "id": "W16",
+      "title": "상한 있는 스캔 스레드 pool·event 대기",
+      "disposition": "evaluate_first",
+      "reason": "E02 선행 평가: 기존 worker 재사용과 별도로 blocking I/O 격리·프로세스 전체 scan admission을 비교한다. 원본 pool cap을 Mac 기본값으로 복사하지 않는다."
+    },
+    {
+      "id": "W17",
+      "title": "OS 디렉터리 열거의 큰 버퍼 경로",
+      "disposition": "defer",
+      "reason": "Windows LARGE_FETCH를 macOS에 직접 적용할 수 없다. bulk metadata의 실제 I/O 실험이 먼저다."
+    },
+    {
+      "id": "W18",
+      "title": "경로 segment 저장·필요 시 full path 조합",
+      "disposition": "defer",
+      "reason": "path 저장 메모리는 줄 수 있지만 full path 조합·tag lookup·rename 비용이 증가할 수 있는 큰 구조 변경이다."
+    },
+    {
+      "id": "W19",
+      "title": "파일 stream에 순차 export",
+      "disposition": "selected",
+      "reason": "선택 작업 B07의 원본 근거"
+    },
+    {
+      "id": "W20",
+      "title": "확대 bitmap 재사용과 옵션별 재렌더",
+      "disposition": "defer",
+      "reason": "bitmap을 보유하면 메모리/품질/전환 의미가 달라질 수 있다. 현재 사용자 요청 rect animation을 유지한다."
+    },
+    {
+      "id": "W21",
+      "title": "기존 filtered TM 노드 보존·차이만 생성/제거",
+      "disposition": "selected",
+      "reason": "선택 작업 B03의 원본 근거"
+    },
+    {
+      "id": "W22",
+      "title": "감시 buffer/event 재사용·batch 직접 변경",
+      "disposition": "defer",
+      "reason": "FSEvents는 Windows notify record의 old/new 쌍·metadata를 동일하게 주지 않는다. 직접 mutation 복제는 누락 위험이 있다."
+    },
+    {
+      "id": "W23",
+      "title": "열거 metadata 재사용·조건부 추가 size query",
+      "disposition": "defer",
+      "reason": "현재 lstat 결과는 여러 필드에 재사용한다. 열거 metadata로 치환하려면 할당량·identity·시각/속성 보존과 I/O 측정이 필요하다."
+    },
+    {
+      "id": "W24",
+      "title": "필터 조건 사전 분류·숫자 변환·빠른 조건 판정",
+      "disposition": "retain_existing",
+      "reason": "조건 사전 파싱/분류는 이미 있음."
+    },
+    {
+      "id": "W25",
+      "title": "사각형·가시성으로 계층형 hit-test 가지치기",
+      "disposition": "defer",
+      "reason": "hit-test hotspot과 visible item 수가 아직 계측되지 않았다. 현재 flat hit보다 이득이 확인되면 다시 선택한다."
+    },
+    {
+      "id": "W26",
+      "title": "동일 FS 노드의 중복 스캔 진입 방지",
+      "disposition": "defer",
+      "reason": "root actor/task/generation으로 이미 수명을 관리한다. bit guard/Sleep loop 복제의 추가 이득이 확인되지 않았다."
+    },
+    {
+      "id": "W27",
+      "title": "설정 객체 lazy 생성·메모리 재사용",
+      "disposition": "defer",
+      "reason": "현재 없는 Windows XML load 경로를 위한 cache는 제거할 비용이 없다. 설정 기능 도입 시 검토한다."
+    },
+    {
+      "id": "W28",
+      "title": "SNS 입력의 record 단위 stream 읽기",
+      "disposition": "defer",
+      "reason": "mapped-if-safe 입력과 stream reader의 실측 우열이 없다. 전체 tree 저장 비용도 남는다."
+    },
+    {
+      "id": "W29",
+      "title": "자식 이름 조회의 hint 주변 양방향 검색",
+      "disposition": "defer",
+      "reason": "hint의 locality가 Mac의 경로/순회 패턴에서도 성립하는지 미측정. binary search로 오인하지 않는다."
+    },
+    {
+      "id": "W30",
+      "title": "전체 스캔과 별도 focus 재스캔 worker 경로",
+      "disposition": "defer",
+      "reason": "별도 focus worker는 I/O·이전 snapshot 보유·중복 작업을 늘릴 수 있다. 반응성 이득과 자원 비용부터 측정한다."
+    }
+  ],
+  "summary": {
+    "retain_existing": 5,
+    "selected": 10,
+    "defer": 12,
+    "existing_contract_with_platform_work": 1,
+    "evaluate_first": 2
+  },
+  "already_shipped_changes": true,
+  "pool_evaluations": [
+    {
+      "id": "E01",
+      "source_items": [
+        "W15"
+      ],
+      "status": "evaluated_with_recorded_limits",
+      "decision": "measure_then_adopt",
+      "scope": "worker scratch, uniquely owned page storage, node pool",
+      "acceptance_gate": "동일 결과·frozen reader 격리·bounded retained bytes를 유지하며 allocation/실제 응답 비용 개선",
+      "implementation_report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+      "current_scope": "private scratch/idle budget 채택; 독립 page/node pool은 frozen-reader/adapter/RSS 측정 뒤 미채택"
+    },
+    {
+      "id": "E02",
+      "source_items": [
+        "W16",
+        "W30"
+      ],
+      "status": "evaluated_with_recorded_limits",
+      "decision": "measure_then_adopt",
+      "scope": "blocking I/O executor, process-wide scan admission, worker reuse",
+      "acceptance_gate": "결과 동등성·취소/종료·정확히 한 번 완료·active 상한을 유지하며 응답성/자원 개선",
+      "implementation_report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+      "current_scope": "native scan8/대기64 및 별도 metadata/artifact/metrics lane; actual waiting threads·bounded submit·늦은 완료·응답 격리 확인. 모든 volume/전체 OS thread ceiling은 아님.",
+      "implementation_reports": [
+        "docs/SCAN_RESOURCE_VALIDATION.md",
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ]
+    }
+  ],
+  "execution_plan": "TODO.md",
+  "implementation_update": "2026-11-09"
+}

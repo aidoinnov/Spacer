@@ -1,0 +1,823 @@
+{
+  "target_path": "References/Windows/2.2.0.27/SpaceSniffer.exe",
+  "target_sha256": "192176a0ff46d84d27885e9d38e60157bc692eaf5d1e5b75ca56b3beaa0de7a6",
+  "analysis_date": "2026-11-08",
+  "provider": {
+    "name": "Ghidra",
+    "version": "12.1.4"
+  },
+  "evidence_bundle": "docs/windows-optimization-rea-evidence.json",
+  "evidence_bundle_sha256": "132b0a0de13ebee169818f23a8497b9a92bd15619dd260d5ec2efd37a72839a0",
+  "baseline_records": 107,
+  "bundle_records": 139,
+  "new_records": 32,
+  "runtime_validation": false,
+  "findings": [
+    {
+      "id": "W01",
+      "title": "루트 데이터·리스너 공유 캐시",
+      "evidence_type": "static_decompilation",
+      "observed": "path segment와 agent GUID로 기존 root를 찾아 listener/refcount를 늘린다. 마지막 참조 해제 때 scan/watch를 정리한다.",
+      "optimization_effect_inference": "중복 스캔·중복 트리 메모리를 줄인다.",
+      "mac_mapping": "Mac 기존 공유 ScanService와 대응. 정규화 규칙·offline 분리를 유지한다.",
+      "limitations": "원본 비교 전에 항상 경로 정규화를 한다거나 자동 영구 캐시가 있다는 결론은 미확인.",
+      "references": [
+        {
+          "address": "0x43ec60",
+          "evidence_id": "ev_6366c304a1eaf0fc40d12e92df991085f4c5e4639b71efb9ea0474e9775c77be",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x43ec60.txt",
+          "payload_sha256": "17ba0a3c7616b6ddd0020bf6ce1f9f3615395b5d294e9e32129ae8c77308501a",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x43f230",
+          "evidence_id": "ev_0fe0a5b05fbf18a8f75067894a76b6f9f86bf2c1d0aa36eb0eb6aa5afd63b10b",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x43f230.txt",
+          "payload_sha256": "1277dd5e40c7c24031f92eec85841425cb6b4eeb100276bb2161e65b72c8d456",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x4559f0",
+          "evidence_id": "ev_ff81c0622cccc0dc08852b069fc6f24ba48dbaf40ab4f79e34779d07bbf2016e",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4559f0.txt",
+          "payload_sha256": "c2a179903718bc739cfb7c7d23270a67ff622f78536439963f8d7c8ba42423d0",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x4574e0",
+          "evidence_id": "ev_a3e8bee60c15de6330bbd64cfeb4a679653ced0688a2dca828bfdae6374f60a4",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4574e0.txt",
+          "payload_sha256": "52ed40324068494f5b8cbfb2c7f1b0440c86362bb17e342b0b70af8f34518177",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W02",
+      "title": "탐색 시 기존 필터 트리 재사용",
+      "evidence_type": "static_decompilation",
+      "observed": "setNewFocus는 view+0x798을 바꾸고 DrawTreeMap/zoom을 호출한다. DrawTreeMap→refreshBitmap 경로는 기존 TM node를 배치·paint한다.",
+      "optimization_effect_inference": "탐색마다 filesystem scan이나 필터 트리 재구축을 반복하지 않는 해당 호출 경로다.",
+      "mac_mapping": "navigation-only membership/weights 재사용은 이 계약에 맞는 Swift 구현 후보.",
+      "limitations": "원본에 Swift Bool/Int64 배열 캐시가 있다는 의미가 아니며 모든 간접 경로 부재의 증명은 아니다.",
+      "references": [
+        {
+          "address": "0x428bb0",
+          "evidence_id": "ev_9b22e4002a554cb7851c86759c2f029061fb069e7bafad02df4363d5b0d6c33f",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x428bb0.txt",
+          "payload_sha256": "2e9ecfc68b6b791035c84c7483a0221a470d51a05f1ea6676a4932eb6d701974",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x42a750",
+          "evidence_id": "ev_1c5d47c080ea44678b893013fe676fc062c070aac7bbc7560fb7954b964abc6c",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42a750.txt",
+          "payload_sha256": "14c501b836b6af2e89510d2b368dc438f165a82eb72b2e8b1d36f533102ffdb6",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x4295a0",
+          "evidence_id": "ev_e118aa88696dc12d66060b7fd3dd91533537dfb764f65360b63ded093c1d183a",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4295a0.txt",
+          "payload_sha256": "9b63c952b61ec6d8bfecab73362ae8f439dcd8cdac97b91724bc25fbaa0ae589",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W03",
+      "title": "focus 우선 필터 후 중복 subtree 제외",
+      "evidence_type": "static_decompilation",
+      "observed": "ctor가 두 TM 인자를 +0x88/+0x90에 저장한다. Execute는 +0x90 먼저 처리하고 +0x88 처리 시 skip=+0x90을 넘긴다. updateFiltering은 this==skip이면 return한다. tag 재적용 호출은 root(+0x790),focus(+0x798)를 순서대로 전달한다.",
+      "optimization_effect_inference": "보이는 focus를 먼저 갱신하고 두 번째 traversal에서 이미 처리한 subtree를 제외한다.",
+      "mac_mapping": "큰 projection의 focus 우선 단계 공개/부분 refilter 후보.",
+      "limitations": "고정 크기 batch/페이지 알고리즘이나 임의 concurrency 수는 이 근거에 없다.",
+      "references": [
+        {
+          "address": "0x4590a0",
+          "evidence_id": "ev_908d01c963acf8a3796c395502f6706bfd33cf145ddc221fe80fbe113553c67b",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4590a0.txt",
+          "payload_sha256": "f73bc3d2f42c67be491888d18fee7de602b42c74e74624032c6f7f4736c2203c",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x459170",
+          "evidence_id": "ev_562c3d17a1e6dc585f3b79fe82a30f627f6faef724f6fe654115a34899512532",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x459170.txt",
+          "payload_sha256": "4440e87558058fcd6fb1bc2b2a821b21d9283cb7a90299671b51ef0c174d166f",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x46a490",
+          "evidence_id": "ev_2ca77b3b513bbe7a458b603e55564e044e7616d195d3d26386de64deb8fe409b",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x46a490.txt",
+          "payload_sha256": "f37dfdb9fb27c809f91f6939318fe2313beee58f5ea3b0995392c4a6b0d1766d",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x42cba0",
+          "evidence_id": "ev_54626e5c9d021b058bdd218aec92c839b4cec312f8c66a80de8e19625937e9f1",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42cba0.txt",
+          "payload_sha256": "3fbb76479589a93dbebaf31ec365962d4b9bba1c91a5b22f1796582a470baebb",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x430400",
+          "evidence_id": "ev_2af873cf5c31f442b5c1af60d4c4f1650b9c27ca8fd4158c34d13c1f0bee7baf",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x430400.txt",
+          "payload_sha256": "6e738734e7ef033a6915c4cdb5f71655b110e402fc079e525c2b1c80ab7daa32",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W04",
+      "title": "조상 delta 누적",
+      "evidence_type": "static_decompilation",
+      "observed": "파일/트리맵 노드의 +0x30/+0x38에 변화량을 더하고 부모 포인터만 따라 올라간다.",
+      "optimization_effect_inference": "파일 하나의 변화에 매번 전체 subtree 합산을 피한다.",
+      "mac_mapping": "기존 scanner ancestor delta와 same-topology page 갱신에 일부 반영되어 있다.",
+      "limitations": "hard-link inode dedup 또는 폴더 메타데이터 기여를 추가하는 근거가 아니다.",
+      "references": [
+        {
+          "address": "0x405a00",
+          "evidence_id": "ev_e10ccfd2798296de840e3be50630adf85369438d8162a4dd4f73b75febf78557",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x405a00.txt",
+          "payload_sha256": "22ef510a5308c00a3da58c13e40f6c5d99d5f5f1ce2ad1cffd4245b707f32386",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x405260",
+          "evidence_id": "ev_032ccc67fac395b2f3bb2fd4a444afd825737d761c3dd843dea2efd33330ebc0",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x405260.txt",
+          "payload_sha256": "af6608a1a11642e4fb631897ef90d7fb70e67d403de070458a329456009d1115",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x4667a0",
+          "evidence_id": "ev_7152a894d66bd19b388f259f09e6d27edfdc2aa6b77b3388c6cac7f9656e869c",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4667a0.txt",
+          "payload_sha256": "2887216d8332f208c0a5006c309993f08e8ed03e1de91f4282e21b4497214e42",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W05",
+      "title": "기존 형제 정렬의 변경 항목 재배치",
+      "evidence_type": "static_decompilation",
+      "observed": "정렬 유지 옵션과 node+0x43 상태가 참이면 변경 자식 IndexOf 후 이웃 크기를 비교하여 TList.Exchange한다. 미정렬 분기는 전체 인접 비교 pass가 있다.",
+      "optimization_effect_inference": "이미 정렬된 목록을 변경 자식 주변에서 복구한다.",
+      "mac_mapping": "projection/geometry에서 모든 형제를 매번 sorted하는 경로의 후속 최적화 근거.",
+      "limitations": "IndexOf와 이동은 선형일 수 있다. O(logN) 업데이트라고 부르지 않는다.",
+      "references": [
+        {
+          "address": "0x4667a0",
+          "evidence_id": "ev_7152a894d66bd19b388f259f09e6d27edfdc2aa6b77b3388c6cac7f9656e869c",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4667a0.txt",
+          "payload_sha256": "2887216d8332f208c0a5006c309993f08e8ed03e1de91f4282e21b4497214e42",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W06",
+      "title": "변경 의존성에 따른 재필터 제한",
+      "evidence_type": "static_decompilation",
+      "observed": "태그 재적용은 isTagInvolved일 때만 applyFilterTo한다. nodeModified는 포함 결과·재필터 필요 분기와 변경 범위를 사용한다.",
+      "optimization_effect_inference": "표시색 변경과 멤버십 변화가 필요한 변경을 구별한다.",
+      "mac_mapping": "tag를 안 쓰는 filter에서 무조건 전체 membership을 다시 계산하는 비용을 줄일 후보.",
+      "limitations": "모든 metadata 의존성을 완성한 DAG나 high-byte의 모든 의미를 규명한 것은 아니다.",
+      "references": [
+        {
+          "address": "0x430400",
+          "evidence_id": "ev_2af873cf5c31f442b5c1af60d4c4f1650b9c27ca8fd4158c34d13c1f0bee7baf",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x430400.txt",
+          "payload_sha256": "6e738734e7ef033a6915c4cdb5f71655b110e402fc079e525c2b1c80ab7daa32",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x42df10",
+          "evidence_id": "ev_066d0b220907c4089dc1e4ebffdda389c8d5d922892f2ea0d3d88a0db84271dc",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42df10.txt",
+          "payload_sha256": "8b39ec9f37ae452f352a23a6be92bf4b8f274bcc3fb502c7c3b427f1131c773b",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x444870",
+          "evidence_id": "ev_15b7982c3b5ee3b855894ab93563f7ca51e6e0afd0fd02ea8e78354a89962a41",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x444870.txt",
+          "payload_sha256": "db9aa1a69a18659f6ac097997ceb65ee9fc1d8059e08cc43daedec9a513ea1d6",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W07",
+      "title": "상속 태그 context의 재귀 전달",
+      "evidence_type": "static_decompilation",
+      "observed": "subtree 시작의 inherited tag를 구하고 updateFiltering 재귀에 ownTag|inheritedMask를 넘긴다.",
+      "optimization_effect_inference": "bulk filter 중 각 파일마다 같은 태그 조상을 다시 순회하는 일을 줄인다.",
+      "mac_mapping": "Mac packed context의 태그 OR 의미는 대응하며 MCP bulk query에도 적용 후보.",
+      "limitations": "원본의 folder matcher는 부모 재귀가 남는다. 모든 폴더 조건 사전 계산·1byte 배열 자체는 Mac 구현이다.",
+      "references": [
+        {
+          "address": "0x459170",
+          "evidence_id": "ev_562c3d17a1e6dc585f3b79fe82a30f627f6faef724f6fe654115a34899512532",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x459170.txt",
+          "payload_sha256": "4440e87558058fcd6fb1bc2b2a821b21d9283cb7a90299671b51ef0c174d166f",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x46a490",
+          "evidence_id": "ev_2ca77b3b513bbe7a458b603e55564e044e7616d195d3d26386de64deb8fe409b",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x46a490.txt",
+          "payload_sha256": "f37dfdb9fb27c809f91f6939318fe2313beee58f5ea3b0995392c4a6b0d1766d",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x406ad0",
+          "evidence_id": "ev_09bfe0b650b6ea3b8345bd98f827d05d8bf5724ec6c9c2b0fe535084d58eb287",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x406ad0.txt",
+          "payload_sha256": "283ab149b61a10f8567ac086a236602a67fd63057117b5708a5ec3039d58dc81",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x408670",
+          "evidence_id": "ev_676b548ba467b73830a9e7a9dc67a42f115c3106f416421be0b8cd1e49ebd68a",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x408670.txt",
+          "payload_sha256": "c04af567c9efd7bd867446c8f038e34fdd989d4ff7c194e76e32669295b666b4",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W08",
+      "title": "오래된 필터 작업 취소·교체",
+      "evidence_type": "static_decompilation",
+      "observed": "새 필터 전에 Terminate→WaitFor→해제한다. 재귀/노드 갱신 사이에서 취소 flag와 detached 상태를 확인한다.",
+      "optimization_effect_inference": "버려질 필터가 끝까지 진행하지 않도록 한다.",
+      "mac_mapping": "기존 LatestWorker의 취소 계약과 대응. 취소 검사 전 큰 sort 등은 별도 개선 후보.",
+      "limitations": "원본은 WaitFor를 사용한다. lock-free나 실행1/대기1 mailbox 자체가 원본 기법이라는 근거는 없다.",
+      "references": [
+        {
+          "address": "0x42cba0",
+          "evidence_id": "ev_54626e5c9d021b058bdd218aec92c839b4cec312f8c66a80de8e19625937e9f1",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42cba0.txt",
+          "payload_sha256": "3fbb76479589a93dbebaf31ec365962d4b9bba1c91a5b22f1796582a470baebb",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x429020",
+          "evidence_id": "ev_f1287c10b10a8905e1eed9b2ad3fe3110864f9297e7923bab2491d89fc63530f",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x429020.txt",
+          "payload_sha256": "dd4f78dccb29d75bb3d05241613d6ee6fa458e644e3884d51aed0628c0bf10e6",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x46a490",
+          "evidence_id": "ev_2ca77b3b513bbe7a458b603e55564e044e7616d195d3d26386de64deb8fe409b",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x46a490.txt",
+          "payload_sha256": "f37dfdb9fb27c809f91f6939318fe2313beee58f5ea3b0995392c4a6b0d1766d",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W09",
+      "title": "변경 요청 중복·조상 packing과 FIFO",
+      "evidence_type": "static_decompilation",
+      "observed": "TList 뒤에 요청을 추가하고 중첩 전체쌍 비교로 중복/덮이는 하위 요청을 제거한다. 조상 판정은 부모 포인터를 따른다. dequeue는 index0 Get/Delete다.",
+      "optimization_effect_inference": "같은/포함된 범위의 중복 refilter를 줄이고 독립 분기를 남긴다.",
+      "mac_mapping": "Mac RefreshQueue의 의미 계약. trie/radix는 Mac 별도 구현 선택이다.",
+      "limitations": "이 본문은 고속 trie/hash가 아니다. 원본 큐의 점근적 우월성이나 실제 Windows 처리 시간을 주장하지 않는다.",
+      "references": [
+        {
+          "address": "0x42e130",
+          "evidence_id": "ev_489afac4d740e9ebddf2a3df7d3385bc7ef52460fde09b7242f6a416adb440e1",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42e130.txt",
+          "payload_sha256": "e8470d01a82123ff94986d500170fb05c5cac678bbd8e103254ce836fc563808",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x408260",
+          "evidence_id": "ev_3f7f9c040cecda8594db39b54ed88de17b48892062eb4e51ee29e48e86115c73",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x408260.txt",
+          "payload_sha256": "dfaab5c4d2aa17e0a4cf0c24f744d87f6b1530b5b60a465cc170b2c024ab701d",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x42c9e0",
+          "evidence_id": "ev_08ce7fbb1815faa493ee978928cd9fd2a6396356f2b44f9af339240caf0a1d25",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42c9e0.txt",
+          "payload_sha256": "439adaccfbdf2b94a2f8ea59c09992cd7dddc081a21a1b4b40613cb4266b8f6b",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W10",
+      "title": "repaint 병합·간격 조절·가려진 창 생략",
+      "evidence_type": "static_decompilation",
+      "observed": "requestRepaint는 요청 강도를 max로 병합하고 layout dirty를 유지한다. timer는 pending과 visible region 조건을 확인한다. DynaSmooth는 갱신 간격을 조절한다.",
+      "optimization_effect_inference": "동일 시점의 중복 paint와 보이지 않는 화면의 갱신을 줄일 수 있다.",
+      "mac_mapping": "AppKit occlusion/dirty state 기반 scheduler 후보.",
+      "limitations": "DynaSmooth는 위치 보간 자체가 아니다. 실제 Windows 프레임율·모든 refresh interval은 미측정.",
+      "references": [
+        {
+          "address": "0x429140",
+          "evidence_id": "ev_0e61104ae6c66269d8f23f10e721133304922f0cdf486e740bdfe6663c0286e3",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x429140.txt",
+          "payload_sha256": "1e7adcd1dc25a65adf2acfb7f880c77e449d30d5920cc40c128c4501bee1df13",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x42c760",
+          "evidence_id": "ev_13bfacca86b66bc7212b944368cab6dfffbc4d6e7d12b72973b0233c6262a4a0",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42c760.txt",
+          "payload_sha256": "92845714b744b3b11a2f2b90c66f6b4fb0334cf84656172ff18cdfb6e39f07ac",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x42cd00",
+          "evidence_id": "ev_bb3b2f1661f47a2e96685ba226182f1756ad30f3e5da65172076cb7caa81bc36",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42cd00.txt",
+          "payload_sha256": "6df678ec4312402d7e4df2c27757909c2abc452f77c23f2ca81587e14882e317",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x42c6a0",
+          "evidence_id": "ev_e4ad33b85df34a6d89533468f27a4a9f38eeb6fc6f0515e1d84881a6c7c597a1",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42c6a0.txt",
+          "payload_sha256": "b02bdbb2b4125c654d6fef4944df8160704251ec8526de53f9bbe48c4150c641",
+          "new_in_this_pass": true
+        }
+      ]
+    },
+    {
+      "id": "W11",
+      "title": "layout/paint 분리와 표시 재귀 제한",
+      "evidence_type": "static_decompilation",
+      "observed": "force-layout flag일 때 setCoords/layout하고 그렇지 않으면 저장된 기하를 paint한다. depth·선택 경로·크기·visible/expanded 상태로 재귀를 제한한다.",
+      "optimization_effect_inference": "불필요한 전체 배치와 보이지 않는 하위 paint를 피한다.",
+      "mac_mapping": "기존 geometryKey를 보강하고 unchanged branch geometry 재사용 후보.",
+      "limitations": "모든 작은 양수 항목을 배치 입력에서 버려도 된다는 근거가 아니다.",
+      "references": [
+        {
+          "address": "0x4295a0",
+          "evidence_id": "ev_e118aa88696dc12d66060b7fd3dd91533537dfb764f65360b63ded093c1d183a",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4295a0.txt",
+          "payload_sha256": "9b63c952b61ec6d8bfecab73362ae8f439dcd8cdac97b91724bc25fbaa0ae589",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x468db0",
+          "evidence_id": "ev_dc6466e30198d13b3d07a6dbc875d9ac35aa12a1be06834e99d52851e5e55d1d",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x468db0.txt",
+          "payload_sha256": "d91214b579eccd55b2a4dce839c0d0dd9037e6c006c00f47b22e55fbf7f24960",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x469770",
+          "evidence_id": "ev_d68cea8a9e63cb7c1c08f47f663240d4e5c0dbf163e79a4ab04019bf48d5e345",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x469770.txt",
+          "payload_sha256": "dc8a4028f3031460d6bcf848e51cb3db9044c019c7e9294d88400c053f22519a",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W12",
+      "title": "palette 포인터 캐시와 명시적 무효화",
+      "evidence_type": "static_decompilation",
+      "observed": "paint는 node+0x50가 null일 때 palette를 얻어 보관한다. resetCache는 포인터를 비우고 자식 재귀, configChanged는 대응 virtual slot을 호출한다.",
+      "optimization_effect_inference": "반복 색상 테이블 취득을 줄이고 설정 변경 시 갱신한다.",
+      "mac_mapping": "기존 Mac paletteCache와 대응. UI 표현별 key/invalidation을 유지한다.",
+      "limitations": "cache pointer가 픽셀 전체 또는 node geometry cache라는 뜻은 아니다.",
+      "references": [
+        {
+          "address": "0x469770",
+          "evidence_id": "ev_d68cea8a9e63cb7c1c08f47f663240d4e5c0dbf163e79a4ab04019bf48d5e345",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x469770.txt",
+          "payload_sha256": "dc8a4028f3031460d6bcf848e51cb3db9044c019c7e9294d88400c053f22519a",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x46bb00",
+          "evidence_id": "ev_3601438fc640a8f94699d8606e70810192d08f6146b5314ebb8cfc0dc56f1efa",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x46bb00.txt",
+          "payload_sha256": "c899b559ec0cc6b1dd7e351055ad978d2cbbddb2b9d7c5c66583450937b784d6",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x427ff0",
+          "evidence_id": "ev_b83c37db5be1e53f3553930daf7d225b6b44c8320790690574e78938dad2712e",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x427ff0.txt",
+          "payload_sha256": "e45ea1adce91e83d5122d0f7b5299e86f3fa1824901f27f998dfc6999bb5606b",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W13",
+      "title": "문자열 치수 memoization",
+      "evidence_type": "static_decompilation",
+      "observed": "TTextBox.setText는 다른 문자열일 때만 dirty(+0x18)를 켠다. getSize는 dirty/font size/bold 변경 때만 TextExtent하고 저장된 size를 반환한다.",
+      "optimization_effect_inference": "같은 텍스트의 글자 폭/높이 측정 반복을 줄인다.",
+      "mac_mapping": "MapItem sizeWidth 외 제목·글꼴별 측정 수명 분리 후보.",
+      "limitations": "검사 key는 관찰된 font size와 bold bit다. 모든 font 속성을 포함한 완전한 key라고 확대하지 않는다.",
+      "references": [
+        {
+          "address": "0x4352c0",
+          "evidence_id": "ev_da10aa7510cfde41bfe062643b44ca73d832d00bba267e1a607f618652e92191",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4352c0.txt",
+          "payload_sha256": "f8cf263dba0380758fbc92b8cc8aad3cd65d15ec9f731ea6571332f50e3a2359",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x435340",
+          "evidence_id": "ev_7e6ae2c7dd953543513ad0faf492c9f1590cdf59a0a301ebda9fea5d3f27b00e",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x435340.txt",
+          "payload_sha256": "64b7da79d35fd2a8fb60bd284bc6302fe954c2801341c4aa206c8271e4e20c3e",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x468db0",
+          "evidence_id": "ev_dc6466e30198d13b3d07a6dbc875d9ac35aa12a1be06834e99d52851e5e55d1d",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x468db0.txt",
+          "payload_sha256": "d91214b579eccd55b2a4dce839c0d0dd9037e6c006c00f47b22e55fbf7f24960",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x469770",
+          "evidence_id": "ev_d68cea8a9e63cb7c1c08f47f663240d4e5c0dbf163e79a4ab04019bf48d5e345",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x469770.txt",
+          "payload_sha256": "dc8a4028f3031460d6bcf848e51cb3db9044c019c7e9294d88400c053f22519a",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W14",
+      "title": "지속 tooltip 객체와 dirty rebuild",
+      "evidence_type": "static_decompilation",
+      "observed": "view+0x7f0의 tooltip 객체를 계속 사용한다. setRows는 rows를 저장하고 +0x40 dirty를 켠다. rebuild는 dirty가 아니면 return한다. Paint는 이 객체를 그린다.",
+      "optimization_effect_inference": "매 paint마다 다수 tooltip 객체를 생성하는 구조를 피하고 layout 재계산을 분리한다.",
+      "mac_mapping": "Mac tooltip 수명 분리 방향의 근거. AX 객체 재사용은 Mac 플랫폼 대응이다.",
+      "limitations": "setRows는 같은 rows인지 비교하지 않고 dirty를 켠다. Paint 일부 TextExtent도 남아 있어 모든 측정을 생략한다고 말하지 않는다.",
+      "references": [
+        {
+          "address": "0x429aa0",
+          "evidence_id": "ev_7bfcf25248b748ed36ba74fd008daff038dc70ae7e9c0ec717253444c54537a3",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x429aa0.txt",
+          "payload_sha256": "9128e5f0cbeea808c82117011662ace013d364513b22b73f8aaa949a17552845",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x450420",
+          "evidence_id": "ev_97d4735ba4aa74ad29faa501c06ed973150ae050758662f30d613487bc49bec0",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x450420.txt",
+          "payload_sha256": "c1163096440e8b9fa1ab4233cca31044ae99ad025cc4a171060445f391d74a08",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x450590",
+          "evidence_id": "ev_b07efc8e74afb867610413a3da0f184319b314ec077c0cb80cc98802ecd2dbd8",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x450590.txt",
+          "payload_sha256": "3a54cee41578343d10328d899c0817ed54c484739a14c86efb81912b3bbafad0",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x450b10",
+          "evidence_id": "ev_86a23fdc9f416ce8a863c3c8ac7c04dade24bebf1ed7978d799141d8b4734115",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x450b10.txt",
+          "payload_sha256": "5ff00561a0e112861d1527287d48c27ad3c813b3df0c180d981216eb5a6fdf32",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x4295a0",
+          "evidence_id": "ev_e118aa88696dc12d66060b7fd3dd91533537dfb764f65360b63ded093c1d183a",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4295a0.txt",
+          "payload_sha256": "9b63c952b61ec6d8bfecab73362ae8f439dcd8cdac97b91724bc25fbaa0ae589",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W15",
+      "title": "노드 재활용 pool과 busy 참조 제외",
+      "evidence_type": "static_decompilation",
+      "observed": "FS file node와 TM file node newNode는 recycle can을 먼저 확인한다. 없으면 각각 0x70/200 bytes 객체를 할당한다. pool은 연결 포인터로 보관하며 busy 목록의 객체를 건너뛴다.",
+      "optimization_effect_inference": "반복 노드 생성/제거 시 allocation과 객체 초기화 비용을 줄일 수 있다.",
+      "mac_mapping": "Swift snapshot page·payload lifetime에 맞춘 재사용 설계 참고. raw pointer pool을 그대로 이식하지 않는다.",
+      "limitations": "전역 allocator 전체가 이 pool이라는 의미가 아니며 retained pool 크기/실측 절감량은 미측정.",
+      "references": [
+        {
+          "address": "0x404ee0",
+          "evidence_id": "ev_0128c32f876e1350caf06dccbb243e1be8b69f2fbaab1ce7e02f5bad7668c658",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x404ee0.txt",
+          "payload_sha256": "478bc5d49c3a9f10440b124ea4bef1c678796693458eaa26eb602f1a67c9a60e",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x4658e0",
+          "evidence_id": "ev_5223c2505a0ed0ceb433714bb710d7033b2503e29e175359ce0a98b36c5a4523",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4658e0.txt",
+          "payload_sha256": "7e6d4eaed1bd046ba5557a926dcdcaf6a0d92fa204635ac4ee5e730b533ff437",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x448380",
+          "evidence_id": "ev_74ccb65ee0b3cf0b415752fe5a17dc6568c927bcb36f2e801a070a427b0c0eeb",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x448380.txt",
+          "payload_sha256": "cef4606da1785d1c08f3f02c70596960cc22e1ad5ca35629be14ba7b2ca54ae3",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x448450",
+          "evidence_id": "ev_588535e7866871de4f8796550d56df3b28cee68869dd4aa8b96ff155b954e216",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x448450.txt",
+          "payload_sha256": "a311e302cbc589d63c598177239d61a9f2d309e21a789b9f2801daaea84e002f",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x447fb0",
+          "evidence_id": "ev_780313d44d1a6969e68ce56aab8fa501a1325419cff4498ef6a43d866fc3f42f",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x447fb0.txt",
+          "payload_sha256": "74022d97156574c4bd7069033a2a12ca264eead45c1d7e2ba9f252145fe04758",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x448050",
+          "evidence_id": "ev_2f18e534601445166c81850a63c69d47be9c6d303f538171b6cf1f5f9248d9ee",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x448050.txt",
+          "payload_sha256": "2d9916bdd40260dff067429c39baa22b9a41a5268247d844de4cd17cb8b25685",
+          "new_in_this_pass": true
+        }
+      ]
+    },
+    {
+      "id": "W16",
+      "title": "상한 있는 스캔 스레드 pool·event 대기",
+      "evidence_type": "static_decompilation",
+      "observed": "working count를 maxConcurrency와 비교한다. pooled thread가 있으면 재설정하고 event로 깨운다. 완료 worker는 pooled list로 돌아가고 Execute는 event wait한다.",
+      "optimization_effect_inference": "스레드 생성 반복과 idle busy-loop를 줄이는 구조다.",
+      "mac_mapping": "bounded worker와 재사용을 참고하되 Mac syscall/I/O 특성을 측정해야 한다.",
+      "limitations": "고정 원본 data maxConcurrency의 4 bytes는 01 00 00 00이다. 기본부터 여러 스레드가 병렬 스캔한다고 주장하지 않는다.",
+      "references": [
+        {
+          "address": "0x45a7c0",
+          "evidence_id": "ev_472c33e96ae7d779feca421b4927a9248646059d585e5918c5a1ca0eec5cac56",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x45a7c0.txt",
+          "payload_sha256": "d7a7d2ebb83a05b229a42e32afe90533b2003ddf88672f8c096e63edebf9791a",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x459e30",
+          "evidence_id": "ev_f862eeb2003afa1d1090d17f1b3d9e8b0366df49c159a733ad09ea731ead6828",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x459e30.txt",
+          "payload_sha256": "cd7bc7e0eb2dcc77e7cf2d04555bb509385ad6caab5a11a548342722eb85c308",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x459a00",
+          "evidence_id": "ev_bb8f9153ddb74c4edd6f6708d358954c7441019000426b85247f622a65cfb24c",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x459a00.txt",
+          "payload_sha256": "97c40f12f7b54818e85ff98e8eb9c036987ee32dcdfb94b48fb80e4ff0343c0e",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W17",
+      "title": "OS 디렉터리 열거의 큰 버퍼 경로",
+      "evidence_type": "static_decompilation",
+      "observed": "global branch에서 FindFirstFileExW(FindExInfoBasic,...,flags=2)를 호출하고 FindNextFileW로 이어간다. 다른 branch에는 FindFirstFileW가 있다.",
+      "optimization_effect_inference": "flag2는 Windows LARGE_FETCH로 큰 디렉터리 query buffer를 요청하는 경로다.",
+      "mac_mapping": "macOS bulk enumeration/stat 접근을 별도 측정할 후보.",
+      "limitations": "실행 중 어느 branch가 선택됐는지나 모든 파일시스템에서 더 빠른지는 미확인.",
+      "references": [
+        {
+          "address": "0x455be0",
+          "evidence_id": "ev_c4d89b45eb9e66208230dc7096e4c43e638dd01b9af05b0b7fb33d1c50e56fda",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x455be0.txt",
+          "payload_sha256": "3c5cc18219765496c245b9e5b75baf312a7239a8fcd1cc04741cba69e5314081",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W18",
+      "title": "경로 segment 저장·필요 시 full path 조합",
+      "evidence_type": "static_decompilation",
+      "observed": "init은 부모(+0x10)와 segment(+0x20)를 저장한다. getFullPath는 부모를 재귀 호출하고 separator와 현재 segment를 합친다.",
+      "optimization_effect_inference": "모든 노드에 전체 조상 경로를 상주시키는 저장과 다른 구조다.",
+      "mac_mapping": "현재 Swift path/name 전체 문자열 저장 비용을 줄일 장기 후보.",
+      "limitations": "full path 조합 CPU·깊은 경로 비용도 있다. 프로그램 전체에 full path cache가 전혀 없다는 증명은 아니다.",
+      "references": [
+        {
+          "address": "0x405260",
+          "evidence_id": "ev_032ccc67fac395b2f3bb2fd4a444afd825737d761c3dd843dea2efd33330ebc0",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x405260.txt",
+          "payload_sha256": "af6608a1a11642e4fb631897ef90d7fb70e67d403de070458a329456009d1115",
+          "new_in_this_pass": true
+        },
+        {
+          "address": "0x4061b0",
+          "evidence_id": "ev_53fbba43bea5272f19c68739b36d4836b54fd700ca4215f2d2d3207543f20840",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x4061b0.txt",
+          "payload_sha256": "7b767925881e066291a9535e2f12327cbeced8f12cdb87ed8c00f0473740bd4d",
+          "new_in_this_pass": true
+        }
+      ]
+    },
+    {
+      "id": "W19",
+      "title": "파일 stream에 순차 export",
+      "evidence_type": "static_decompilation",
+      "observed": "SNS writer는 FILE*에 필드별 fwrite, 종료 writer는 end bytes를 쓴다. TXT exportNode는 FILE*가 있으면 행을 UTF8로 fprintf하고 별도 string destination이 있으면 거기에 append한다.",
+      "optimization_effect_inference": "파일 저장 경로에서 전체 최종 출력 문자열/Data를 요구하지 않는 구조다.",
+      "mac_mapping": "ArtifactWorker/Report/SNS에 sink 기반 writer를 추가할 원본 근거.",
+      "limitations": "원본에도 행 buffer/정렬 TList/재귀와 string destination 경로가 있다. 전체 O(1) 메모리라고 주장하지 않는다. SNS decompiler warning도 보존한다.",
+      "references": [
+        {
+          "address": "0x408a80",
+          "evidence_id": "ev_5600410e604de05627fef9296308e383109246c061535bfd5820f2ebea6d9efd",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x408a80.txt",
+          "payload_sha256": "69625cc7821fa2e3962e65c1f378e786711b5dd2bb3bc2cd6dd2614c74edc0a2",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x408a10",
+          "evidence_id": "ev_464e3bbb8fe25861c64950e95c54f00bdf24112a148f75b6854fcaf7d70d1b89",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x408a10.txt",
+          "payload_sha256": "f8769af56d26488235a288762e4de3d6d71f13b14c425701d2dede541b20ef04",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x415eb0",
+          "evidence_id": "ev_84fc56940ebeb03eec09865d84070300b313fea98b778d6bf137e1a95b032e08",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x415eb0.txt",
+          "payload_sha256": "f2641de546e782a599c84fdd0615c58ad9d6b30344c3f62b36e4d26db74026c0",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x416650",
+          "evidence_id": "ev_a6d1af9a96f7cb3db3ef2c664531f49545eb7c920954c459730b1e99719be895",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x416650.txt",
+          "payload_sha256": "ad3b23ae0c2d89e77bb390f9d418c89bb3e872fab0398c41a69641d5026fad09",
+          "new_in_this_pass": false
+        }
+      ]
+    },
+    {
+      "id": "W20",
+      "title": "확대 bitmap 재사용과 옵션별 재렌더",
+      "evidence_type": "static_decompilation",
+      "observed": "zoom은 시작/목표 bitmap을 준비해 변환해서 그리는 경로가 있고 real-zoom flag일 때는 loop에서 refreshBitmap을 한다. 같은 depth focus 변경은 zoom을 생략하는 분기가 있다.",
+      "optimization_effect_inference": "기본 확대 과정의 반복 트리 rendering을 줄일 수 있다.",
+      "mac_mapping": "원본 곡선/500ms를 유지하며 bitmap/presentation 캐시 정책을 참고한다.",
+      "limitations": "일반 재배치의 모든 rect 위치 보간은 아직 입증하지 못했다. Mac 일반 애니메이션은 사용자 요청 UI 구현이다.",
+      "references": [
+        {
+          "address": "0x428bb0",
+          "evidence_id": "ev_9b22e4002a554cb7851c86759c2f029061fb069e7bafad02df4363d5b0d6c33f",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x428bb0.txt",
+          "payload_sha256": "2e9ecfc68b6b791035c84c7483a0221a470d51a05f1ea6676a4932eb6d701974",
+          "new_in_this_pass": false
+        },
+        {
+          "address": "0x42bb40",
+          "evidence_id": "ev_06ba8eff222c5a22a09dbc4ec8b1bf1ef1d87d14b56c530cd1d60c950e67432b",
+          "operation": "procedure_pseudo_code",
+          "pseudocode_path": "docs/validation/windows-optimization-functions/0x42bb40.txt",
+          "payload_sha256": "1875e477dd8fe62608692081e39807f689005c3b131c45f603675ec048a00283",
+          "new_in_this_pass": false
+        }
+      ]
+    }
+  ],
+  "corroborating_evidence": [
+    {
+      "evidence_id": "ev_018f329a697c13dfa22bd6f3878f8e81d28500d1fcb2937a01b198c2e4674dc1",
+      "operation": "read_bytes",
+      "parameters": {
+        "address": "0x924580",
+        "length": 4
+      }
+    },
+    {
+      "evidence_id": "ev_588e3c5b935d03f59ebeeb35b459fe5b1f621baba20a3cd8ea4277919a08953c",
+      "operation": "read_bytes",
+      "parameters": {
+        "address": "0x9266f8",
+        "length": 8
+      }
+    },
+    {
+      "evidence_id": "ev_778131abab47eebc5038d4fb1f6359bae4635bcd6ee17f82870387a3bb1a8e2d",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x4667a0"
+      }
+    },
+    {
+      "evidence_id": "ev_7df1e917aff362d97fa5b8d49e7f056bb4050494cc8f8ab4f48461055288949d",
+      "operation": "read_bytes",
+      "parameters": {
+        "address": "0x9268c8",
+        "length": 8
+      }
+    },
+    {
+      "evidence_id": "ev_c8d0c3ea2a24d1d9d5396148f9cd314dc3605f8509ee255f75b070fb3b3b4d1b",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x45a7c0"
+      }
+    }
+  ],
+  "unknowns": [
+    "Windows runtime performance and selected enumeration branch",
+    "runtime concurrency changes, if any",
+    "automatic persistent disk cache across restart",
+    "general relayout rectangle interpolation",
+    "original high-speed trie/hash request queue is not supported by observed list implementation",
+    "all indirect callers and hidden code paths"
+  ],
+  "api_semantics_sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-findfirstfileexw",
+      "purpose": "flags=2 LARGE_FETCH semantics only, not proof SpaceSniffer called it"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-getclipbox",
+      "purpose": "clip region semantics only, not a runtime occlusion observation"
+    }
+  ]
+}

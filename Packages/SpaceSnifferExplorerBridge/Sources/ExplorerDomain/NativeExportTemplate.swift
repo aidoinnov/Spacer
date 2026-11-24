@@ -1,0 +1,1 @@
+../../../../Sources/SpaceSnifferCore/NativeExportTemplate.swift

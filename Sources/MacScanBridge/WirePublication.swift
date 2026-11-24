@@ -1,0 +1,1 @@
+../../Packages/SpaceSnifferExplorerBridge/Sources/ExplorerService/Platform/WirePublication.swift

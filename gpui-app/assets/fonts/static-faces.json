@@ -1,0 +1,29 @@
+{
+  "tool": "fonttools 4.68.0",
+  "source": "NotoSansKR.ttf",
+  "sourceSha256": "194018e6b2b293a7964f037b25c0249ce1418bc9ab3c971060a03aa57861e252",
+  "license": "OFL.txt",
+  "family": "Noto Sans KR",
+  "faces": [
+    {
+      "path": "NotoSansKR-Regular.ttf",
+      "weight": 400,
+      "sha256": "a5de2fc691da377bda97300f151260362cdb606f8809e18904d3ebe251286f07"
+    },
+    {
+      "path": "NotoSansKR-Medium.ttf",
+      "weight": 500,
+      "sha256": "c1b5d4aabaf5ef7d2d11ac745e15feecc60d1ac04130425323d7ac1fbef4d776"
+    },
+    {
+      "path": "NotoSansKR-SemiBold.ttf",
+      "weight": 600,
+      "sha256": "b391df024d3f43f7c567dbbdaffe2efea2ab8cceaa5defb9d95705b0ded50564"
+    },
+    {
+      "path": "NotoSansKR-Bold.ttf",
+      "weight": 700,
+      "sha256": "fd31f7804740d98794cf2891be8f7960f6d84a9c14446d233ba7e58719e9bf48"
+    }
+  ]
+}

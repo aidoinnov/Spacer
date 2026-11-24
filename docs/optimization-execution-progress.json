@@ -1,0 +1,946 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "scope": "active59 중 59개 추가 완료; 전체 116/116. native Space/가림 matrix를 포함한 이번 실행 acceptance 완료; Windows 동적 동등성 R01~R15 별도.",
+  "completed_steps": {
+    "G00.01": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md",
+        "docs/SCAN_RESOURCE_VALIDATION.md",
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "G00.05": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "G00.09": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "A00.01": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "A00.02": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "A00.03": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "A00.04": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "A00.05": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "A00.06": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "A00.07": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "A00.08": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "A00.10": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md",
+        "docs/SCAN_RESOURCE_VALIDATION.md",
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "B01.01": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "B01.02": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "B01.03": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "B01.04": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "B01.05": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "B01.07": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "B01.08": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "B02.04": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "B02.05": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "G90.01": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md",
+        "docs/SCAN_RESOURCE_VALIDATION.md",
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "G90.02": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md",
+        "docs/SCAN_RESOURCE_VALIDATION.md",
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "G90.03": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md",
+        "docs/SCAN_RESOURCE_VALIDATION.md",
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "G99.01": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md",
+        "docs/SCAN_RESOURCE_VALIDATION.md",
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "G99.03": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md",
+        "docs/SCAN_RESOURCE_VALIDATION.md",
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "G99.04": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md",
+        "docs/SCAN_RESOURCE_VALIDATION.md",
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "G99.05": {
+      "evidence": [
+        "docs/PROJECTION_SESSION_VALIDATION.md",
+        "docs/SCAN_RESOURCE_VALIDATION.md",
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "이번 구현 범위의 산출물/설계/검사만 완료. 상위 작업과 다른 E/B 작업의 완료를 뜻하지 않는다."
+    },
+    "E01.10": {
+      "evidence": [
+        "docs/SCAN_RESOURCE_VALIDATION.md"
+      ],
+      "note": "선택한 private context 및 scan admission 범위. node/page pool·ArtifactWorker 전체 격리 완료는 아님."
+    },
+    "E02.03": {
+      "evidence": [
+        "docs/SCAN_RESOURCE_VALIDATION.md"
+      ],
+      "note": "선택한 private context 및 scan admission 범위. node/page pool·ArtifactWorker 전체 격리 완료는 아님."
+    },
+    "E02.04": {
+      "evidence": [
+        "docs/SCAN_RESOURCE_VALIDATION.md"
+      ],
+      "note": "선택한 private context 및 scan admission 범위. node/page pool·ArtifactWorker 전체 격리 완료는 아님."
+    },
+    "E02.05": {
+      "evidence": [
+        "docs/SCAN_RESOURCE_VALIDATION.md"
+      ],
+      "note": "선택한 private context 및 scan admission 범위. node/page pool·ArtifactWorker 전체 격리 완료는 아님."
+    },
+    "E02.06": {
+      "evidence": [
+        "docs/SCAN_RESOURCE_VALIDATION.md"
+      ],
+      "note": "선택한 private context 및 scan admission 범위. node/page pool·ArtifactWorker 전체 격리 완료는 아님."
+    },
+    "E02.07": {
+      "evidence": [
+        "docs/SCAN_RESOURCE_VALIDATION.md"
+      ],
+      "note": "선택한 private context 및 scan admission 범위. node/page pool·ArtifactWorker 전체 격리 완료는 아님."
+    },
+    "A00.09": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "E02.02": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "E02.10": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "B07.01": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "B07.02": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "B07.03": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "B07.04": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "B07.05": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "B07.06": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "B07.07": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "B07.08": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "B07.09": {
+      "evidence": [
+        "docs/ARTIFACT_STREAMING_VALIDATION.md"
+      ],
+      "note": "실제 stream/transaction/executor와 기록된 검증 범위 완료. 전체 Windows runtime/long-volume 검증 완료 아님."
+    },
+    "B08.01": {
+      "evidence": [
+        "docs/REFRESH_QUEUE_VALIDATION.md"
+      ],
+      "note": "배열 oracle, lexical 경계, FIFO/COW/arena 수명, 5쌍 release metadata probe 완료. 실제 burst 중 active cancel/직접 live retained-byte 관측은 B08.08에 남음."
+    },
+    "B08.02": {
+      "evidence": [
+        "docs/REFRESH_QUEUE_VALIDATION.md"
+      ],
+      "note": "배열 oracle, lexical 경계, FIFO/COW/arena 수명, 5쌍 release metadata probe 완료. 실제 burst 중 active cancel/직접 live retained-byte 관측은 B08.08에 남음."
+    },
+    "B08.03": {
+      "evidence": [
+        "docs/REFRESH_QUEUE_VALIDATION.md"
+      ],
+      "note": "배열 oracle, lexical 경계, FIFO/COW/arena 수명, 5쌍 release metadata probe 완료. 실제 burst 중 active cancel/직접 live retained-byte 관측은 B08.08에 남음."
+    },
+    "B08.04": {
+      "evidence": [
+        "docs/REFRESH_QUEUE_VALIDATION.md"
+      ],
+      "note": "배열 oracle, lexical 경계, FIFO/COW/arena 수명, 5쌍 release metadata probe 완료. 실제 burst 중 active cancel/직접 live retained-byte 관측은 B08.08에 남음."
+    },
+    "B08.05": {
+      "evidence": [
+        "docs/REFRESH_QUEUE_VALIDATION.md"
+      ],
+      "note": "배열 oracle, lexical 경계, FIFO/COW/arena 수명, 5쌍 release metadata probe 완료. 실제 burst 중 active cancel/직접 live retained-byte 관측은 B08.08에 남음."
+    },
+    "B08.06": {
+      "evidence": [
+        "docs/REFRESH_QUEUE_VALIDATION.md"
+      ],
+      "note": "배열 oracle, lexical 경계, FIFO/COW/arena 수명, 5쌍 release metadata probe 완료. 실제 burst 중 active cancel/직접 live retained-byte 관측은 B08.08에 남음."
+    },
+    "B08.07": {
+      "evidence": [
+        "docs/REFRESH_QUEUE_VALIDATION.md"
+      ],
+      "note": "배열 oracle, lexical 경계, FIFO/COW/arena 수명, 5쌍 release metadata probe 완료. 실제 burst 중 active cancel/직접 live retained-byte 관측은 B08.08에 남음."
+    },
+    "B08.08": {
+      "evidence": [
+        "docs/REFRESH_LIFECYCLE_VALIDATION.md"
+      ],
+      "note": "기본 실제 FSEvents→48개 index queue→running control 취소와 실제 Storage weak 해제, stale monitor/root recreation guard, 90 TSAN 검사. deep byte profiler/OS RSS 반환량 또는 장시간 폭주는 범위 밖."
+    },
+    "B05.05": {
+      "evidence": [
+        "docs/ACCESSIBILITY_CACHE_VALIDATION.md"
+      ],
+      "note": "실제 MapAccessibilityCache 경로 identity/ID 재검증·old element owner 약한 수명·pruning·bounded 후보·AppKit 구성 요소 5쌍 비교. 전체 B05/VoiceOver/full-frame 완료 아님."
+    },
+    "B05.06": {
+      "evidence": [
+        "docs/ACCESSIBILITY_CACHE_VALIDATION.md"
+      ],
+      "note": "실제 MapAccessibilityCache 경로 identity/ID 재검증·old element owner 약한 수명·pruning·bounded 후보·AppKit 구성 요소 5쌍 비교. 전체 B05/VoiceOver/full-frame 완료 아님."
+    },
+    "B05.04": {
+      "evidence": [
+        "docs/TOOLTIP_REGISTRY_VALIDATION.md"
+      ],
+      "note": "presentation key와 native 등록 영역 분리, 안정 redraw 재등록 생략, 실제 MapTransition 중간/중단 rect·stale token/id/path·clear/autorelease view 해제 검사. 전체 frame/원본 bitmap cache 미완료."
+    },
+    "G00.03": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/fixtures/manifest.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "G00.06": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B02.02": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B03.03": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "G00.04": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/allocations-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B04.01": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "G00.08": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E01.04": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/reader-motion-final.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B03.01": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B02.03": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "G90.06": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/host-pressure.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B02.01": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E02.09": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E01.03": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "G00.11": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/release-v2-tests.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B04.03": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E01.07": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/reader-motion-final.log",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "G00.07": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/allocations-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B03.07": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E01.05": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E01.09": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/allocations-final/report.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E02.08": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/scan-stall-status.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B04.04": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "G00.10": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/render-dense-final.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "G00.02": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/fixtures/manifest.json",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B05.03": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B03.05": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B02.07": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B04.05": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E02.01": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/scan-stall-sample.txt",
+        "docs/validation/final-optimization-2026-11-09/scan-stall-status.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B03.04": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B03.06": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E01.08": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/reader-motion-final.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B05.01": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/render-allocations-warm/report.json",
+        "docs/validation/final-optimization-2026-11-09/render-dense-final.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B01.06": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B04.02": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B02.06": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B03.02": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E01.06": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/reader-motion-final.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B02.08": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "G90.04": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E01.01": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/allocations-final/report.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B04.06": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "E01.02": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/allocations-final/report.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B03.08": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/mcp-final/results.json"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "B05.02": {
+      "evidence": [
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md",
+        "docs/validation/final-optimization-2026-11-09/final-all-tsan.log"
+      ],
+      "note": "이 step에 해당하는 구현/비교/수명 계약과 관측 범위만 완료. 실제 foreground/Space/마지막 창 및 정식 앱 검증이 남은 다른 step을 완료로 포함하지 않는다. pool 후보는 측정 뒤 미채택도 명시한 결정이다."
+    },
+    "G00.12": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/app-comparison.json",
+        "docs/validation/final-optimization-2026-11-09/render-dense-final.json",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "B01.09": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/paired-final/report.json",
+        "docs/validation/final-optimization-2026-11-09/app-comparison.json",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "B04.07": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/app-comparison.json",
+        "docs/validation/final-optimization-2026-11-09/render-dense-final.json",
+        "docs/validation/final-optimization-2026-11-09/final-126-tsan.log",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "B05.07": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/native-double-click.json",
+        "docs/validation/final-optimization-2026-11-09/reader-motion-final.log",
+        "docs/validation/final-optimization-2026-11-09/final-126-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/hidden-smoke/events.json",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "B05.08": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/render-dense-final.json",
+        "docs/validation/final-optimization-2026-11-09/render-allocations-warm/report.json",
+        "docs/validation/final-optimization-2026-11-09/multiwindow/last-close.json",
+        "docs/validation/final-optimization-2026-11-09/hidden-qa-after-close.json",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "B06.02": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/app-visible-hidden-minimized/report.json",
+        "docs/validation/final-optimization-2026-11-09/hidden-smoke/events.json",
+        "docs/validation/final-optimization-2026-11-09/final-126-tsan.log",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "B06.03": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/app-visible-hidden-minimized/report.json",
+        "docs/validation/final-optimization-2026-11-09/hidden-smoke/events.json",
+        "docs/validation/final-optimization-2026-11-09/final-126-tsan.log",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "B06.04": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/hidden-smoke/events.json",
+        "docs/validation/final-optimization-2026-11-09/main-mcp/results.json",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "B06.05": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/hidden-smoke/events.json",
+        "docs/validation/final-optimization-2026-11-09/native-double-click.json",
+        "docs/validation/final-optimization-2026-11-09/final-126-tsan.log",
+        "docs/validation/final-optimization-2026-11-09/multiwindow/last-close.json",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "B06.06": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/app-visible-hidden-minimized/report.json",
+        "docs/validation/final-optimization-2026-11-09/app-current-state-observations/report.json",
+        "docs/validation/final-optimization-2026-11-09/visibility-cpu.json",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "G90.05": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/lifetime-cycles.json",
+        "docs/validation/final-optimization-2026-11-09/multiwindow/events.json",
+        "docs/validation/final-optimization-2026-11-09/multiwindow/last-close.json",
+        "docs/validation/final-optimization-2026-11-09/final-126-tsan.log",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "G99.02": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/package.json",
+        "docs/validation/final-optimization-2026-11-09/main-mcp/results.json",
+        "docs/validation/final-optimization-2026-11-09/window-frame-build.log",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    },
+    "B06.01": {
+      "evidence": [
+        "docs/validation/final-optimization-2026-11-09/app-visible-hidden-minimized/report.json",
+        "docs/validation/final-optimization-2026-11-09/two-window-partial.json",
+        "docs/validation/final-optimization-2026-11-09/two-window-full.json",
+        "docs/validation/final-optimization-2026-11-09/other-space/report.json",
+        "docs/validation/final-optimization-2026-11-09/visibility-return.json",
+        "docs/validation/final-optimization-2026-11-09/final-126-tsan.log",
+        "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+        "docs/OPTIMIZATION_INVALIDATION.md"
+      ],
+      "note": "실제 native/STDIO/CLI 및 retained-reader oracle의 해당 acceptance만 완료. 외장 volume open 대기·OS Space 미검증·짧은 RSS 관측 범위와 Rosetta 한계를 보고서에 구분한다. 원본 Windows 동적 동등성은 R backlog다."
+    }
+  },
+  "pending_task_groups": [],
+  "report": "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+  "partial_steps": {},
+  "reports": [
+    "docs/PROJECTION_SESSION_VALIDATION.md",
+    "docs/SCAN_RESOURCE_VALIDATION.md",
+    "docs/ARTIFACT_STREAMING_VALIDATION.md",
+    "docs/REFRESH_QUEUE_VALIDATION.md",
+    "docs/REFRESH_LIFECYCLE_VALIDATION.md",
+    "docs/ACCESSIBILITY_CACHE_VALIDATION.md",
+    "docs/TOOLTIP_REGISTRY_VALIDATION.md",
+    "docs/FINAL_OPTIMIZATION_VALIDATION.md",
+    "docs/OPTIMIZATION_INVALIDATION.md"
+  ]
+}

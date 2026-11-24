@@ -1,0 +1,1408 @@
+{
+  "schema": 1,
+  "artifact_sha256": "192176a0ff46d84d27885e9d38e60157bc692eaf5d1e5b75ca56b3beaa0de7a6",
+  "evidence_bundle": "docs/validation/r-backlog-2026-11-09/rea-final.json",
+  "rules": [
+    {
+      "id": "scan.enumeration",
+      "file": "Sources/SpaceSnifferCore/Scanner.swift",
+      "anchor": "func scan",
+      "classification": "original",
+      "contract": "순회·취소·폴더 초기 0·경로별 파일 크기 합산은 원본 근거. lstat/st_blocks와 POSIX 오류 분류는 Mac 플랫폼 대체. 원본 10회/10ms 무조건 재시도는 2026-11-19 V01에서 대체했으며 scan.retry-policy 계약을 따른다. V00 selected-volume default and System/Data alias handling are explicit Mac scope changes; see scan.volume-scope.",
+      "evidence": [
+        {
+          "key": "enumerate",
+          "evidence_id": "ev_c4d89b45eb9e66208230dc7096e4c43e638dd01b9af05b0b7fb33d1c50e56fda",
+          "address": "0x455be0"
+        },
+        {
+          "key": "scan",
+          "evidence_id": "ev_bb8f9153ddb74c4edd6f6708d358954c7441019000426b85247f622a65cfb24c",
+          "address": "0x459a00"
+        },
+        {
+          "key": "logicalSize",
+          "evidence_id": "ev_1e98ac00952a5174c430247667a58a41553cdf32837c9c1cf9152fc267075c88",
+          "address": "0x405d30"
+        },
+        {
+          "key": "physicalSize",
+          "evidence_id": "ev_80c5aac66e4eb0309e6abc90e96a56555897c774e4a490385b4006117d064cdd",
+          "address": "0x406380"
+        },
+        {
+          "key": "sizeDelta",
+          "evidence_id": "ev_e10ccfd2798296de840e3be50630adf85369438d8162a4dd4f73b75febf78557",
+          "address": "0x405a00"
+        },
+        {
+          "key": "nodeInit",
+          "evidence_id": "ev_47afa82c3aecb891c68d0ceeaa5cd554e66737d955cb7afe3d8f251d385a3946",
+          "address": "0x4051a0"
+        }
+      ]
+    },
+    {
+      "id": "cache.lifecycle",
+      "file": "Sources/SpaceSnifferCore/ScanService.swift",
+      "anchor": "actor ScanService",
+      "classification": "original",
+      "contract": "같은 루트 재사용·참조 해제·스캔/감시 수명. actor 및 FSEvents 수신 경계는 플랫폼 대체.",
+      "evidence": [
+        {
+          "key": "cache",
+          "evidence_id": "ev_6366c304a1eaf0fc40d12e92df991085f4c5e4639b71efb9ea0474e9775c77be",
+          "address": "0x43ec60"
+        },
+        {
+          "key": "releaseCache",
+          "evidence_id": "ev_0fe0a5b05fbf18a8f75067894a76b6f9f86bf2c1d0aa36eb0eb6aa5afd63b10b",
+          "address": "0x43f230"
+        },
+        {
+          "key": "rootStart",
+          "evidence_id": "ev_98a577ed1000873e0471ab072d93427a911379905a5393427a524dcbe5eb59ea",
+          "address": "0x43d9d0"
+        },
+        {
+          "key": "poolDispatch",
+          "evidence_id": "ev_472c33e96ae7d779feca421b4927a9248646059d585e5918c5a1ca0eec5cac56",
+          "address": "0x45a7c0"
+        },
+        {
+          "key": "elementChange",
+          "evidence_id": "ev_0261955c96dd41d366b16dd99d82ddb93d6095e970b18bada004c3a605e160ac",
+          "address": "0x406d30"
+        },
+        {
+          "key": "filesystemAgentGUID",
+          "evidence_id": "ev_ff81c0622cccc0dc08852b069fc6f24ba48dbaf40ab4f79e34779d07bbf2016e",
+          "address": "0x4559f0"
+        },
+        {
+          "key": "snapshotAgentGUID",
+          "evidence_id": "ev_a3e8bee60c15de6330bbd64cfeb4a679653ced0688a2dca828bfdae6374f60a4",
+          "address": "0x4574e0"
+        },
+        {
+          "key": "cacheConstructor",
+          "evidence_id": "ev_c15866d79cdb22a5987ed410bf72fe8bbd0fdfd00509b3351407d95abcffe4f3",
+          "address": "0x43e940"
+        },
+        {
+          "key": "cacheDestructor",
+          "evidence_id": "ev_466536e8dbc4d54d9fffb1976e96225d17a539255775244ccb73bda032ec7c54",
+          "address": "0x43ea50"
+        }
+      ]
+    },
+    {
+      "id": "filter.contract",
+      "file": "Sources/SpaceSnifferCore/Filter.swift",
+      "anchor": "struct ScanFilter",
+      "classification": "original",
+      "contract": "외부 구분자 ;, 파일명 OR/제외 AND, 경계 포함, m=분, 태그 OR, 폴더 접두사, 기본 클래스/속성. 같은 ICU 결과를 보존하는 printable ASCII literal/suffix 단축 경로, 폴더당 ancestor 조건 계산 및 UInt8 context 사용. Unicode/복잡한 mask는 기존 ICU 경로.",
+      "evidence": [
+        {
+          "key": "filterConstructor",
+          "evidence_id": "ev_b340ec2251e42716776f166b0d7651f762b80ed76095edcbbc60f1516fa58b70",
+          "address": "0x43f450"
+        },
+        {
+          "key": "filterIncluded",
+          "evidence_id": "ev_15b7982c3b5ee3b855894ab93563f7ca51e6e0afd0fd02ea8e78354a89962a41",
+          "address": "0x444870"
+        },
+        {
+          "key": "fileFilterMatch",
+          "evidence_id": "ev_5821b63db0bab9ebb2054359e2130f0430de878255a70fb5f5c524270b4ec35a",
+          "address": "0x445050"
+        },
+        {
+          "key": "sizeParser",
+          "evidence_id": "ev_1217ed943e0cbcfb7907636a583b2c1bc3d154ed5f96287af8b678207488cb34",
+          "address": "0x43fd20"
+        },
+        {
+          "key": "ageParser",
+          "evidence_id": "ev_983b78fe08d9e35a1841106a7858fccfbd7d161ddc9d52a53fedd2ffe5b2cb1f",
+          "address": "0x440810"
+        },
+        {
+          "key": "fuzzyEntry",
+          "evidence_id": "ev_c0b3f42e5241941fc2dd328b1b2e971377fe9e92303d0b57167c12015fda82d1",
+          "address": "0x445420"
+        },
+        {
+          "key": "fuzzy",
+          "evidence_id": "ev_b8673f5d06f58a497cf641a29fbfdd1ddc31a974e187d56af394618105142d95",
+          "address": "0x4460a0"
+        },
+        {
+          "key": "tagParser",
+          "evidence_id": "ev_2977aca93823701d69367063d47c16594e636684a33fca3db6b63eadffc240f2",
+          "address": "0x441b00"
+        },
+        {
+          "key": "tagToken",
+          "evidence_id": "ev_34e62ff1ab992628370be1dbe6489f60350d87296224d0047f46eaa3b01f310c",
+          "address": "0x4455b0"
+        },
+        {
+          "key": "attributeParser",
+          "evidence_id": "ev_f61041bfdb06452d997c99e4a5afab1ef25e3ae65d3649f96e6b263df8302aba",
+          "address": "0x4422a0"
+        },
+        {
+          "key": "tokenize",
+          "evidence_id": "ev_7f58443b378a4e2945e0022b9dc49a78081aa1fc4700e7936925cba52d94cc63",
+          "address": "0x445bd0"
+        },
+        {
+          "key": "configRead",
+          "evidence_id": "ev_86f67da6a9992450f34db568f0a50b8b60362308208a676a458c1c1af56fb2ae",
+          "address": "0x40c420"
+        },
+        {
+          "key": "folderMatching",
+          "evidence_id": "ev_676b548ba467b73830a9e7a9dc67a42f115c3106f416421be0b8cd1e49ebd68a",
+          "address": "0x408670"
+        }
+      ]
+    },
+    {
+      "id": "tag.rename",
+      "file": "Sources/SpaceSnifferCore/TagPolicy.swift",
+      "anchor": "func reconcile",
+      "classification": "platform",
+      "contract": "원본 rename은 같은 노드를 유지. old/new 쌍이 없는 FSEvents에서 유일한 새 inode 경로로 태그 이관. 모호하면 추측하지 않음.",
+      "evidence": [
+        {
+          "key": "elementChange",
+          "evidence_id": "ev_0261955c96dd41d366b16dd99d82ddb93d6095e970b18bada004c3a605e160ac",
+          "address": "0x406d30"
+        },
+        {
+          "key": "setTag",
+          "evidence_id": "ev_cf754e05743b2202732f58afc73f7f3eee5c1a81ff172a8fb66dc9eb40dc0f84",
+          "address": "0x408300"
+        },
+        {
+          "key": "keyDown",
+          "evidence_id": "ev_85b1b030d743ec963d75f37b506f8c303a400fc568b624bd4baf78d77c8e9e85",
+          "address": "0x42f0a0"
+        },
+        {
+          "key": "tagMask",
+          "evidence_id": "ev_09bfe0b650b6ea3b8345bd98f827d05d8bf5724ec6c9c2b0fe535084d58eb287",
+          "address": "0x406ad0"
+        }
+      ]
+    },
+    {
+      "id": "cache.subtree",
+      "file": "Sources/SpaceSnifferCore/SnapshotTree.swift",
+      "anchor": "func replacing",
+      "classification": "platform",
+      "contract": "노드 추가/수정/제거와 상위 합계 보존. FSEvents 부모 범위를 다시 읽어 불변 테이블에 병합하는 플랫폼 구현. 전체 DiskNode/경로 사전을 만들지 않고 두 flat tree를 직접 순회해 새 ID와 합계를 구성. 같은 topology는 ID/children을 유지하며 변경 노드와 조상 delta만 반영. 추가/삭제/이름 변경은 기존 재인덱싱 경로.",
+      "evidence": [
+        {
+          "key": "enumerate",
+          "evidence_id": "ev_c4d89b45eb9e66208230dc7096e4c43e638dd01b9af05b0b7fb33d1c50e56fda",
+          "address": "0x455be0"
+        },
+        {
+          "key": "elementChange",
+          "evidence_id": "ev_0261955c96dd41d366b16dd99d82ddb93d6095e970b18bada004c3a605e160ac",
+          "address": "0x406d30"
+        },
+        {
+          "key": "sizeDelta",
+          "evidence_id": "ev_e10ccfd2798296de840e3be50630adf85369438d8162a4dd4f73b75febf78557",
+          "address": "0x405a00"
+        },
+        {
+          "key": "focusedScan",
+          "evidence_id": "ev_36f8a538a6a5256fa9ffee3a9b4a60be5a13b0796ddbc5ec34f204e4f9bd8e0d",
+          "address": "0x430270"
+        },
+        {
+          "key": "viewSizeDelta",
+          "evidence_id": "ev_7152a894d66bd19b388f259f09e6d27edfdc2aa6b77b3388c6cac7f9656e869c",
+          "address": "0x4667a0"
+        }
+      ]
+    },
+    {
+      "id": "snapshot.native",
+      "file": "Sources/SpaceSnifferCore/SNSSnapshot.swift",
+      "anchor": "enum SNSSnapshot",
+      "classification": "original",
+      "contract": "SNS v4 필드 순서·LE 숫자·UTF16LE Base64·노드 종료 01 00. v1/v3 읽기, v2는 미구현. Native v4 record emitter를 Data/file sink가 공유한다. field 순서/LE/UTF16LE Base64/종료 bytes를 변경 전 writer와 대조한다.",
+      "evidence": [
+        {
+          "key": "snapshotExport",
+          "evidence_id": "ev_5600410e604de05627fef9296308e383109246c061535bfd5820f2ebea6d9efd",
+          "address": "0x408a80"
+        },
+        {
+          "key": "snapshotRead",
+          "evidence_id": "ev_f761ae2de7fd81aac2ac871d8b655e0bce8eab6ea08ab6595b1b50d16334f3d0",
+          "address": "0x408ef0"
+        },
+        {
+          "key": "snapshotImport",
+          "evidence_id": "ev_4b2b9372d4bd56a040303817e975ebaab6d8aacef0cf192a4d0f3e16da29efc6",
+          "address": "0x4093c0"
+        },
+        {
+          "key": "snapshotEnd",
+          "evidence_id": "ev_464e3bbb8fe25861c64950e95c54f00bdf24112a148f75b6854fcaf7d70d1b89",
+          "address": "0x408a10"
+        },
+        {
+          "key": "snapshotChildren",
+          "evidence_id": "ev_9fa18b4756026a3f5cafe6042941109dba66a1b2c5233051366764267e1b5f0b",
+          "address": "0x4576f0"
+        },
+        {
+          "key": "base64Encode",
+          "evidence_id": "ev_dbd0e91d0fe9a4d67e913c2d52db2972b495e54cd0d45a5d7fb9afd24b66aaa9",
+          "address": "0x435410"
+        },
+        {
+          "key": "base64default",
+          "evidence_id": "ev_726bb27a728de39a40ec7c96480a3a21d1b644ed87464415d45213ad2dac5d66",
+          "address": "0x4353e0"
+        },
+        {
+          "key": "exportNodeFull",
+          "evidence_id": "ev_a6d1af9a96f7cb3db3ef2c664531f49545eb7c920954c459730b1e99719be895",
+          "address": "0x416650"
+        }
+      ]
+    },
+    {
+      "id": "model.storage",
+      "file": "Sources/SpaceSnifferCore/Model.swift",
+      "anchor": "struct DiskNode",
+      "classification": "platform",
+      "contract": "Swift 값 타입과 POSIX/Windows 경로 표현. 파일 분류 색상과 단위 표시만 UI 예외. Native drive records (nativeType=1) store capacity rather than descendant aggregates; capacity may be below leaf allocation. Ordinary folder aggregate bounds remain mandatory; checked global logical/allocated leaf totals reject transitive overflow.",
+      "evidence": [
+        {
+          "key": "nodeInit",
+          "evidence_id": "ev_47afa82c3aecb891c68d0ceeaa5cd554e66737d955cb7afe3d8f251d385a3946",
+          "address": "0x4051a0"
+        },
+        {
+          "key": "logicalSize",
+          "evidence_id": "ev_1e98ac00952a5174c430247667a58a41553cdf32837c9c1cf9152fc267075c88",
+          "address": "0x405d30"
+        },
+        {
+          "key": "physicalSize",
+          "evidence_id": "ev_80c5aac66e4eb0309e6abc90e96a56555897c774e4a490385b4006117d064cdd",
+          "address": "0x406380"
+        },
+        {
+          "key": "sizeDelta",
+          "evidence_id": "ev_e10ccfd2798296de840e3be50630adf85369438d8162a4dd4f73b75febf78557",
+          "address": "0x405a00"
+        },
+        {
+          "key": "snapshotImport",
+          "evidence_id": "ev_4b2b9372d4bd56a040303817e975ebaab6d8aacef0cf192a4d0f3e16da29efc6",
+          "address": "0x4093c0"
+        }
+      ]
+    },
+    {
+      "id": "report.preset",
+      "file": "Sources/SpaceSnifferCore/Report.swift",
+      "anchor": "func simpleFileList",
+      "classification": "original",
+      "contract": "Native Simple file list: real file paths only, files-first/size-desc/reverse child-array arrival ties, UTF8/LF binary file; preview CRLF is separate. LF corrected from native wb+ + command bytes in R11.",
+      "evidence": [
+        {
+          "key": "exportTemplates",
+          "evidence_id": "ev_abe6411d7e45cf5c63347fba533d5d3bfd2c23595a3cfba1c2e526aa41a5287d",
+          "address": "0x413b30"
+        },
+        {
+          "key": "exportNodeFull",
+          "evidence_id": "ev_a6d1af9a96f7cb3db3ef2c664531f49545eb7c920954c459730b1e99719be895",
+          "address": "0x416650"
+        },
+        {
+          "key": "exportSort",
+          "evidence_id": "ev_f7241835086216e065b4271bf41b08adc12b51a0d432ce343c58143186b73fa6",
+          "address": "0x46b6b0"
+        }
+      ]
+    },
+    {
+      "id": "runtime.worker",
+      "file": "Sources/SpaceSnifferCore/LatestWorker.swift",
+      "anchor": "class LatestWorker",
+      "classification": "platform",
+      "contract": "기존 필터를 중단하고 최신 입력을 실행하는 계약. Swift executor/mailbox는 OS 스레드·WaitFor 대체이며 원본 큐 구현과 동일하다는 주장은 하지 않음. 완료 후 입력 closure payload를 동기적으로 해제해 idle async frame의 이전 트리 보관을 방지. Job payload의 생성→인계→take/해제를 전용 lock으로 동기화한다. 기존 경로에서 재현된 TSAN 인계 경고를 숨기지 않고 수정했다.",
+      "evidence": [
+        {
+          "key": "filter",
+          "evidence_id": "ev_562c3d17a1e6dc585f3b79fe82a30f627f6faef724f6fe654115a34899512532",
+          "address": "0x459170"
+        },
+        {
+          "key": "stopFilter",
+          "evidence_id": "ev_f1287c10b10a8905e1eed9b2ad3fe3110864f9297e7923bab2491d89fc63530f",
+          "address": "0x429020"
+        },
+        {
+          "key": "applyFilter",
+          "evidence_id": "ev_54626e5c9d021b058bdd218aec92c839b4cec312f8c66a80de8e19625937e9f1",
+          "address": "0x42cba0"
+        },
+        {
+          "key": "refilterQueue",
+          "evidence_id": "ev_489afac4d740e9ebddf2a3df7d3385bc7ef52460fde09b7242f6a416adb440e1",
+          "address": "0x42e130"
+        }
+      ]
+    },
+    {
+      "id": "runtime.watch",
+      "file": "Sources/SpaceSnifferCore/DirectoryMonitor.swift",
+      "anchor": "class DirectoryMonitor",
+      "classification": "platform",
+      "contract": "ReadDirectoryChangesW를 FSEvents 전용 큐로 대체. 이벤트 손실 시 상위 범위/루트 재검사.",
+      "evidence": [
+        {
+          "key": "watch",
+          "evidence_id": "ev_9778ab7ce4a66e14343508f818cc7440b6464df05fe3a61071a8b6dd46d8da91",
+          "address": "0x45bc60"
+        },
+        {
+          "key": "elementChange",
+          "evidence_id": "ev_0261955c96dd41d366b16dd99d82ddb93d6095e970b18bada004c3a605e160ac",
+          "address": "0x406d30"
+        }
+      ]
+    },
+    {
+      "id": "runtime.artifact",
+      "file": "Sources/SpaceSnifferCore/ArtifactWorker.swift",
+      "anchor": "actor ArtifactWorker",
+      "classification": "platform",
+      "contract": "ArtifactWorker는 async facade이며 serial Dispatch I/O queue를 await한다. synchronous file/codec 작업은 actor executor를 점유하지 않는다. 기본 accepted1+pending64. snapshot/filter/mode/hidden/root와 한 번의 evaluationDate를 캡처하고 기존 UI/MCP job 제한/세대 검사를 유지한다.",
+      "evidence": [
+        {
+          "key": "snapshotExport",
+          "evidence_id": "ev_5600410e604de05627fef9296308e383109246c061535bfd5820f2ebea6d9efd",
+          "address": "0x408a80"
+        },
+        {
+          "key": "snapshotChildren",
+          "evidence_id": "ev_9fa18b4756026a3f5cafe6042941109dba66a1b2c5233051366764267e1b5f0b",
+          "address": "0x4576f0"
+        },
+        {
+          "key": "exportNodeFull",
+          "evidence_id": "ev_a6d1af9a96f7cb3db3ef2c664531f49545eb7c920954c459730b1e99719be895",
+          "address": "0x416650"
+        }
+      ]
+    },
+    {
+      "id": "runtime.telemetry",
+      "file": "Sources/SpaceSnifferCore/WorkerTelemetry.swift",
+      "anchor": "class WorkerTelemetry",
+      "classification": "platform",
+      "contract": "메인 스레드 실행 여부 진단만 기록하는 플랫폼 계측. 분석 결과와 파일 내용에는 영향 없음.",
+      "evidence": []
+    },
+    {
+      "id": "view.geometry",
+      "file": "Sources/SpaceSnifferCore/Treemap.swift",
+      "anchor": "enum Treemap",
+      "classification": "ui",
+      "contract": "색·여백·Squarified 배치는 UI 예외. 선택 경로를 따라 한 단계 더 보이는 동작은 원본 layout 근거에 맞춤.",
+      "evidence": [
+        {
+          "key": "layoutNode",
+          "evidence_id": "ev_dc6466e30198d13b3d07a6dbc875d9ac35aa12a1be06834e99d52851e5e55d1d",
+          "address": "0x468db0"
+        },
+        {
+          "key": "refreshBitmap",
+          "evidence_id": "ev_e118aa88696dc12d66060b7fd3dd91533537dfb764f65360b63ded093c1d183a",
+          "address": "0x4295a0"
+        },
+        {
+          "key": "hitTest",
+          "evidence_id": "ev_2f2fb97da2edd1dab0b781416134bb994aa0c67571ae9183a20fd794af8b936c",
+          "address": "0x4680b0"
+        }
+      ]
+    },
+    {
+      "id": "interaction.drill",
+      "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+      "anchor": "override func mouseDown",
+      "classification": "original",
+      "contract": "한 번 클릭은 상세화. 두 번 클릭은 첫 클릭 노드로 확대하며 새로 나타난 자식으로 표적이 바뀌지 않음.",
+      "evidence": [
+        {
+          "key": "mouseDown",
+          "evidence_id": "ev_9628f3fe03a7656cb8fe6f31c0ece8585b026ce740a950807d6ce819459313d4",
+          "address": "0x42b5c0"
+        },
+        {
+          "key": "doubleClick",
+          "evidence_id": "ev_60bd512d041306341ca0265e3370bb6d460878351d0b4bbb8d9692dbd0a59ebe",
+          "address": "0x42c590"
+        },
+        {
+          "key": "drawTree",
+          "evidence_id": "ev_1c5d47c080ea44678b893013fe676fc062c070aac7bbc7560fb7954b964abc6c",
+          "address": "0x42a750"
+        },
+        {
+          "key": "refreshBitmap",
+          "evidence_id": "ev_e118aa88696dc12d66060b7fd3dd91533537dfb764f65360b63ded093c1d183a",
+          "address": "0x4295a0"
+        },
+        {
+          "key": "layoutNode",
+          "evidence_id": "ev_dc6466e30198d13b3d07a6dbc875d9ac35aa12a1be06834e99d52851e5e55d1d",
+          "address": "0x468db0"
+        }
+      ]
+    },
+    {
+      "id": "interaction.focus",
+      "file": "Sources/MacSpaceSniffer/ScanStore.swift",
+      "anchor": "func zoomTarget",
+      "classification": "original",
+      "contract": "파일 더블 클릭은 부모로 확대, 파일 실행 아님. 탐색 이력과 태그 교체/상속 정책.",
+      "evidence": [
+        {
+          "key": "doubleClick",
+          "evidence_id": "ev_60bd512d041306341ca0265e3370bb6d460878351d0b4bbb8d9692dbd0a59ebe",
+          "address": "0x42c590"
+        },
+        {
+          "key": "setFocus",
+          "evidence_id": "ev_9b22e4002a554cb7851c86759c2f029061fb069e7bafad02df4363d5b0d6c33f",
+          "address": "0x428bb0"
+        },
+        {
+          "key": "keyDown",
+          "evidence_id": "ev_85b1b030d743ec963d75f37b506f8c303a400fc568b624bd4baf78d77c8e9e85",
+          "address": "0x42f0a0"
+        }
+      ]
+    },
+    {
+      "id": "view.motion",
+      "file": "Sources/SpaceSnifferCore/TreemapMotion.swift",
+      "anchor": "enum TreemapMotion",
+      "classification": "ui",
+      "contract": "원본 확대의 500ms/코사인제곱 보간 곡선을 사용자 요청 Mac 재배치에도 적용. 원본에 개별 박스 morph가 확인되었다는 주장은 하지 않음.",
+      "evidence": [
+        {
+          "key": "zoomAnimation",
+          "evidence_id": "ev_06ba8eff222c5a22a09dbc4ec8b1bf1ef1d87d14b56c530cd1d60c950e67432b",
+          "address": "0x42bb40"
+        },
+        {
+          "key": "animationConstants",
+          "evidence_id": "ev_36c6b02905ea4d636575193d80bb209a09465ac0e8c7b06d754337bad5442f4d",
+          "address": "0x73f4e0"
+        },
+        {
+          "key": "refreshCadence",
+          "evidence_id": "ev_bb3b2f1661f47a2e96685ba226182f1756ad30f3e5da65172076cb7caa81bc36",
+          "address": "0x42cd00"
+        }
+      ]
+    },
+    {
+      "id": "view.presentation.cache",
+      "file": "Sources/MacSpaceSniffer/MapTransition.swift",
+      "anchor": "struct MapTransition",
+      "classification": "ui",
+      "contract": "경로별 현재 표시 좌표와 목표 좌표/문자열을 보관하는 Mac 표시 캐시. 중간 전환에서 새 목표를 받으면 현재 표시 위치부터 이어짐.",
+      "evidence": [
+        {
+          "key": "zoomAnimation",
+          "evidence_id": "ev_06ba8eff222c5a22a09dbc4ec8b1bf1ef1d87d14b56c530cd1d60c950e67432b",
+          "address": "0x42bb40"
+        },
+        {
+          "key": "nodeCacheReset",
+          "evidence_id": "ev_3601438fc640a8f94699d8606e70810192d08f6146b5314ebb8cfc0dc56f1efa",
+          "address": "0x46bb00"
+        }
+      ]
+    },
+    {
+      "id": "view.folder.capacity",
+      "file": "Sources/MacSpaceSniffer/TreemapView.swift",
+      "anchor": "func drawItem",
+      "classification": "ui",
+      "contract": "원본 paint는 펼친 폴더 이름에 크기를 합친다. 누락된 폴더 헤더 크기 표시를 복구하고 색상/서식 캐시를 사용.",
+      "evidence": [
+        {
+          "key": "paintNodes",
+          "evidence_id": "ev_d68cea8a9e63cb7c1c08f47f663240d4e5c0dbf163e79a4ab04019bf48d5e345",
+          "address": "0x469770"
+        },
+        {
+          "key": "nodeCacheReset",
+          "evidence_id": "ev_3601438fc640a8f94699d8606e70810192d08f6146b5314ebb8cfc0dc56f1efa",
+          "address": "0x46bb00"
+        }
+      ]
+    },
+    {
+      "id": "refresh.pending",
+      "file": "Sources/SpaceSnifferCore/RefreshQueue.swift",
+      "anchor": "struct RefreshQueue",
+      "classification": "platform",
+      "contract": "원본 addRefilterRequest의 중복/하위 경로 제거와 독립 분기 FIFO를 FSEvents 부모 범위 재검사 큐에 적용. 실제 원본 부분 refilter 전체를 구현한 것으로 보지 않음. 후속 검증용 internal monitor factory는 같은 changed 세대 guard를 사용하며 기본 생성자는 실제 FSEvents를 보존한다. 큐 진단은 저장소를 붙잡지 않는 weak witness만 반환한다.",
+      "evidence": [
+        {
+          "key": "refilterQueue",
+          "evidence_id": "ev_489afac4d740e9ebddf2a3df7d3385bc7ef52460fde09b7242f6a416adb440e1",
+          "address": "0x42e130"
+        },
+        {
+          "key": "pickRefilter",
+          "evidence_id": "ev_08ce7fbb1815faa493ee978928cd9fd2a6396356f2b44f9af339240caf0a1d25",
+          "address": "0x42c9e0"
+        },
+        {
+          "key": "ancestor",
+          "evidence_id": "ev_3f7f9c040cecda8594db39b54ed88de17b48892062eb4e51ee29e48e86115c73",
+          "address": "0x408260"
+        }
+      ]
+    },
+    {
+      "id": "navigation.removal",
+      "file": "Sources/SpaceSnifferCore/NavigationState.swift",
+      "anchor": "struct NavigationState",
+      "classification": "original",
+      "contract": "제거된 하위 트리의 focus와 history를 가까운 생존 부모로 이관, selection 해제, 연속 중복 history 병합. 포인터 대신 경로로 연결하는 부분은 플랫폼 대체. 원본 rename의 동일 노드 유지에 대응해 Mac에서는 유일한 새 inode 경로만 재연결. 전체 부모/경로 사전 대신 추적 경로와 조상만 인덱싱하며 기존 rename/제거 계약을 유지.",
+      "evidence": [
+        {
+          "key": "nodeRemoved",
+          "evidence_id": "ev_488903a7a14ad961914c864e99d000cbe202220edf6befb327a3cf25fae15c5f",
+          "address": "0x42ee60"
+        },
+        {
+          "key": "filterRemoval",
+          "evidence_id": "ev_2ca77b3b513bbe7a458b603e55564e044e7616d195d3d26386de64deb8fe409b",
+          "address": "0x46a490"
+        },
+        {
+          "key": "rename",
+          "evidence_id": "ev_0261955c96dd41d366b16dd99d82ddb93d6095e970b18bada004c3a605e160ac",
+          "address": "0x406d30"
+        }
+      ]
+    },
+    {
+      "id": "scan.liveAggregation",
+      "file": "Sources/SpaceSnifferCore/Scanner.swift",
+      "anchor": "snapshot.nodes.addObservedBytes",
+      "classification": "original",
+      "contract": "파일 발견 시 logical/allocated delta를 조상에 즉시 전파. UI 진행 표시마다 전체 트리를 다시 합산하지 않음.",
+      "evidence": [
+        {
+          "key": "sizeDelta",
+          "evidence_id": "ev_e10ccfd2798296de840e3be50630adf85369438d8162a4dd4f73b75febf78557",
+          "address": "0x405a00"
+        }
+      ]
+    },
+    {
+      "id": "scan.presentation",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/ScanPublication.swift",
+      "anchor": "struct ScanPublication",
+      "classification": "ui",
+      "contract": "가벼운 진행 정보와 전체 트리 발행을 분리. 중간 트리는 노드 수 기하 성장 시에만 발행해 누적 복사량 O(n) 보장. 파일 순회·최종 집계·취소 규칙을 바꾸는 정책이 아닌 Mac UI 발행 정책.",
+      "evidence": []
+    },
+    {
+      "id": "storage.paged",
+      "file": "Sources/SpaceSnifferCore/NodeTable.swift",
+      "anchor": "struct NodeTable",
+      "classification": "platform",
+      "contract": "Swift 값 snapshot 저장을 페이지 단위 copy-on-write로 구현. 페이지 크기는 Mac 저장 선택이며 원본의 노드 크기/레이아웃이라는 주장이 아님. 노드 ID/순서/값 격리/Codable flat array/SNS 필드 계약 유지.",
+      "evidence": []
+    },
+    {
+      "id": "projection.calculation",
+      "file": "Sources/SpaceSnifferCore/FilterProjection.swift",
+      "anchor": "struct FilterProjection",
+      "classification": "original",
+      "contract": "기존 membership/weights/navigation 계산을 범용 실행기에서 분리. 동일한 leaf 포함과 weights로 navigation/history/children을 계산하며 0바이트 selection을 보존. 원본 focus의 기존 필터 트리 재사용 원리를 ProjectionSession에서 사용한다.",
+      "evidence": [
+        {
+          "key": "projection-0x428bb0",
+          "evidence_id": "ev_9b22e4002a554cb7851c86759c2f029061fb069e7bafad02df4363d5b0d6c33f",
+          "address": "0x428bb0"
+        },
+        {
+          "key": "projection-0x444870",
+          "evidence_id": "ev_15b7982c3b5ee3b855894ab93563f7ca51e6e0afd0fd02ea8e78354a89962a41",
+          "address": "0x444870"
+        },
+        {
+          "key": "projection-0x42ee60",
+          "evidence_id": "ev_488903a7a14ad961914c864e99d000cbe202220edf6befb327a3cf25fae15c5f",
+          "address": "0x42ee60"
+        }
+      ]
+    },
+    {
+      "id": "projection.session",
+      "file": "Sources/SpaceSnifferCore/ProjectionSession.swift",
+      "anchor": "class ProjectionSession",
+      "classification": "platform",
+      "contract": "창별 opaque source identity·mode/hidden/적용 filter key의 한 개 cache. 같은 입력 탐색에서 immutable membership/weights 재사용; 시간 조건은 전체 pass. 변경 source/설정/세대·reset·shutdown에서 stale publish 방지. Swift actor/key/cache는 Mac 설계이며 원본 메모리 표현 동일 주장은 하지 않음.",
+      "evidence": [
+        {
+          "key": "projection-0x428bb0",
+          "evidence_id": "ev_9b22e4002a554cb7851c86759c2f029061fb069e7bafad02df4363d5b0d6c33f",
+          "address": "0x428bb0"
+        },
+        {
+          "key": "projection-0x429020",
+          "evidence_id": "ev_f1287c10b10a8905e1eed9b2ad3fe3110864f9297e7923bab2491d89fc63530f",
+          "address": "0x429020"
+        }
+      ]
+    },
+    {
+      "id": "scan.admission",
+      "file": "Sources/SpaceSnifferCore/ScanAdmission.swift",
+      "anchor": "class ScanAdmission",
+      "classification": "platform",
+      "contract": "프로세스 공유 Dispatch 기반 blocking scan 실행 허가. 기본 active 슬롯8/대기64, FIFO, queued 취소 I/O0, running 취소는 실제 종료까지 슬롯유지, callback한번/lock밖. 상한·Dispatch·포화 오류는 Mac 정책이며 원본 pool cap/event thread의 직접 복제가 아니다.",
+      "evidence": [
+        {
+          "key": "scan-resource-0x45a7c0",
+          "address": "0x45a7c0",
+          "evidence_id": "ev_472c33e96ae7d779feca421b4927a9248646059d585e5918c5a1ca0eec5cac56"
+        },
+        {
+          "key": "scan-resource-0x429020",
+          "address": "0x429020",
+          "evidence_id": "ev_f1287c10b10a8905e1eed9b2ad3fe3110864f9297e7923bab2491d89fc63530f"
+        }
+      ]
+    },
+    {
+      "id": "scan.work",
+      "file": "Sources/SpaceSnifferCore/ScanWork.swift",
+      "anchor": "enum ScanWork",
+      "classification": "platform",
+      "contract": "ScanService의 기존 full/scoped/fallback/merge 작업을 별도 동기 계산으로 추출하고 DirectoryScanOperation 경계를 주입한다. root 구독/generation/revision 승인은 ScanService에 남긴다.",
+      "evidence": [
+        {
+          "key": "scan-resource-0x455be0",
+          "address": "0x455be0",
+          "evidence_id": "ev_c4d89b45eb9e66208230dc7096e4c43e638dd01b9af05b0b7fb33d1c50e56fda"
+        }
+      ]
+    },
+    {
+      "id": "filter.scratch",
+      "file": "Sources/SpaceSnifferCore/FilterScratch.swift",
+      "anchor": "class FilterScratch",
+      "classification": "platform",
+      "contract": "창별 worker가 독점하는 UInt8 ancestor context만 재사용한다. published membership/weights/NodeTable page는 재사용하지 않는다. 실제 capacity 1MiB 초과 보유 금지, reset은 소유자교체. 취소된 pass 이후 모든 node state를 새 부모상태로 덮어쓴다. 노드 객체 pool 구현으로 표현하지 않는다.",
+      "evidence": [
+        {
+          "key": "scan-resource-0x444870",
+          "address": "0x444870",
+          "evidence_id": "ev_15b7982c3b5ee3b855894ab93563f7ca51e6e0afd0fd02ea8e78354a89962a41"
+        }
+      ]
+    },
+    {
+      "id": "artifact.bytesink",
+      "file": "Sources/SpaceSnifferCore/ArtifactByteSink.swift",
+      "anchor": "protocol ArtifactByteSink",
+      "classification": "platform",
+      "contract": "동기 borrowed byte sink. Data와 bounded file buffer가 공통 record/path emitter를 소비. per-node protocol 객체/escaping pointer 없음.",
+      "evidence": [
+        {
+          "key": "artifact-0x408a80",
+          "address": "0x408a80",
+          "evidence_id": "ev_5600410e604de05627fef9296308e383109246c061535bfd5820f2ebea6d9efd"
+        },
+        {
+          "key": "artifact-0x416650",
+          "address": "0x416650",
+          "evidence_id": "ev_a6d1af9a96f7cb3db3ef2c664531f49545eb7c920954c459730b1e99719be895"
+        }
+      ]
+    },
+    {
+      "id": "artifact.selection",
+      "file": "Sources/SpaceSnifferCore/ArtifactSelection.swift",
+      "anchor": "enum ArtifactSelection",
+      "classification": "platform",
+      "contract": "한 시각의 leaf membership에서 weights를 먼저 계산하고 ancestor inclusion을 전파. zero-byte 포함 보존. ArtifactProjection은 source-bound 불변값으로 CLI summary와 파일 출력의 추가 판정을 제거.",
+      "evidence": [
+        {
+          "key": "artifact-0x444870",
+          "address": "0x444870",
+          "evidence_id": "ev_15b7982c3b5ee3b855894ab93563f7ca51e6e0afd0fd02ea8e78354a89962a41"
+        },
+        {
+          "key": "artifact-0x459170",
+          "address": "0x459170",
+          "evidence_id": "ev_562c3d17a1e6dc585f3b79fe82a30f627f6faef724f6fe654115a34899512532"
+        }
+      ]
+    },
+    {
+      "id": "artifact.transaction",
+      "file": "Sources/SpaceSnifferCore/ArtifactFileTransaction.swift",
+      "anchor": "class ArtifactFileTransaction",
+      "classification": "platform",
+      "contract": "인접 UUID staging/O_EXCL/NOFOLLOW, partial-write/EINTR 처리, close 뒤 inode확인과 rename/renamex_np(RENAME_EXCL) 게시. 실패 cleanup은 소유 staging inode만 대상으로 하며 destination unlink 금지. local namespace atomicity이며 fsync durability/적대적 same-UID namespace 경쟁 보장은 아님.",
+      "evidence": []
+    },
+    {
+      "id": "artifact.executor",
+      "file": "Sources/SpaceSnifferCore/ArtifactIOExecutor.swift",
+      "anchor": "class ArtifactIOExecutor",
+      "classification": "platform",
+      "contract": "기존 단일 actor의 직렬 operation 순서를 별도 Dispatch queue로 옮김. 최대65 outstanding(예약1+대기64), 초과 busy. actor await는 suspend. pre-enqueue task cancellation만 검사하며 접수 후 취소 API는 추가하지 않음.",
+      "evidence": [
+        {
+          "key": "artifact-0x45a7c0",
+          "address": "0x45a7c0",
+          "evidence_id": "ev_472c33e96ae7d779feca421b4927a9248646059d585e5918c5a1ca0eec5cac56"
+        }
+      ]
+    },
+    {
+      "id": "artifact.transfer",
+      "file": "Sources/SpaceSnifferCore/ArtifactTransfer.swift",
+      "anchor": "enum ArtifactTransfer",
+      "classification": "platform",
+      "contract": "순수 selection/codec와 file transaction을 조합하는 동기 transfer. UI/MCP는 I/O executor, CLI는 같은 transfer를 직접 사용. 결과 성공은 flush/close/publish 완료 뒤.",
+      "evidence": [
+        {
+          "key": "artifact-0x408a80",
+          "address": "0x408a80",
+          "evidence_id": "ev_5600410e604de05627fef9296308e383109246c061535bfd5820f2ebea6d9efd"
+        },
+        {
+          "key": "artifact-0x416650",
+          "address": "0x416650",
+          "evidence_id": "ev_a6d1af9a96f7cb3db3ef2c664531f49545eb7c920954c459730b1e99719be895"
+        }
+      ]
+    },
+    {
+      "id": "desktop.fileactions",
+      "file": "Sources/SpaceSnifferCore/DesktopFileActions.swift",
+      "anchor": "enum DesktopFileActions",
+      "classification": "platform",
+      "contract": "Foundation volume 열거/trash만 담당. AppKit open/reveal/preview는 UI adapter에 남김.",
+      "evidence": []
+    },
+    {
+      "id": "refresh.path-index",
+      "file": "Sources/SpaceSnifferCore/RefreshPathIndex.swift",
+      "anchor": "struct RefreshPathIndex",
+      "classification": "platform",
+      "contract": "B08 Mac 전용 compressed Character radix index. Swift String의 lexical/canonical prefix 의미를 보존하며 정규화하지 않음. FIFO/감시/scan 실행은 소유하지 않음. flat slot 재사용·삭제 병합·상위 큐 compaction. 원본 Windows TList의 trie 구현을 주장하지 않음.",
+      "evidence": []
+    },
+    {
+      "id": "ui.accessibility-presentation",
+      "file": "Sources/MacSpaceSniffer/MapAccessibilityCache.swift",
+      "anchor": "final class MapAccessibilityCache",
+      "classification": "ui",
+      "contract": "Mac AX platform extension: 최대 500개 path 기반 요소 수명과 현재 ID 재검증. snapshot/MapItem 강한 cache 없음. candidate 순회 조기 중단, 정확한 이름 표기/size label/frame 갱신, parent/target 정리. 원본 W13/W14 또는 tooltip 구현 완료로 간주하지 않음.",
+      "evidence": []
+    },
+    {
+      "id": "ui.tooltip-registry",
+      "file": "Sources/MacSpaceSniffer/MapTooltipRegistry.swift",
+      "anchor": "final class MapTooltipRegistry",
+      "classification": "ui",
+      "contract": "W14 지속 객체/dirty 원칙의 Mac 등록 영역 대체. 현재 id/path/rect/view가 같으면 native tooltip 재등록 생략. content는 현재 node로 조회. monotonic token/tag/current path 검증, presentation rect 갱신과 clear. 원본 bitmap/text 치수 cache 구현 동일성 주장은 아님.",
+      "evidence": []
+    },
+    {
+      "id": "platform.path_io",
+      "file": "Sources/SpaceSnifferCore/PathIO.swift",
+      "anchor": "enum PathIO",
+      "classification": "platform",
+      "contract": "Mac metadata I/O 격리: 별도 native serial queue/64 pending, actor와 cooperative executor에서 canonical/exists/volume blocking 호출 분리. 원본 FS API 동일 이식 주장이 아님.",
+      "evidence": []
+    },
+    {
+      "id": "platform.scratch_budget",
+      "file": "Sources/SpaceSnifferCore/ScratchBudget.swift",
+      "anchor": "final class ScratchBudget",
+      "classification": "platform",
+      "contract": "private ancestor context idle 보유 예산/weak owner/pressure epoch. published 배열/page/node pool과 분리한 Mac 저장소 정책.",
+      "evidence": []
+    },
+    {
+      "id": "projection.delta",
+      "file": "Sources/SpaceSnifferCore/ProjectionDelta.swift",
+      "anchor": "struct ProjectionDelta",
+      "classification": "platform",
+      "contract": "원본 leaf/조상 기여 의미를 보존하고 opaque source/COW page proof로 검증한 size/mtime/atime sparse 변경만 갱신. unknown/dense/time/topology full fallback. Swift proof/배열 COW는 Mac 설계.",
+      "evidence": [
+        {
+          "key": "filterConstructor",
+          "evidence_id": "ev_b340ec2251e42716776f166b0d7651f762b80ed76095edcbbc60f1516fa58b70",
+          "address": "0x43f450"
+        },
+        {
+          "key": "filterIncluded",
+          "evidence_id": "ev_15b7982c3b5ee3b855894ab93563f7ca51e6e0afd0fd02ea8e78354a89962a41",
+          "address": "0x444870"
+        },
+        {
+          "key": "fileFilterMatch",
+          "evidence_id": "ev_5821b63db0bab9ebb2054359e2130f0430de878255a70fb5f5c524270b4ec35a",
+          "address": "0x445050"
+        },
+        {
+          "key": "sizeParser",
+          "evidence_id": "ev_1217ed943e0cbcfb7907636a583b2c1bc3d154ed5f96287af8b678207488cb34",
+          "address": "0x43fd20"
+        },
+        {
+          "key": "ageParser",
+          "evidence_id": "ev_983b78fe08d9e35a1841106a7858fccfbd7d161ddc9d52a53fedd2ffe5b2cb1f",
+          "address": "0x440810"
+        },
+        {
+          "key": "fuzzyEntry",
+          "evidence_id": "ev_c0b3f42e5241941fc2dd328b1b2e971377fe9e92303d0b57167c12015fda82d1",
+          "address": "0x445420"
+        },
+        {
+          "key": "fuzzy",
+          "evidence_id": "ev_b8673f5d06f58a497cf641a29fbfdd1ddc31a974e187d56af394618105142d95",
+          "address": "0x4460a0"
+        },
+        {
+          "key": "tagParser",
+          "evidence_id": "ev_2977aca93823701d69367063d47c16594e636684a33fca3db6b63eadffc240f2",
+          "address": "0x441b00"
+        },
+        {
+          "key": "tagToken",
+          "evidence_id": "ev_34e62ff1ab992628370be1dbe6489f60350d87296224d0047f46eaa3b01f310c",
+          "address": "0x4455b0"
+        },
+        {
+          "key": "attributeParser",
+          "evidence_id": "ev_f61041bfdb06452d997c99e4a5afab1ef25e3ae65d3649f96e6b263df8302aba",
+          "address": "0x4422a0"
+        },
+        {
+          "key": "tokenize",
+          "evidence_id": "ev_7f58443b378a4e2945e0022b9dc49a78081aa1fc4700e7936925cba52d94cc63",
+          "address": "0x445bd0"
+        },
+        {
+          "key": "configRead",
+          "evidence_id": "ev_86f67da6a9992450f34db568f0a50b8b60362308208a676a458c1c1af56fb2ae",
+          "address": "0x40c420"
+        },
+        {
+          "key": "folderMatching",
+          "evidence_id": "ev_676b548ba467b73830a9e7a9dc67a42f115c3106f416421be0b8cd1e49ebd68a",
+          "address": "0x408670"
+        },
+        {
+          "key": "sizeDelta",
+          "evidence_id": "ev_e10ccfd2798296de840e3be50630adf85369438d8162a4dd4f73b75febf78557",
+          "address": "0x405a00"
+        }
+      ]
+    },
+    {
+      "id": "geometry.session",
+      "file": "Sources/SpaceSnifferCore/GeometrySession.swift",
+      "anchor": "final class GeometrySession",
+      "classification": "ui",
+      "contract": "원래 Treemap Double comparator·rect·선택 상세화 결과를 보존한 bounded 정렬/rectangle cache. native UI 계산 수명이며 새 layout 의미를 만들지 않음.",
+      "evidence": [
+        {
+          "key": "layoutNode",
+          "evidence_id": "ev_dc6466e30198d13b3d07a6dbc875d9ac35aa12a1be06834e99d52851e5e55d1d",
+          "address": "0x468db0"
+        },
+        {
+          "key": "refreshBitmap",
+          "evidence_id": "ev_e118aa88696dc12d66060b7fd3dd91533537dfb764f65360b63ded093c1d183a",
+          "address": "0x4295a0"
+        },
+        {
+          "key": "hitTest",
+          "evidence_id": "ev_2f2fb97da2edd1dab0b781416134bb994aa0c67571ae9183a20fd794af8b936c",
+          "address": "0x4680b0"
+        }
+      ]
+    },
+    {
+      "id": "space.accounting",
+      "file": "Sources/SpaceSnifferCore/SpaceAccounting.swift",
+      "anchor": "struct SpaceAccounting",
+      "classification": "original",
+      "contract": "Drive used=total-free, unknown=max(0,used-physicalData); live pseudo getter zero. Snapshot timing/overflow/scope checks are explicit Mac guards, not completion estimates. V00: allVolumes observed totals are incompatible with one root OS used/free value, so snapshot accounting is nil for that mode.",
+      "evidence": [
+        {
+          "key": "0x404880",
+          "evidence_id": "ev_797bf10dc5e86a9160a21712420c9ab275d1b718d8c0b0b151d6f69cb2cc01c0",
+          "address": "0x404880"
+        },
+        {
+          "key": "0x404cb0",
+          "evidence_id": "ev_b6f86c6ebf32b0f279f3300708e6938894ed3c8b0be947dbd2c5978fdadc91b7",
+          "address": "0x404cb0"
+        }
+      ]
+    },
+    {
+      "id": "config.codec",
+      "file": "Sources/SpaceSnifferCore/NativeConfiguration.swift",
+      "anchor": "struct NativeConfiguration",
+      "classification": "original",
+      "contract": "Recognized XML keys/defaults/fileclasses/export configs; original Windows codepages explicit; semantic XML writer does not claim TinyXML printer byte equivalence.",
+      "evidence": [
+        {
+          "key": "0x40c420",
+          "evidence_id": "ev_86f67da6a9992450f34db568f0a50b8b60362308208a676a458c1c1af56fb2ae",
+          "address": "0x40c420"
+        },
+        {
+          "key": "0x413870",
+          "evidence_id": "ev_85747338d9d4c812917ef4bd33d9452dfafbb3888df95e5494964ed9722d9187",
+          "address": "0x413870"
+        }
+      ]
+    },
+    {
+      "id": "config.language",
+      "file": "Sources/SpaceSnifferCore/NativeExportTemplate.swift",
+      "anchor": "struct NativeExportTemplate",
+      "classification": "original",
+      "contract": "Observed Atom grammar/tags/eager commands; bounded Mac parser, malformed source and locale-sensitive number differences documented.",
+      "evidence": [
+        {
+          "key": "0x418fe0",
+          "evidence_id": "ev_c5d5ddba172351302ad526a59e3e4bee48fc32406984d5245a9d73759d92e880",
+          "address": "0x418fe0"
+        },
+        {
+          "key": "0x419aa0",
+          "evidence_id": "ev_5aca97d80c1d4cdc3b0f00efa0f7f644a09ccaa97ecb5a459978bebfc5704696",
+          "address": "0x419aa0"
+        }
+      ]
+    },
+    {
+      "id": "report.configured",
+      "file": "Sources/SpaceSnifferCore/ConfiguredReport.swift",
+      "anchor": "enum ConfiguredReport",
+      "classification": "original",
+      "contract": "Explicit template and sorting/counters; file UTF8/LF, preview CRLF; original child-array tie order. Locale/date formatter supplied at platform boundary.",
+      "evidence": [
+        {
+          "key": "0x416e60",
+          "evidence_id": "ev_23cc19dc7c51fa8954a18de8d5b10d2589ad2944d388bb23d901504aa64b84ca",
+          "address": "0x416e60"
+        },
+        {
+          "key": "0x416650",
+          "evidence_id": "ev_a6d1af9a96f7cb3db3ef2c664531f49545eb7c920954c459730b1e99719be895",
+          "address": "0x416650"
+        }
+      ]
+    },
+    {
+      "id": "text.windows",
+      "file": "Sources/SpaceSnifferCore/WindowsLegacyText.swift",
+      "anchor": "enum WindowsLegacyText",
+      "classification": "platform",
+      "contract": "Explicit Windows ANSI codepage adapter using CoreFoundation; no implicit Mac ACP/UTF8 guess. Native ANSI decode is target contract.",
+      "evidence": [
+        {
+          "key": "0x436390",
+          "evidence_id": "ev_2ac560ac2927ff07c6b0a32dff3747f6407995ce994559222f767f0ed74e9626",
+          "address": "0x436390"
+        },
+        {
+          "key": "0x684690",
+          "evidence_id": "ev_2b8ae975f231260e2f95308f2370d1861453ea9899638aca7640c8ce7121843d",
+          "address": "0x684690"
+        }
+      ]
+    },
+    {
+      "id": "config.file",
+      "file": "Sources/SpaceSnifferCore/ConfigurationFile.swift",
+      "anchor": "enum ConfigurationFile",
+      "classification": "platform",
+      "contract": "Bounded regular local file inspection and XML root routing on artifact executor; no settings auto-application or host-language execution.",
+      "evidence": []
+    },
+    {
+      "id": "config.job",
+      "file": "Sources/SpaceSnifferCore/ConfiguredExportOptions.swift",
+      "anchor": "struct ConfiguredExportOptions",
+      "classification": "platform",
+      "contract": "Immutable export job inputs, explicit Mac locale/timezone formatting, serial IO and cancel-aware atomic publish. Windows locale equality not claimed.",
+      "evidence": []
+    },
+    {
+      "id": "scan.bulk.optin",
+      "file": "Sources/SpaceSnifferCore/NativeDirectoryMetadata.swift",
+      "anchor": "struct NativeDirectoryMetadata",
+      "classification": "platform",
+      "contract": "Mac native decoder: ordinary read/stream retain native EOF semantics. Explicit readCensusCandidate may return a sparse validated prefix; only an independent complete raw namespace census can certify it. A mismatch discards the candidate and uses original names-first fallback. Budgets are estimated, not hard RSS caps.",
+      "evidence": []
+    },
+    {
+      "id": "scan.focus.owners",
+      "file": "Sources/SpaceSnifferCore/FocusScanRequests.swift",
+      "anchor": "struct FocusScanRequests",
+      "classification": "platform",
+      "contract": "View-owned focus intent maps to subscription owner/ticket/incarnation with latest replacement and exact cancel. Overlaps are serialized; not a claim of native independent parallel worker or throughput gain.",
+      "evidence": [
+        {
+          "key": "0x430270",
+          "evidence_id": "ev_36f8a538a6a5256fa9ffee3a9b4a60be5a13b0796ddbc5ec34f204e4f9bd8e0d",
+          "address": "0x430270"
+        },
+        {
+          "key": "0x406b10",
+          "evidence_id": "ev_fca4c5988706237015101927b74fb4af1d28da1d7371ebcc2daab8cf167762d5",
+          "address": "0x406b10"
+        }
+      ]
+    },
+    {
+      "id": "scan.focus.target",
+      "file": "Sources/SpaceSnifferCore/FocusScanTarget.swift",
+      "anchor": "enum FocusScanTarget",
+      "classification": "platform",
+      "contract": "Mac lstat/dev:ino/realpath boundaries on native admission lane; stale targets discard terminal candidate and retain complete baseline. Watch/explicit rescan handles recovery.",
+      "evidence": []
+    },
+    {
+      "id": "snapshot.du",
+      "file": "Sources/SpaceSnifferCore/DUSnapshot.swift",
+      "anchor": "enum DUSnapshot",
+      "classification": "original",
+      "contract": "Grounded strict KiB/space/dot/backslash grammar, missing6 residual addition and subtraction/removal; exact UTF16 name keys. Limits/cancellation/per-drive host containers are Mac adapters; rejects ambiguous/malformed subset. Windows runtime remains unverified.",
+      "evidence": [
+        {
+          "key": "0x4547f0",
+          "evidence_id": "ev_5e5050fe671bef819825466a308e010e94978ee427a5dd32b8d53de262db56f3",
+          "address": "0x4547f0"
+        },
+        {
+          "key": "0x4068a0",
+          "evidence_id": "ev_92c22d965689259ba98bd238571eca9edc9c4d715b227436a542ec38ee40fdf2",
+          "address": "0x4068a0"
+        },
+        {
+          "key": "0x5fd7a0",
+          "evidence_id": "ev_3552de2bfd34d3b35ecf806f04110ffd6b3e8c511516488ccf47fd3f3f562f12",
+          "address": "0x5fd7a0"
+        }
+      ]
+    },
+    {
+      "id": "scan.retry-policy",
+      "file": "Sources/SpaceSnifferCore/ScanRetryPolicy.swift",
+      "anchor": "enum ScanRetryPolicy",
+      "classification": "platform",
+      "contract": "Mac opendir 오류 정책. EINTR 즉시, EAGAIN/EBUSY/ETIMEDOUT 10ms 간격. 최대 3회 시도/요청 대기 합계 20ms. 권한·소멸·기타 오류는 즉시 기록. 원본 Windows 10회 재시도와 구분.",
+      "evidence": []
+    },
+    {
+      "id": "scan.posix-directory-reader",
+      "file": "Sources/SpaceSnifferCore/POSIXDirectoryReader.swift",
+      "anchor": "struct POSIXDirectoryReader",
+      "classification": "platform",
+      "contract": "POSIX open/readdir/close·errno 즉시 캡처·이름 정렬·FD 수명 단일 소유. 재시도 판단은 ScanRetryPolicy, 취소 대기는 ScanControl. read 오류는 재시작하지 않는다.",
+      "evidence": []
+    },
+    {
+      "id": "scan.metadata-policy",
+      "file": "Sources/SpaceSnifferCore/ScanMetadataPolicy.swift",
+      "anchor": "struct ScanMetadataPolicy",
+      "classification": "platform",
+      "contract": "Run-local backend choice cached by observed device. Only MNT_LOCAL APFS permits ordered bulk; unknown, failed probes and other filesystems use POSIX. Nested mounts get independent decisions; traversal scope and node model are unchanged. No persistent filesystem capability cache.",
+      "evidence": []
+    },
+    {
+      "id": "scan.volume-scope",
+      "file": "Sources/SpaceSnifferCore/ScanVolumePolicy.swift",
+      "anchor": "struct ScanVolumePolicy",
+      "classification": "platform",
+      "contract": "Mac-only immutable operation scope: selected volume by default, optional mounted volumes, mount inventory with observed-device guard. Root System/Data firmlink view retained; direct Data alias pruned in both modes. Scope anchor retained for scoped rescans; bounded live exclusion provenance, legacy SNS scope unknown. Inventory failure is explicit incomplete result. Scope reduction is not engine throughput improvement.",
+      "evidence": []
+    },
+    {
+      "id": "scan.ordered-reader",
+      "file": "Sources/SpaceSnifferCore/OrderedDirectoryReader.swift",
+      "anchor": "struct OrderedDirectoryReader",
+      "classification": "platform",
+      "contract": "Inline names-first preflight and bounded worker single bulk collection/streaming POSIX census share exact raw UTF-8 namespace and deterministic ordering requirements. Two OS enumerations remain. Sparse native tails avoid a duplicate EOF call only after independent coverage proof. Mismatch falls back; bounded overflow returns inline retry with actual I/O counters.",
+      "evidence": []
+    },
+    {
+      "id": "scan.directory-read-ahead",
+      "file": "Sources/SpaceSnifferCore/DirectoryReadAhead.swift",
+      "anchor": "final class DirectoryReadPool",
+      "classification": "platform",
+      "contract": "macOS composition of shared typed worker pool. macOS supplies userInitiated QoS and calibrated limits; shared package owns bounded queue, cancellation, ticket completion and permit lifetime. Rolling candidate remains unshipped pending reliable whole-matrix gates.",
+      "evidence": []
+    },
+    {
+      "id": "scan.observed-overview",
+      "file": "Sources/SpaceSnifferCore/ScanOverview.swift",
+      "anchor": "struct ScanOverviewAccumulator",
+      "classification": "platform",
+      "contract": "After50ms, single builder offers its already accepted snapshot at geometric node growth boundaries and final flush. Consumer retains only top16 root folders,top16 files,cursor and publication count; no NodeTable retained, no second filesystem pass. observedNodeCount pins the summary source; provisional observations never assert unvisited coverage or reclaimable bytes.",
+      "evidence": []
+    },
+    {
+      "id": "storage.file-identity",
+      "file": "Sources/SpaceSnifferCore/FileIdentity.swift",
+      "anchor": "public struct FileIdentity",
+      "classification": "platform",
+      "contract": "Mac native device/inode stay numeric until String use; exact opaque/noncanonical text and optional JSON missing/null/omission contracts preserved. No public field removal.",
+      "evidence": []
+    },
+    {
+      "id": "scan.observed-byte-batch",
+      "file": "Sources/SpaceSnifferCore/ScanEngineBridge.swift",
+      "anchor": "typealias ObservedByteBatch",
+      "classification": "platform",
+      "contract": "Core compatibility aliases refer to the independent shared engine for observed-byte batching, cancellation, publication and typed worker results. No duplicated algorithm or per-entry dynamic dispatch.",
+      "evidence": []
+    },
+    {
+      "id": "snapshot.path-spelling",
+      "file": "Sources/SpaceSnifferCore/SnapshotPath.swift",
+      "anchor": "public enum SnapshotPath",
+      "classification": "platform",
+      "contract": "Extracted shared path joining: preserves POSIX, Windows, UNC and Unicode spelling and existing snapshot output. POSIX scanner specialization does not normalize names.",
+      "evidence": []
+    },
+    {
+      "id": "scan.mac-batch-adapter",
+      "file": "Sources/SpaceSnifferCore/MacDirectoryBatchReader.swift",
+      "anchor": "struct MacDirectoryBatchReader",
+      "classification": "platform",
+      "contract": "Bounded folder-level macOS adapter completes native/fallback stat metadata. Known mount boundaries are checked before stat; failures remain builder-observed. Tree IDs/aggregation remain builder-owned; FD and cancellation lifetime preserved. No per-entry protocol dispatch.",
+      "evidence": []
+    },
+    {
+      "id": "scan.mac-resources",
+      "file": "Sources/SpaceSnifferCore/MacScanResources.swift",
+      "anchor": "enum MacScanResources",
+      "classification": "platform",
+      "contract": "macOS-calibrated concurrency2, native workers3, queue24, IO sections8 and hint admission64...1024 stay out of shared algorithms.",
+      "evidence": []
+    },
+    {
+      "id": "shared.ScanControl",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/ScanControl.swift",
+      "anchor": "public final class ScanControl",
+      "classification": "platform",
+      "contract": "Shared lock-protected cancellation and interruptible retry wait; no OS error policy.",
+      "evidence": []
+    },
+    {
+      "id": "shared.ScanPublication",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/ScanPublication.swift",
+      "anchor": "public struct ScanPublication",
+      "classification": "platform",
+      "contract": "Shared geometric publication policy with scalar state; inlinable across module boundary.",
+      "evidence": []
+    },
+    {
+      "id": "shared.ObservedByteBatch",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/ObservedByteBatch.swift",
+      "anchor": "public struct ObservedByteBatch",
+      "classification": "platform",
+      "contract": "Shared single-builder scalar byte batch, flush/drain exactly once before publication; inlinable without per-entry allocation.",
+      "evidence": []
+    },
+    {
+      "id": "shared.DirectoryIOBudget",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/DirectoryIOBudget.swift",
+      "anchor": "public final class DirectoryIOBudget",
+      "classification": "platform",
+      "contract": "Shared bounded directory permits; adapter explicitly supplies limits; cancellation waits hold no worker ticket.",
+      "evidence": []
+    },
+    {
+      "id": "shared.DirectoryReadTicket",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/DirectoryReadTicket.swift",
+      "anchor": "public final class DirectoryReadTicket",
+      "classification": "platform",
+      "contract": "Shared typed immutable completion channel; condition protects completion and timed progress polling.",
+      "evidence": []
+    },
+    {
+      "id": "shared.DirectoryWorkerPool",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/DirectoryWorkerPool.swift",
+      "anchor": "public final class DirectoryWorkerPool",
+      "classification": "platform",
+      "contract": "Shared bounded worker queue and cancellation/drain lifecycle, generic typed outputs; OS thread configuration injected once per worker.",
+      "evidence": []
+    },
+    {
+      "id": "shared.DirectoryBatchReader",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/DirectoryBatchReader.swift",
+      "anchor": "public protocol DirectoryBatchReader",
+      "classification": "platform",
+      "contract": "Coarse folder batch adapter protocol; generic inline metadata values avoid POSIX types or truncated Windows identities. Native failure domain/code preserved.",
+      "evidence": []
+    },
+    {
+      "id": "shared.DirectoryReadWindowPolicy",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/DirectoryReadWindowPolicy.swift",
+      "anchor": "public struct DirectoryReadWindowPolicy",
+      "classification": "platform",
+      "contract": "Shared bounded-window admission; platform supplies thresholds and unknown-count policy; no OS calls.",
+      "evidence": []
+    },
+    {
+      "id": "shared.DirectoryReadWindow",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/DirectoryReadWindow.swift",
+      "anchor": "public struct DirectoryReadWindow",
+      "classification": "platform",
+      "contract": "Shared builder-owned result window: completed tickets retain capacity until consumption; bounded refill and duplicate-plan suppression independent of OS or metadata type.",
+      "evidence": []
+    },
+    {
+      "id": "scan.sibling-resampling",
+      "file": "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/DirectorySiblingAdmission.swift",
+      "anchor": "struct DirectorySiblingAdmission",
+      "classification": "platform",
+      "contract": "Builder-local negative admission expires after a bounded interval; positive admission survives rolling-window drain. No OS APIs or filesystem I/O.",
+      "evidence": []
+    },
+    {
+      "id": "scan.node-path-storage",
+      "file": "Sources/SpaceSnifferCore/NodePathStorage.swift",
+      "anchor": "struct NodePathStorage",
+      "classification": "platform",
+      "contract": "Native file nodes share parent path spelling; directory nodes retain literal paths for frontier/read/admission reuse. Public literal imports and setters preserve exact bytes. JSON still encodes full path; transient reconstruction cost is measured separately. Native file nodes are initialized directly from components; full child strings are deferred to stat, boundary/error or progress consumers. The builder captures errno before deferred path formatting.",
+      "evidence": []
+    },
+    {
+      "id": "scan.node-optional-storage",
+      "file": "Sources/SpaceSnifferCore/NodeOptionalMetadata.swift",
+      "anchor": "struct NodeOptionalMetadata",
+      "classification": "platform",
+      "contract": "Presence bits retain all original optional values including zero and distant dates; clearing restores canonical equality.",
+      "evidence": []
+    },
+    {
+      "id": "scan.node-wire-schema",
+      "file": "Sources/SpaceSnifferCore/DiskNodeCoding.swift",
+      "anchor": "extension DiskNode",
+      "classification": "platform",
+      "contract": "Explicit Codable preserves all prior public keys, required fields, optional omission and caller date strategies independently of compact storage.",
+      "evidence": []
+    },
+    {
+      "id": "scan.native-scratch",
+      "file": "Sources/SpaceSnifferCore/MacDirectoryScratch.swift",
+      "anchor": "enum MacDirectoryScratch",
+      "classification": "platform",
+      "contract": "macOS pthread-local 64KiB buffer is removed while borrowed; reentrant calls receive separate storage, throwing returns leases, thread exit releases the cached spare.",
+      "evidence": []
+    },
+    {
+      "id": "scan.entry-count-metrics",
+      "file": "Sources/SpaceSnifferCore/EntryCountMetrics.swift",
+      "anchor": "struct EntryCountMetrics",
+      "classification": "platform",
+      "contract": "Scan-local actual native ENTRYCOUNT observations, API failures, unavailable/cancelled outcomes and monotonic query time. Admission candidates/hint hits separate; absent legacy metrics mean unmeasured. No OS querying or global shared mutation in the common admission state machine.",
+      "evidence": []
+    },
+    {
+      "id": "runtime.watch-path-mapping",
+      "file": "Sources/SpaceSnifferCore/DirectoryWatchPath.swift",
+      "anchor": "struct DirectoryWatchPath",
+      "classification": "platform",
+      "contract": "Mac FSEvents native root와 캐시 root의 문자열 대응을 감시 시작 때 고정. 삭제된 이벤트 항목의 존재 여부로 경로 해석을 바꾸지 않으며 인접 루트 경계를 넘지 않는다.",
+      "evidence": []
+    },
+    {
+      "id": "scan.volume-coverage",
+      "file": "Sources/SpaceSnifferCore/ScanVolumeCoverage.swift",
+      "anchor": "public struct ScanVolumeCoverage",
+      "classification": "platform",
+      "contract": "Portable scan provenance values extracted from the Mac traversal adapter. Exclusion samples remain capped at 500; no traversal policy changes.",
+      "evidence": []
+    },
+    {
+      "id": "platform.legacy-codepage",
+      "file": "Sources/SpaceSnifferCore/Platform/LegacyCodePageDecoder.swift",
+      "anchor": "enum LegacyCodePageDecoder",
+      "classification": "platform",
+      "contract": "Explicit Windows code page conversion port: CoreFoundation on Mac, strict MultiByteToWideChar on Windows. No ACP guessing. Shared import grammar and user-selected code page are unchanged.",
+      "evidence": []
+    },
+    {
+      "id": "ui.explorer-semantics",
+      "file": "Sources/SpaceSnifferCore/ExplorerSemantics.swift",
+      "anchor": "public enum ExplorerSemantics",
+      "classification": "ui",
+      "contract": "GPUI facade delegates weights, SNS selection and simple report streaming to existing ScanFilter, ArtifactSelection, SNSSnapshot and Report. The UI owns destination staging; no new scanner or filter grammar.",
+      "evidence": []
+    },
+    {
+      "id": "runtime.watch-registration",
+      "file": "Sources/SpaceSnifferCore/DirectoryMonitorRegistration.swift",
+      "anchor": "final class DirectoryMonitorRegistration",
+      "classification": "platform",
+      "contract": "One utility registration lane isolates potentially blocking FSEvents creation from the service actor. Cancellation invalidates pending registration; late native objects and teardown release off actor. Watch readiness reflects a started stream. An event cursor captured before scanning closes the asynchronous registration gap; loss flags retain root rescan behavior.",
+      "evidence": []
+    },
+    {
+      "id": "platform.export.formatting",
+      "file": "Sources/SpaceSnifferCore/Platform/ExportFormatting.swift",
+      "anchor": "enum ExplorerExportFormatting",
+      "classification": "platform",
+      "contract": "Caller formatting strategy: reuse unchanged Mac short-date/medium-time/numeric-relative-age formatting; Windows ICU dates/time/decimal separator and explicit whole-second age. No claim of identical OS locale strings. Native template evaluation and ordering remain shared.",
+      "evidence": []
+    }
+  ],
+  "not_implemented": [
+    "SNS v2 legacy encoding",
+    "SNF text snapshot format",
+    "Multiple top-level roots in one SNS stream",
+    "User-edited Windows XML configuration and full export scripting",
+    "Concurrent master scan and focused secondary scan",
+    "Full native focus-first incremental filtering and direct per-node Windows event mutation"
+  ]
+}

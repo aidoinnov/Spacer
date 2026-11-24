@@ -1,0 +1,191 @@
+{
+  "pairs": 100,
+  "binaries": {
+    "before": {
+      "path": "/private/tmp/sniffer-automatic-v4",
+      "sha256": "af1eee62d5e68daf613c94df145c5a40a21fbf0fe472b2d2d94f3a42a5c4e528"
+    },
+    "after": {
+      "path": "/private/tmp/sniffer-scope-v3-profile",
+      "sha256": "d23c843004f5304c0bcfcc31e1b127f709fd142821af3a129c176a0c13093236"
+    }
+  },
+  "scope": "shared host; warm/unknown filesystem cache; release engine completion, not GUI. Selected-volume reduction is not same-scope engine speedup.",
+  "cells": {
+    "mounted": {
+      "variants": {
+        "before_all": {
+          "attempted": 100,
+          "valid": 100,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 15.988042,
+              "p95": 29.977834
+            },
+            "cpu_seconds": {
+              "p50": 0.015297,
+              "p95": 0.024565
+            },
+            "peak_rss_mib": {
+              "p50": 6.9296875,
+              "p95": 8.015625
+            }
+          }
+        },
+        "after_all": {
+          "attempted": 100,
+          "valid": 100,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 16.0528125,
+              "p95": 30.230417
+            },
+            "cpu_seconds": {
+              "p50": 0.015189000000000001,
+              "p95": 0.02535
+            },
+            "peak_rss_mib": {
+              "p50": 6.8984375,
+              "p95": 7.96875
+            }
+          }
+        },
+        "after_selected": {
+          "attempted": 100,
+          "valid": 100,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 1.880646,
+              "p95": 5.685291
+            },
+            "cpu_seconds": {
+              "p50": 0.001518,
+              "p95": 0.0030060000000000004
+            },
+            "peak_rss_mib": {
+              "p50": 4.921875,
+              "p95": 5.9375
+            }
+          }
+        }
+      },
+      "checks": {
+        "after_all": {
+          "gates": {
+            "complete": true,
+            "digest": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "paired_improvement_pct": 0.21942569922076544,
+          "ci95": [
+            -2.133783399954247,
+            2.863104208424378
+          ],
+          "passed": true
+        }
+      }
+    },
+    "control10000": {
+      "variants": {
+        "before_all": {
+          "attempted": 100,
+          "valid": 100,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 49.039771,
+              "p95": 107.541167
+            },
+            "cpu_seconds": {
+              "p50": 0.0387745,
+              "p95": 0.049160999999999996
+            },
+            "peak_rss_mib": {
+              "p50": 9.9375,
+              "p95": 10.21875
+            }
+          }
+        },
+        "after_all": {
+          "attempted": 100,
+          "valid": 100,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 49.708604,
+              "p95": 124.328958
+            },
+            "cpu_seconds": {
+              "p50": 0.039517,
+              "p95": 0.050178
+            },
+            "peak_rss_mib": {
+              "p50": 9.96875,
+              "p95": 10.25
+            }
+          }
+        },
+        "after_selected": {
+          "attempted": 100,
+          "valid": 100,
+          "complete": true,
+          "metrics": {
+            "scan_complete_ms": {
+              "p50": 50.769437499999995,
+              "p95": 99.034125
+            },
+            "cpu_seconds": {
+              "p50": 0.0404475,
+              "p95": 0.04926
+            },
+            "peak_rss_mib": {
+              "p50": 10.1171875,
+              "p95": 10.375
+            }
+          }
+        }
+      },
+      "checks": {
+        "after_all": {
+          "gates": {
+            "complete": true,
+            "digest": true,
+            "latency": false,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "paired_improvement_pct": 0.6332640528155448,
+          "ci95": [
+            -8.265664474409977,
+            13.036464920094101
+          ],
+          "passed": false
+        },
+        "after_selected": {
+          "gates": {
+            "complete": true,
+            "digest": true,
+            "latency": true,
+            "paired_ci": true,
+            "cpu": true,
+            "rss": true
+          },
+          "paired_improvement_pct": 2.6837436940719135,
+          "ci95": [
+            -9.56389422109514,
+            11.333410943194224
+          ],
+          "passed": true
+        }
+      }
+    }
+  },
+  "passed": false
+}

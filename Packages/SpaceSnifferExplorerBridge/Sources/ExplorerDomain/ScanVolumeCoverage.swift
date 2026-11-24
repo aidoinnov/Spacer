@@ -1,0 +1,1 @@
+../../../../Sources/SpaceSnifferCore/ScanVolumeCoverage.swift

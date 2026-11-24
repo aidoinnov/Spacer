@@ -1,0 +1,1 @@
+../../../../Sources/SpaceSnifferCore/WindowsLegacyText.swift
