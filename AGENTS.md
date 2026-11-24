@@ -1,4 +1,9 @@
-# Space Sniffer — current handoff
+# Spacer — current handoff
+
+The project/repository name is **Spacer** (`aidoinnov/Spacer`). Existing binary,
+bundle and installer names remain Space Sniffer in the validated 0.3.0 payload.
+Treat any binary/bundle identity migration as a separate change with validation;
+do not rename frozen release artifacts or invalidate their recorded hashes.
 
 Read `docs/WORK_HANDOFF.md` before changing or packaging the product. It is the
 current completion/deferred-work record; older dated reports are historical.

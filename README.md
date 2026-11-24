@@ -4,7 +4,11 @@
 
 최신 검증: [실제 OS 입력·취소 역할 수정·양쪽 설치](docs/GPUI_OS_INPUT_RESULTS.md).
 
-# Mac Space Sniffer
+# Spacer
+
+Mac·Windows 공통 GPUI 디스크 사용량 분석기입니다. 프로젝트 이름은 **Spacer**이며,
+기존 소스·실행 파일·검증된 0.3.0 설치파일에는 Space Sniffer 이름이 남아 있습니다.
+저장소: [aidoinnov/Spacer](https://github.com/aidoinnov/Spacer).
 
 현재 제품 UI는 **Mac/Windows 공통 Rust/GPUI 0.3.0**이며 기존 Swift 스캔·문서 엔진을 재사용합니다. Mac 설치본과 Windows 132 PC의 바로가기·실행 검증: [최신 결과](docs/GPUI_COMPLETION_RESULTS.md). **2026-11-24 콘솔/감시 갱신 후속 수정:** [원인·검증·최신 설치본](docs/GPUI_BACKGROUND_RESULTS.md). **재검사 계약·장시간 검수·최신 disktree 메모리 비교:** [후속 결과](docs/GPUI_REMAINING_RESULTS.md). **공통 노드 메모리 개선 개발 후보(미배포):** [184→168B·검증과 gate](docs/NODE_STORAGE_RESULTS.md). **양쪽 실제 파일·100만 SNS 메모리·종료 검증:** [후속 정량 결과·미완료 조건](docs/BOTH_PLATFORM_FINISH_RESULTS.md). **최신 UI 패치 설치·실행:** [Quick Look 충돌 재현/수정·접근성 초점·184B 엔진 유지](docs/GPUI_PREVIEW_REENTRY_RESULTS.md). 아래 날짜별 기록은 이전 단계 이력입니다.
 
