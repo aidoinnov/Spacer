@@ -4,6 +4,7 @@ mod backend;
 mod document;
 mod latest_work;
 mod layout;
+mod launch;
 mod model;
 mod motion;
 mod navigation;
@@ -18,6 +19,18 @@ fn main() {
     if std::env::args_os().any(|arg| arg.to_string_lossy().starts_with("--qa-")) {
         eprintln!("QA options require the qa feature");
         std::process::exit(64);
+    }
+    let launch_args: Vec<_> = std::env::args_os().skip(1).collect();
+    if let Some(command) = launch::terminal(&launch_args) {
+        match command {
+            launch::Terminal::Help => print!("{}", launch::HELP),
+            launch::Terminal::Version => println!("Spacer {}", env!("CARGO_PKG_VERSION")),
+            launch::Terminal::UnsupportedCli => {
+                eprintln!("The GPUI package does not include the legacy headless --cli interface. Use --help for available commands.");
+                std::process::exit(64);
+            }
+        }
+        return;
     }
     #[cfg(feature = "qa")]
     if std::env::args().nth(1).as_deref() == Some("--qa-wire-compare") {
@@ -86,7 +99,7 @@ fn main() {
             progress_probe = args.next().map(PathBuf::from);
         } else if arg == "--qa-output" {
             qa_output = args.next().map(PathBuf::from);
-        } else if arg == "--scan" {
+        } else if arg == "--scan" || arg == "--snapshot" {
             initial = args.next().map(PathBuf::from);
         } else {
             initial = Some(PathBuf::from(arg));

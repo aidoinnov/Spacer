@@ -170,7 +170,7 @@ class Bridge:
         return response['result']
     def handle(self, request):
         if not isinstance(request, dict) or request.get('jsonrpc') != '2.0' or not isinstance(request.get('method'), str): raise RPCError(-32600, 'Invalid JSON-RPC request')
-        method = request['method']; params = request.get('params') or {}
+        method = request['method']; params = request.get('params', {})
         if not isinstance(params, dict): raise RPCError(-32602, 'params must be an object')
         meta = params.get('_meta', {})
         if not isinstance(meta, dict): raise RPCError(-32602, '_meta must be an object')
@@ -190,14 +190,14 @@ class Bridge:
             self.protocol = offered if offered in LEGACY else LEGACY[0]
             self.initialized = True
             return {'protocolVersion':self.protocol, 'serverInfo':INFO, 'capabilities':CAPABILITIES, 'instructions':INSTRUCTIONS}
-        if not modern and not self.initialized: raise RPCError(-32000, 'Initialize the MCP connection first')
+        if not modern and not self.initialized and method != 'ping': raise RPCError(-32000, 'Initialize the MCP connection first')
         if method == 'server/discover':
             result = {'supportedVersions':[MODERN,*LEGACY], 'capabilities':CAPABILITIES, 'instructions':INSTRUCTIONS}
         elif method == 'ping': result = {}
         elif method == 'tools/list': result = {'tools':TOOLS}
         elif method == 'tools/call':
             name = params.get('name'); arguments = params.get('arguments', {})
-            if name not in TOOL_MAP: raise RPCError(-32602, 'Unknown tool')
+            if not isinstance(name, str) or name not in TOOL_MAP: raise RPCError(-32602, 'Unknown tool')
             validate(arguments, TOOL_MAP[name]['inputSchema'])
             try:
                 value = {'instances':self.instances()} if name == 'app_instances' else self.call_app(name, arguments)
@@ -213,7 +213,7 @@ class Bridge:
         elif method == 'resources/read':
             uri = params.get('uri')
             names = {'space-sniffer://status':'app_status','space-sniffer://resources':'app_resources'}
-            if uri not in names: raise RPCError(-32602, 'Unknown resource URI')
+            if not isinstance(uri, str) or uri not in names: raise RPCError(-32602, 'Unknown resource URI')
             try: value = self.call_app(names[uri], {})
             except (OSError, RuntimeError, ValueError) as error: raise RPCError(-32603, str(error))
             result = {'contents':[{'uri':uri,'mimeType':'application/json','text':json.dumps(value,ensure_ascii=False)}]}
@@ -251,7 +251,11 @@ def main():
             if error.data is not None: response['error']['data'] = error.data
         except Exception:
             response = {'jsonrpc':'2.0','id':identifier,'error':{'code':-32603,'message':'Internal server error'}}
-        try: print(json.dumps(response,ensure_ascii=False,separators=(',',':'),allow_nan=False),flush=True)
+        # MCP STDIO is UTF-8 even when Windows/PYTHONIOENCODING defaults to a
+        # legacy console code page. Never route protocol bytes through print().
+        try:
+            sys.stdout.buffer.write(json.dumps(response,ensure_ascii=False,separators=(',',':'),allow_nan=False).encode('utf-8')+b'\n')
+            sys.stdout.buffer.flush()
         except BrokenPipeError: break
 
 if __name__ == '__main__': main()

@@ -466,6 +466,7 @@ impl Explorer {
         self.start(cx)
     }
     pub(super) fn start(&mut self, cx: &mut Context<Self>) {
+        self.error_dialog = None;
         if self.scanning {
             return;
         }

@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -36,6 +37,48 @@ class MCPTests(unittest.TestCase):
             with self.assertRaises(m.RPCError): b.handle({'jsonrpc':'2.0','id':3,'method':'tools/call','params':{'name':'tree_children','arguments':args}})
     def test_notifications_produce_no_response(self):
         b = self.legacy(); self.assertIsNone(b.handle({'jsonrpc':'2.0','method':'notifications/initialized'}))
+    def test_ping_can_precede_initialization_but_tools_cannot(self):
+        b=m.Bridge(directory='/does-not-exist')
+        self.assertEqual(b.handle({'jsonrpc':'2.0','id':1,'method':'ping'}),{})
+        with self.assertRaises(m.RPCError):b.handle({'jsonrpc':'2.0','id':2,'method':'tools/list'})
+    def test_stdio_oversized_line_and_bad_names_do_not_break_next_request(self):
+        messages=[json.dumps({'jsonrpc':'2.0','id':'init','method':'initialize','params':{'protocolVersion':'2025-11-25','capabilities':{},'clientInfo':{'name':'test','version':'1'}}}),
+                  'x'*1048577,
+                  json.dumps({'jsonrpc':'2.0','id':2,'method':'tools/call','params':{'name':[]}}),
+                  json.dumps({'jsonrpc':'2.0','id':3,'method':'resources/read','params':{'uri':{}}}),
+                  json.dumps({'jsonrpc':'2.0','id':4,'method':'ping','params':False}),
+                  json.dumps({'jsonrpc':'2.0','id':5,'method':'ping'})]
+        proc=subprocess.run([sys.executable,str(MODULE)],input='\n'.join(messages)+'\n',text=True,capture_output=True,check=True,timeout=15)
+        rows=[json.loads(line) for line in proc.stdout.splitlines()]
+        self.assertEqual(len(rows),6)
+        self.assertEqual([r['error']['code'] for r in rows[1:5]],[-32600,-32602,-32602,-32602])
+        self.assertEqual(rows[-1],{'jsonrpc':'2.0','id':5,'result':{}})
+        self.assertEqual(proc.stderr,'')
+    def test_stdio_is_utf8_even_with_an_ascii_console(self):
+        messages=[{'jsonrpc':'2.0','id':1,'method':'initialize','params':{'protocolVersion':'2025-11-25','capabilities':{},'clientInfo':{'name':'test','version':'1'}}},
+                  {'jsonrpc':'2.0','id':2,'method':'tools/call','params':{'name':'tree_children','arguments':{'한국어':'값'}}}]
+        proc=subprocess.run([sys.executable,str(MODULE)],input=('\n'.join(json.dumps(x) for x in messages)+'\n').encode(),capture_output=True,
+                            env={**os.environ,'PYTHONIOENCODING':'ascii'},check=True,timeout=15)
+        rows=[json.loads(line.decode('utf-8')) for line in proc.stdout.splitlines()]
+        self.assertEqual(rows[1]['error']['code'],-32602)
+        self.assertIn('한국어',rows[1]['error']['message'])
+        self.assertNotIn(b'\r\n',proc.stdout)
+        self.assertEqual(proc.stderr,b'')
+    def test_nonobject_params_are_invalid_even_when_falsey(self):
+        b = self.legacy()
+        for value in [None,False,0,[], '']:
+            with self.subTest(value=value):
+                with self.assertRaises(m.RPCError) as error:
+                    b.handle({'jsonrpc':'2.0','id':3,'method':'ping','params':value})
+                self.assertEqual(error.exception.code,-32602)
+    def test_nonstring_tool_and_resource_names_are_invalid_params(self):
+        b = self.legacy()
+        for method,key in [('tools/call','name'),('resources/read','uri')]:
+            for value in [None,[],{},False,3]:
+                with self.subTest(method=method,value=value):
+                    with self.assertRaises(m.RPCError) as error:
+                        b.handle({'jsonrpc':'2.0','id':4,'method':method,'params':{key:value}})
+                    self.assertEqual(error.exception.code,-32602)
     def test_subtree_cursor_schema_is_additive_and_bounded(self):
         query = m.TOOL_MAP['query_nodes']
         schema = query['inputSchema']

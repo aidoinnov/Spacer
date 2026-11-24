@@ -14,7 +14,7 @@ enum HeadlessCommand {
               --cli --scan PATH [options]        Scan without a window
               --cli --load FILE [options]        Read a saved snapshot
             Options:
-              --output FILE.txt|FILE.sns        Export a report or complete snapshot
+              --output FILE.txt|FILE.sns        Export to a new file; existing files are preserved
               --filter '*.zip;>100mb'            Filter exported file list
               --logical                         Use logical size for filtering view weights
               --hide-hidden                     Omit hidden paths from exported file list
@@ -34,11 +34,9 @@ enum HeadlessCommand {
             """)
             exit(0)
         }
-        func value(_ flag: String) -> String? {
-            guard let index = args.firstIndex(of: flag), args.indices.contains(index + 1) else { return nil }
-            return args[index + 1]
-        }
         do {
+            let arguments = try HeadlessArguments(args)
+            func value(_ flag: String) -> String? { arguments.value(flag) }
             let configRequest = try HeadlessConfiguration.parse(args)
             if let path = configRequest.inspect {
                 let data = try HeadlessConfiguration.inspectionJSON(configRequest.read(path))
@@ -84,14 +82,14 @@ enum HeadlessCommand {
             if let output = value("--output") {
                 let url = URL(fileURLWithPath: output)
                 if url.pathExtension.lowercased() == "sns" {
-                    try ArtifactTransfer.save(projection!, to: url)
+                    try ArtifactTransfer.save(projection!, to: url, replaceExisting: false)
                 } else if url.pathExtension.lowercased() == "txt" {
                     if let exportConfig {
                         let options = ConfiguredExportOptions(configuration: exportConfig, filter: filter, mode: mode,
                             showHidden: !args.contains("--hide-hidden"), formatting: MacExportFormatting.localized(),
                             now: now, maximumOutputBytes: configRequest.maximumOutputBytes)
-                        try ArtifactTransfer.exportConfigured(snapshot, options: options, to: url)
-                    } else { try ArtifactTransfer.export(projection!, to: url) }
+                        try ArtifactTransfer.exportConfigured(snapshot, options: options, to: url, replaceExisting: false)
+                    } else { try ArtifactTransfer.export(projection!, to: url, replaceExisting: false) }
                 } else { throw CLIError.message("Output extension must be .txt or .sns") }
             }
             let matchedBytes = projection?.matchedBytes ?? ArtifactProjection(snapshot, filter: filter, mode: mode, showHidden: !args.contains("--hide-hidden"), now: now).matchedBytes

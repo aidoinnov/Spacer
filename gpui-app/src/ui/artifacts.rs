@@ -201,6 +201,7 @@ impl Explorer {
         window: &mut Window,
         cx: &mut Context<Self>,
     ) {
+        self.error_dialog = None;
         self.reset_workspace(PathBuf::from(&source.root));
         self.root = PathBuf::from(&source.root);
         self.scanning = false;

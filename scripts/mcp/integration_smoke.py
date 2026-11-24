@@ -30,12 +30,13 @@ def main():
         j=call(name,extra); deadline=time.monotonic()+25
         while time.monotonic()<deadline:
             s=call('task_status',{'job_id':j['job_id']})
-            if s['phase']!='running': assert s['phase']=='completed',s; return s
+            if s['phase'] not in ('pending','running'): assert s['phase']=='completed',s; return s
             time.sleep(.05)
         raise AssertionError(('artifact timeout',s))
     try:
         rpc('initialize',{'protocolVersion':'2025-11-25','capabilities':{},'clientInfo':{'name':'integration-smoke','version':'1'}})
-        catalog=rpc('tools/list'); assert len(catalog['tools'])==20
+        from space_sniffer_mcp import TOOL_MAP
+        catalog=rpc('tools/list'); assert {t['name'] for t in catalog['tools']}==set(TOOL_MAP)
         instances=call('app_instances'); assert len(instances['instances'])==1,instances
         s=call('app_status'); assert len(s['windows'])==1,s
         window['window_id']=s['windows'][0]['window_id']; checks.append('discovery/catalog/window targeting')

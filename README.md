@@ -93,6 +93,10 @@ cargo +1.97.0 test --locked --manifest-path gpui-app/Cargo.toml
 
 The source tree includes scan-engine changes that are not part of the validated 0.3.0 packages. A source build will therefore differ from those packages. Performance acceptance for those changes is still pending.
 
+CLI and MCP test coverage, fixes, and remaining gaps are recorded in the
+[CLI/MCP validation report](docs/CLI_MCP_VALIDATION.md). The GPUI executable provides
+`--help` and `--version`; the legacy headless `--cli` is not included in its package.
+
 ## Source layout
 
 | Path | Contents |

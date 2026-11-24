@@ -8,6 +8,13 @@ do not rename frozen release artifacts or invalidate their recorded hashes.
 Read `docs/WORK_HANDOFF.md` before changing or packaging the product. It is the
 current completion/deferred-work record; older dated reports are historical.
 
+Latest CLI/MCP audit: `docs/CLI_MCP_VALIDATION.md`. Source fixes have been tested
+in separate QA builds, not installed. The GPUI binary has help/version handling
+but does not ship the legacy headless scan/export CLI. Windows final artifact
+retrieval, task removal and active filesystem cancellation proof remain open
+after a network loss. Never describe the legacy Mac CLI tests as a Windows or
+installed GPUI CLI pass.
+
 - Product UI is common Rust/GPUI for Mac and Windows. Keep OS branches in
   platform adapters/native ports; preserve the existing shared scan engine.
 - The approved 2026-11-24 packaging baseline is GPUI 0.3.0 with the **184B**
