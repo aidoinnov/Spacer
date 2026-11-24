@@ -1,65 +1,66 @@
 # Spacer
 
-macOS와 Windows에서 폴더별 디스크 사용량을 트리맵으로 살펴보는 데스크톱 앱입니다.
-큰 파일을 찾고, 폴더 안으로 들어가 보고, 정리할 항목을 고를 때 사용합니다.
+![Spacer — Disk usage, mapped. macOS + Windows](docs/images/spacer-cover.png)
 
-![macOS에서 테스트 폴더를 연 Spacer 화면](docs/images/spacer-macos.png)
+A desktop disk usage analyzer for macOS and Windows. See which folders take up space, drill into the large ones, and decide what to keep.
 
-*0.3.0 개발 빌드의 macOS 화면입니다. 테스트 데이터를 사용했으며, 앱 안에는 이전 이름인 Mac Space Sniffer가 남아 있습니다.*
+![Spacer displaying a test folder on macOS](docs/images/spacer-macos.png)
 
-## 주요 기능
+*macOS development build, using test data. The app still displays its earlier name, Mac Space Sniffer. The current UI is in Korean.*
 
-- **트리맵 탐색** — 파일과 폴더의 사용량을 사각형 크기로 표시합니다. 폴더를 더블클릭해 들어가고, 뒤로·앞으로·상위 폴더로 이동할 수 있습니다.
-- **분석 중 결과 표시** — 전체 분석이 끝나기 전에도 지금까지 집계한 결과를 보여줍니다.
-- **필터와 태그** — 파일명, 크기, 수정 시점 등으로 결과를 좁히고 색상 태그를 붙일 수 있습니다.
-- **스냅샷과 보고서** — SNS 스냅샷을 저장하거나 다시 열고, 파일 목록을 내보낼 수 있습니다. DU 파일도 읽습니다.
-- **파일 작업** — 미리보기, Finder·탐색기에서 보기, 경로 복사, 휴지통 이동을 지원합니다.
-- **변경 감지** — 분석한 폴더의 변경을 감지해 결과를 갱신하고, 필요할 때 다시 검사합니다.
+## What it does
 
-Mac과 Windows 모두 Rust/GPUI로 만든 공통 UI를 사용합니다. 파일시스템 접근과 미리보기 등 OS에 따라 달라지는 부분은 별도로 처리합니다.
+- **Browse a treemap.** Rectangle sizes show disk usage. Double-click a folder to open it, then use back, forward, or up to move around.
+- **See results while scanning.** The map fills in as the scan progresses; you don't have to wait for the entire tree.
+- **Filter and tag files.** Narrow the view by name, size, or modification date, and mark items with color tags.
+- **Save a snapshot.** Save and reopen SNS snapshots, read DU files, or export a file list.
+- **Work with files.** Preview an item, reveal it in Finder or Explorer, copy its path, or move it to the trash.
+- **Keep the view up to date.** Watch the scanned folder for changes or request another scan.
 
-## 사용 방법
+Both platforms use the same Rust/GPUI interface. Filesystem access, previews, and other OS-specific behavior sit behind platform adapters.
 
-1. **폴더 스캔**에서 확인할 폴더를 선택합니다.
-2. 트리맵의 큰 영역부터 살펴봅니다. 항목을 선택하면 오른쪽에서 경로와 크기를 확인할 수 있습니다.
-3. 폴더를 더블클릭해 안으로 들어가거나, 필터를 적용해 원하는 파일만 남깁니다.
+## Using Spacer
 
-필터는 다음처럼 입력합니다. 조건은 세미콜론(`;`)으로 구분합니다.
+1. Choose **Folder Scan** to select a folder. In the current Korean UI, this is **폴더 스캔**.
+2. Start with the largest rectangles. Select an item to see its path and size in the details panel.
+3. Double-click a folder to look inside, or apply a filter to narrow the results.
 
-| 입력 | 의미 |
+Filter conditions are separated by semicolons (`;`). A few examples:
+
+| Filter | Matches |
 |---|---|
-| `*.zip;*.dmg` | ZIP 또는 DMG 파일 |
-| `*.zip;>100mb` | 디스크 사용량이 100 MiB 이상인 ZIP 파일 |
-| `>30d` | 수정한 지 30일 이상 지난 항목 |
-| `\node_modules` | 경로에 node_modules 폴더가 포함된 파일 |
-| `\|*.tmp` | TMP 파일 제외 |
+| `*.zip;*.dmg` | ZIP or DMG files |
+| `*.zip;>100mb` | ZIP files using at least 100 MiB on disk |
+| `>30d` | Items last modified at least 30 days ago |
+| `\node_modules` | Files with a node_modules folder in their path |
+| `\|*.tmp` | Excludes TMP files |
 
-SNS 스냅샷은 저장한 시점의 결과를 오프라인으로 확인하는 용도입니다. 스냅샷에 기록된 경로가 현재 컴퓨터에 그대로 존재한다는 뜻은 아닙니다.
+An SNS snapshot is an offline record of a scan. Its paths may belong to another computer or no longer exist on the current one.
 
-### 분석 중 화면
+### During a scan
 
-![Windows에서 분석 진행 상황과 부분 트리맵을 표시하는 화면](docs/images/spacer-windows-scanning.png)
+![Spacer showing partial scan results on Windows](docs/images/spacer-windows-scanning.png)
 
-*Windows 개발 빌드에서 분석 진행 화면을 검증한 캡처입니다. 표시된 경로와 용량은 테스트 데이터입니다.*
+*Windows development build. Paths and sizes in this capture are test data.*
 
-## 지원 환경과 설치
+## Platforms and downloads
 
-| 플랫폼 | 확인한 환경 |
+| Platform | Verified environment |
 |---|---|
-| macOS | Apple Silicon, macOS 14 이상 |
-| Windows | Windows 10 x64 실기기 |
+| macOS | Apple Silicon, macOS 14 or later |
+| Windows | Windows 10 x64, tested on physical hardware |
 
-Intel Mac에서의 실행은 아직 확인하지 않았습니다. 미리보기는 macOS에서 Quick Look을, Windows에서 별도 preview helper를 사용하며 지원 형식에는 차이가 있습니다.
+Intel Mac runtime support has not been verified. Previews use Quick Look on macOS and a separate helper on Windows, so supported file types differ.
 
-0.3.0용 Mac DMG와 Windows 설치 EXE를 만들었지만, **공개 다운로드는 아직 제공하지 않습니다.** Windows 설치·제거 프로그램의 실제 실행 검수와 배포 서명 작업이 남아 있습니다. 현재 Mac 패키지는 ad-hoc 서명, Windows 패키지는 unsigned입니다.
+Mac DMG and Windows EXE packages have been built for 0.3.0, but **public downloads are not available yet**. The new Windows installer still needs install/uninstall testing. The Mac package is ad-hoc signed and not notarized; the Windows package is unsigned.
 
-소스에서 실행하려면 아래 빌드 절차를 사용하세요.
+You can build from source using the steps below.
 
-## 소스 빌드
+## Building from source
 
 ### macOS
 
-Xcode 또는 Command Line Tools, Swift, Rust 1.97이 필요합니다.
+Install Xcode or Command Line Tools, Swift, and Rust 1.97.
 
 ```sh
 git clone https://github.com/aidoinnov/Spacer.git
@@ -67,11 +68,11 @@ cd Spacer
 ./scripts/build-gpui-app.sh
 ```
 
-빌드한 앱은 `dist/gpui-builds/`에 생성됩니다. `dist/Mac Space Sniffer GPUI.app`은 가장 최근 빌드의 바로가기입니다. 실행 중인 설치본을 자동으로 교체하지 않습니다.
+The app is written to `dist/gpui-builds/`. `dist/Mac Space Sniffer GPUI.app` points to the latest build. Building does not replace an installed copy.
 
 ### Windows
 
-Visual Studio의 **x64 Developer PowerShell**, Windows SDK, Swift 6.2.4와 일치하는 Swift runtime, Rust 1.97이 필요합니다. 저장소는 공유 Swift 소스를 심볼릭 링크로 연결하므로, 체크아웃할 때 링크가 실제 파일로 처리되는지도 확인해야 합니다.
+Use an **x64 Developer PowerShell** with Visual Studio build tools, the Windows SDK, Swift 6.2.4 and its matching runtime, and Rust 1.97. Shared Swift sources use symbolic links; make sure your checkout preserves them.
 
 ```powershell
 .\scripts\build-gpui-app.ps1 `
@@ -79,9 +80,9 @@ Visual Studio의 **x64 Developer PowerShell**, Windows SDK, Swift 6.2.4와 일�
   -SwiftRuntimeDirectory "C:\path\to\swift-runtime\usr\bin"
 ```
 
-두 경로는 설치한 Swift toolchain과 runtime 위치로 바꿉니다. 결과에는 GUI, 스캔 backend, preview helper와 필요한 runtime DLL이 함께 들어갑니다. 자세한 구성은 [GPUI 빌드 문서](gpui-app/README.md)를 참고하세요.
+Replace both paths with your toolchain and runtime locations. The output includes the GUI, scan backend, preview helper, and runtime DLLs. See the [GPUI build notes](gpui-app/README.md) for details; those notes are currently in Korean.
 
-### 검사
+### Checks
 
 ```sh
 python3 scripts/gpui-app/check-shared-domain.py
@@ -90,19 +91,19 @@ python3 scripts/check-gpui-boundary.py
 cargo +1.97.0 test --locked --manifest-path gpui-app/Cargo.toml
 ```
 
-현재 소스에는 검증된 0.3.0 패키지에 넣지 않은 스캔 엔진 개선 후보도 포함되어 있습니다. 소스 빌드와 기존 배포 후보의 바이너리는 같지 않습니다. 성능 개선 여부는 별도 측정이 끝난 뒤 판단합니다.
+The source tree includes scan-engine changes that are not part of the validated 0.3.0 packages. A source build will therefore differ from those packages. Performance acceptance for those changes is still pending.
 
-## 코드 구성
+## Source layout
 
-| 위치 | 역할 |
+| Path | Contents |
 |---|---|
-| `gpui-app/` | 공통 Rust/GPUI 화면, 탐색과 사용자 입력 |
-| `Sources/SpaceSnifferCore/` | 문서, 필터, 트리와 집계 등 Swift 공통 코드 |
-| `Packages/SpaceSnifferScanEngine/` | 디렉터리 작업, 취소, 병렬 처리 정책 |
-| `Packages/SpaceSnifferExplorerBridge/` | 공통 문서 기능과 Windows backend 연결 |
-| `Packages/SpaceSnifferWindows/` | Windows 파일시스템 접근과 스캔 |
-| `scripts/gpui-app/` | 패키징과 앱 검수 도구 |
+| `gpui-app/` | Shared Rust/GPUI interface, navigation, and input handling |
+| `Sources/SpaceSnifferCore/` | Shared Swift document, filter, tree, and aggregation code |
+| `Packages/SpaceSnifferScanEngine/` | Directory work, cancellation, and parallel scheduling |
+| `Packages/SpaceSnifferExplorerBridge/` | Shared document services and the Windows backend |
+| `Packages/SpaceSnifferWindows/` | Windows filesystem access and scanning |
+| `scripts/gpui-app/` | Packaging and application validation tools |
 
-개발 경위와 검증 기록은 [docs](docs/)에 있습니다. 성능 측정이 끝나지 않은 항목과 플랫폼별 제약도 기록해 두었습니다.
+Development notes and validation reports live in [docs](docs/), mostly in Korean. They also record platform limitations and measurements that are not yet complete.
 
-Spacer는 SpaceSniffer의 트리맵 탐색 방식에서 출발한 프로젝트이며, Uderzo Software의 공식 제품은 아닙니다. UI는 [GPUI](https://github.com/zed-industries/zed/tree/main/crates/gpui)와 GPUI Kit를 사용합니다. 글꼴은 [Noto Sans KR](gpui-app/assets/fonts/OFL.txt), 아이콘은 Lucide를 사용합니다.
+Spacer grew out of SpaceSniffer's treemap navigation model. It is not an official Uderzo Software product. The interface uses [GPUI](https://github.com/zed-industries/zed/tree/main/crates/gpui) and GPUI Kit, with [Noto Sans KR](gpui-app/assets/fonts/OFL.txt) and Lucide icons.
