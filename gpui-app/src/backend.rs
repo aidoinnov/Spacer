@@ -107,7 +107,7 @@ impl ScanSession {
         if matches!(mode, SourceMode::Inspect) {
             command.arg("--inspect-only");
         }
-        crate::platform::configure_child_process(&mut command);
+        crate::platform::process::configure_child_process(&mut command);
         let mut child = match command.spawn() {
             Ok(child) => child,
             Err(error) => {
@@ -140,6 +140,7 @@ impl ScanSession {
             commands,
             stopping: Default::default(),
         });
+        crate::session_lifecycle::register(process.child.clone(), process.commands.clone(), directory.clone())?;
         let pending = process.pending.clone();
         let process_weak = Arc::downgrade(&process);
         let (tx, events) = mpsc::channel();
@@ -240,7 +241,9 @@ impl ScanSession {
                     errors.lock().unwrap()
                 )));
             }
-            let _ = std::fs::remove_dir_all(directory);
+            if std::fs::remove_dir_all(&directory).is_ok() || !directory.exists() {
+                crate::session_lifecycle::unregister(&directory);
+            }
         });
         Ok(Self { process, events })
     }

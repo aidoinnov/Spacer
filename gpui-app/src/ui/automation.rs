@@ -87,7 +87,14 @@ fn execute(command: &str, args: &Value, jobs: &mut Jobs, cx: &mut App) -> anyhow
             .ok_or_else(|| anyhow::anyhow!("not_found"));
     }
     if command == "window_new" {
-        let handle = windows::open(None, cx)?;
+        let background = args.get("background")
+            .map(|v| v.as_bool().ok_or_else(|| anyhow::anyhow!("invalid_argument")))
+            .transpose()?.unwrap_or(false);
+        let handle = windows::open_request(windows::OpenRequest {
+            visible: !background,
+            focus: !background,
+            ..Default::default()
+        }, cx)?;
         return Ok(json!({"window_id":window_id(handle)}));
     }
     let handles = windows::handles(cx);

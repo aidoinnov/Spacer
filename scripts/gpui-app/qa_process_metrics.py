@@ -113,6 +113,39 @@ def create_probe():
     raise RuntimeError('Unsupported QA metrics host')
 
 
+def foreground_pid():
+    """Observe focus without UI input; a locked Windows desktop may return zero."""
+    if sys.platform == 'darwin':
+        text = subprocess.check_output(['/usr/bin/osascript','-l','JavaScript','-e',
+            "ObjC.import('AppKit'); $.NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier"],text=True,timeout=5)
+        return int(text.strip())
+    if sys.platform == 'win32':
+        user=ctypes.WinDLL('user32',use_last_error=True)
+        user.GetForegroundWindow.restype=ctypes.c_void_p
+        user.GetWindowThreadProcessId.argtypes=[ctypes.c_void_p,ctypes.POINTER(ctypes.c_uint32)]
+        pid=ctypes.c_uint32()
+        user.GetWindowThreadProcessId(user.GetForegroundWindow(),ctypes.byref(pid))
+        return pid.value
+    raise RuntimeError('Unsupported foreground observation host')
+
+
+def hidden_process_options():
+    """Keep console QA children from creating a Windows console window."""
+    return {'creationflags':subprocess.CREATE_NO_WINDOW} if sys.platform=='win32' else {}
+
+
+def mark_fixture_hidden(path):
+    """A leading dot is not FILE_ATTRIBUTE_HIDDEN on Windows."""
+    if sys.platform=='win32':
+        kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+        kernel.GetFileAttributesW.argtypes=[ctypes.c_wchar_p]
+        kernel.GetFileAttributesW.restype=ctypes.c_uint32
+        kernel.SetFileAttributesW.argtypes=[ctypes.c_wchar_p,ctypes.c_uint32]
+        flags=kernel.GetFileAttributesW(str(path))
+        if flags==0xFFFFFFFF or not kernel.SetFileAttributesW(str(path),flags|2):
+            raise OSError(ctypes.get_last_error(),'Cannot mark owned fixture hidden')
+
+
 def same_path(left, right):
     return os.path.normcase(os.path.realpath(left)) == os.path.normcase(os.path.realpath(right))
 
@@ -177,8 +210,10 @@ class ExitWitness:
 
     def close(self):
         self.stop.set(); self.thread.join(timeout=2)
-        if self.queue is not None: self.queue.close()
-        if self.handle: self.probe.kernel.CloseHandle(self.handle)
+        if self.queue is not None:
+            self.queue.close(); self.queue=None
+        if self.handle:
+            self.probe.kernel.CloseHandle(self.handle); self.handle=None
 
 
 def diagnose_exit_timeout(probe, pid, prefix):

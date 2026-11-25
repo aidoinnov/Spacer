@@ -35,6 +35,15 @@ class MCPTests(unittest.TestCase):
         b = self.legacy()
         for args in [{'limit':501},{'limit':True},{'offset':-1},{'arbitrary_shell':'rm'}]:
             with self.assertRaises(m.RPCError): b.handle({'jsonrpc':'2.0','id':3,'method':'tools/call','params':{'name':'tree_children','arguments':args}})
+    def test_new_window_background_is_an_explicit_boolean(self):
+        m.validate({'background':True},m.TOOL_MAP['window_new']['inputSchema'])
+        for value in [1,'true',None]:
+            with self.assertRaises(m.RPCError):m.validate({'background':value},m.TOOL_MAP['window_new']['inputSchema'])
+    def test_close_window_requires_explicit_instance_and_window(self):
+        schema=m.TOOL_MAP['window_close']['inputSchema']
+        m.validate({'instance_id':123,'window_id':'owned-window'},schema)
+        for args in [{},{'instance_id':123},{'window_id':'owned-window'}]:
+            with self.assertRaises(m.RPCError):m.validate(args,schema)
     def test_notifications_produce_no_response(self):
         b = self.legacy(); self.assertIsNone(b.handle({'jsonrpc':'2.0','method':'notifications/initialized'}))
     def test_ping_can_precede_initialization_but_tools_cannot(self):

@@ -80,7 +80,7 @@ Use an **x64 Developer PowerShell** with Visual Studio build tools, the Windows 
   -SwiftRuntimeDirectory "C:\path\to\swift-runtime\usr\bin"
 ```
 
-Replace both paths with your toolchain and runtime locations. The output includes the GUI, scan backend, preview helper, and runtime DLLs. See the [GPUI build notes](gpui-app/README.md) for details; those notes are currently in Korean.
+Replace both paths with your toolchain and runtime locations. The output includes the GUI, console CLI, scan backend, preview helper, and runtime DLLs. See the [GPUI build notes](gpui-app/README.md) for details; those notes are currently in Korean.
 
 ### Checks
 
@@ -89,13 +89,17 @@ python3 scripts/gpui-app/check-shared-domain.py
 python3 scripts/gpui-app/check-fonts.py
 python3 scripts/check-gpui-boundary.py
 cargo +1.97.0 test --locked --manifest-path gpui-app/Cargo.toml
+cargo +1.97.0 test --locked --manifest-path gpui-app/cli/Cargo.toml
 ```
 
 The source tree includes scan-engine changes that are not part of the validated 0.3.0 packages. A source build will therefore differ from those packages. Performance acceptance for those changes is still pending.
 
 CLI and MCP test coverage, fixes, and remaining gaps are recorded in the
-[CLI/MCP validation report](docs/CLI_MCP_VALIDATION.md). The GPUI executable provides
-`--help` and `--version`; the legacy headless `--cli` is not included in its package.
+[CLI/MCP validation report](docs/CLI_MCP_FOLLOWUP.md). New source builds include a shared headless
+[CLI](docs/HEADLESS_CLI.md), available through `SpacerCLI` / `SpacerCLI.exe` or
+the GPUI executable’s `--cli` option. The frozen November 24 packages predate
+that addition and have not been replaced. See [MCP setup and tools](docs/MCP.md)
+for app automation.
 
 ## Source layout
 

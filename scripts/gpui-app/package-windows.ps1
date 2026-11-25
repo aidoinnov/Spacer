@@ -2,15 +2,18 @@
 param(
     [Parameter(Mandatory=$true)][string]$RustBinary,
     [Parameter(Mandatory=$true)][string]$CompanionDirectory,
-    [Parameter(Mandatory=$true)][string]$OutputDirectory
+    [Parameter(Mandatory=$true)][string]$OutputDirectory,
+    [string]$CliBinary
 )
 $ErrorActionPreference='Stop'
+if(!$CliBinary){$CliBinary=Join-Path (Split-Path $RustBinary -Parent) 'SpacerCLI.exe'}
 if(Test-Path -LiteralPath $OutputDirectory){throw 'Output must be new; preserve previous installation for rollback'}
-foreach($source in @($RustBinary,(Join-Path $CompanionDirectory 'ExplorerBackend.exe'),(Join-Path $CompanionDirectory 'WindowsPreviewHost.exe'))){
+foreach($source in @($RustBinary,$CliBinary,(Join-Path $CompanionDirectory 'ExplorerBackend.exe'),(Join-Path $CompanionDirectory 'WindowsPreviewHost.exe'))){
     if(!(Test-Path -LiteralPath $source -PathType Leaf)){throw "Missing release component: $source"}
 }
 New-Item -ItemType Directory -Path $OutputDirectory | Out-Null
 Copy-Item -LiteralPath $RustBinary -Destination (Join-Path $OutputDirectory 'MacSpaceSniffer.exe')
+Copy-Item -LiteralPath $CliBinary -Destination (Join-Path $OutputDirectory 'SpacerCLI.exe')
 foreach($name in @('ExplorerBackend.exe','WindowsPreviewHost.exe')){Copy-Item -LiteralPath (Join-Path $CompanionDirectory $name) -Destination $OutputDirectory}
 $dlls=@(Get-ChildItem -LiteralPath $CompanionDirectory -Filter '*.dll' -File)
 if(!$dlls.Count){throw 'No Swift runtime DLLs supplied'}

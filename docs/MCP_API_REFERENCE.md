@@ -1,6 +1,6 @@
 # MCP API 상세 명세
 
-기준: 2026-11-09, `scripts/mcp/space_sniffer_mcp.py`의 도구 20개와 `AutomationHub`/`QueryContext`의 실제 출력. 입력표는 현재 `TOOLS` 객체에서 추출했다. [카탈로그 원문](mcp-tool-catalog.json)에는 입력 JSON Schema·annotations와 bridge 소스 SHA-256을 보관한다. 아래 출력 형태는 앱 구현을 대조해 수기로 설명했으며 런타임 `outputSchema`가 제공되는 것은 아니다.
+기준: 입력 카탈로그는 2026-11-25의 도구 22개로 갱신했다. 아래 기존 출력 명세는 2026-11-09의 `AutomationHub`/`QueryContext`의 실제 출력. 입력표는 현재 `TOOLS` 객체에서 추출했다. [카탈로그 원문](mcp-tool-catalog.json)에는 입력 JSON Schema·annotations와 bridge 소스 SHA-256을 보관한다. 아래 출력 형태는 앱 구현을 대조해 수기로 설명했으며 런타임 `outputSchema`가 제공되는 것은 아니다.
 
 설계·보안·비용·운영은 [기술 설계서](MCP_TECHNICAL_DESIGN.md), 처음 연결은 [사용 가이드](MCP.md)를 참고한다. 예시 경로/UUID/PID는 설명용이며 실재 경로를 뜻하지 않는다.
 
@@ -763,3 +763,20 @@ assert job["phase"] == "completed"
 ## 2026-11-09 용량 회계 관측
 
 WindowState.space_accounting은 live whole-volume snapshot에서만 객체이며 폴더/offline/idle은 null이다. total_bytes, free_bytes, system_used_bytes(total-free), observed_physical_bytes, unclamped_residual_bytes, unattributed_bytes(max(0,used-observed)), diagnostics를 제공한다. volume_metadata_timing=captured_at_scan_start이므로 현재 OS fresh poll이 아니며 부분 scan 합계와 시점이 다를 수 있다. coverage_percentage_available=false이고 잔여량을 접근거부나 미스캔 바이트로 단정하지 않는다.
+
+## GPUI window lifecycle — 2026-11-25
+
+The current bridge exposes 22 tools. `window_new` accepts optional boolean
+`background` (default false) and returns `window_id`. With `background=true`, the
+new window is hidden, does not activate, and does not start a home-directory scan.
+Existing analyses remain in their original windows.
+
+`window_close` requires both `instance_id` (positive process ID) and `window_id`
+(window UUID). It returns `{"accepted":true}`. Closing the last window exits the
+app. Ordinary queries require an explicit window when several GPUI windows exist;
+the bridge does not silently choose a key window.
+
+On normal app exit, the shared session lifecycle stops/reaps owned native engines
+and removes their scratch directories before the host exits. This is also used
+by the headless CLI. Forced OS termination is outside that normal-exit contract.
+See the [follow-up audit](CLI_MCP_FOLLOWUP.md) for runtime evidence and remaining scope.

@@ -1,6 +1,6 @@
 {
   "source": "scripts/mcp/space_sniffer_mcp.py",
-  "source_sha256": "efb566d385f2cd6d035ec0f66eaca754f78332bae6297b81f52410a4c05f63a3",
+  "source_sha256": "799bef937011c16a41568779d80a8af0ef61b5102f791e0d79ccb930e4cbde1d",
   "serverInfo": {
     "name": "mac-space-sniffer",
     "version": "1.0.0"
@@ -167,6 +167,10 @@
             "type": "boolean",
             "description": "Monitor changes after/during the scan."
           },
+          "include_mounted_volumes": {
+            "type": "boolean",
+            "description": "Include nested mounts; omit to retain the window mode, initially selected volume only."
+          },
           "replace": {
             "type": "boolean",
             "description": "Explicitly replace an active scan.",
@@ -213,7 +217,7 @@
     },
     {
       "name": "scan_rescan",
-      "description": "Rescan the live root or an existing folder. Requires an idle live scan.",
+      "description": "Refresh the original live root (path omitted) or a cached directory without navigating. Requires its owning document to be idle with a live engine. Returns document_root, requested/effective_path, scope_mode, previous_version and background. Poll the matching scan_documents entry until scanning=false and version changes. Windows refreshes the full owning root for hard-link accounting; macOS can refresh a subtree.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -228,11 +232,71 @@
           },
           "path": {
             "type": "string",
-            "description": "Absolute path in the scanned snapshot. Omit to use the focused folder.",
+            "description": "Absolute cached directory in the original scan scope. Omit to refresh the original root without navigating.",
             "maxLength": 4096
           }
         },
         "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "window_new",
+      "description": "Open a new GPUI window while preserving existing analyses. background=true creates a hidden, non-activating window.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          },
+          "background": {
+            "type": "boolean",
+            "description": "Create without showing or activating the window.",
+            "default": false
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "window_close",
+      "description": "Close the explicitly selected GPUI window and release its document sessions. Closing the last window exits the app.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "instance_id": {
+            "type": "integer",
+            "description": "App process ID from app_instances.",
+            "minimum": 1
+          },
+          "window_id": {
+            "type": "string",
+            "description": "Window UUID from app_status."
+          }
+        },
+        "required": [
+          "instance_id",
+          "window_id"
+        ],
         "additionalProperties": false
       },
       "annotations": {
@@ -570,6 +634,10 @@
             "description": ""
           },
           "watching": {
+            "type": "boolean",
+            "description": ""
+          },
+          "include_mounted": {
             "type": "boolean",
             "description": ""
           },

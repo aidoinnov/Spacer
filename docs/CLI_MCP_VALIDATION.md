@@ -1,5 +1,8 @@
 # CLI and MCP validation — 2026-11-24
 
+Historical audit. The [November 25 follow-up](CLI_MCP_FOLLOWUP.md) records the
+portable CLI, recovered Windows evidence and subsequent lifecycle checks.
+
 The CLI and MCP were exercised against disposable fixtures and separate, hidden
 QA processes. Four defects were reproduced and fixed in source. The installed
 applications and frozen 0.3.0 packages were not replaced.

@@ -7,18 +7,21 @@ import json
 from pathlib import Path
 import subprocess
 import tempfile
+from qa_process_metrics import hidden_process_options, mark_fixture_hidden
 
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--binary',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--portable',action='store_true',help='Test the normalized native-document CLI contract')
+    parser.add_argument('--gui',action='store_true',help='Exercise the GUI binary forwarding to its CLI companion')
     args=parser.parse_args();assert not args.output.exists()
     args.output.mkdir(parents=True)
     report={'binary':str(args.binary),'sha256':hashlib.sha256(args.binary.read_bytes()).hexdigest(),
-            'scope':'Legacy macOS Swift headless CLI; separate from the GPUI executable','checks':[]}
+            'scope':'Portable native-document CLI' if args.portable else 'Legacy macOS Swift headless CLI','checks':[]}
     def run(name,arguments,expected=0,oracle=None):
-        p=subprocess.run([str(args.binary),*arguments],capture_output=True,text=True,timeout=90)
+        p=subprocess.run([str(args.binary),*arguments],capture_output=True,text=True,encoding='utf-8',timeout=90,**hidden_process_options())
         (args.output/(name+'.stdout')).write_text(p.stdout)
         (args.output/(name+'.stderr')).write_text(p.stderr)
         row={'name':name,'exit':p.returncode,'expectedExit':expected,'passed':p.returncode==expected}
@@ -27,10 +30,12 @@ def main():
             except Exception as error:row.update(passed=False,error=repr(error))
         report['checks'].append(row)
         print(json.dumps(row),flush=True)
+        return p
     with tempfile.TemporaryDirectory(prefix='spacer-cli-owned-') as temp:
         root=Path(temp)/'input';root.mkdir();(root/'branch').mkdir()
         for name,size in [('branch/한글.txt',33),('archive.zip',8193),('.hidden.txt',13)]:
             (root/name).write_bytes(b'x'*size)
+        mark_fixture_hidden(root/'.hidden.txt')
         scan=['--cli','--scan',str(root)]
         sns=args.output/'scan.sns';txt=args.output/'files.txt'
         def fields(**expected):
@@ -39,8 +44,9 @@ def main():
                 for key,wanted in expected.items():assert value[key]==wanted,(key,value)
             return check
         def help_text(text):assert '--cli --scan' in text and '--output' in text
-        run('help',['--help'],oracle=help_text)
-        run('scan',scan,oracle=fields(files=3,folders=2,logicalBytes=8239,issues=0,cancelled=False))
+        run('help',['--cli','--help'] if args.gui else ['--help'],oracle=help_text)
+        scanned=run('scan',scan,oracle=fields(files=3,folders=2,logicalBytes=8239,issues=0,cancelled=False))
+        canonical=Path(json.loads(scanned.stdout)['root'])
         run('logical-filter',scan+['--filter','*.zip','--logical'],oracle=fields(matchedBytes=8193))
         run('hide-hidden',scan+['--filter','*.txt','--logical','--hide-hidden'],oracle=fields(matchedBytes=33))
         run('save-sns',scan+['--output',str(sns)],oracle=fields(files=3,logicalBytes=8239))
@@ -51,7 +57,7 @@ def main():
         run('list-roots',['--cli','--load',str(sns),'--list-roots'],oracle=roots)
         run('export-txt',['--cli','--load',str(sns),'--output',str(txt)])
         original=txt.read_bytes()
-        assert set(original.decode().splitlines())=={str(root/'branch/한글.txt'),str(root/'archive.zip'),str(root/'.hidden.txt')}
+        assert set(original.decode().splitlines())=={str(canonical/'branch/한글.txt'),str(canonical/'archive.zip'),str(canonical/'.hidden.txt')}
         run('existing-output',['--cli','--load',str(sns),'--output',str(txt)],1)
         assert txt.read_bytes()==original,'Existing output was modified'
         for name,arguments in [
@@ -70,7 +76,11 @@ def main():
         config=args.output/'format.xml'
         encoded=base64.b64encode('<%pathfile%>{&br}'.encode('utf-16le')).decode()
         config.write_text(f'<exportConfig version="3"><description>Owned format</description><detailFormat>{encoded}</detailFormat><blockSorting>files</blockSorting><fineSorting>size</fineSorting><fineSortingDirection>desc</fineSortingDirection></exportConfig>')
-        run('inspect-config',['--cli','--inspect-config',str(config)],oracle=fields(document_kind='exportConfig'))
+        def inspection(stdout):
+            value=json.loads(stdout)
+            if args.portable:assert len(value['exports'])==1 and value['exports'][0]['description']=='Owned format',value
+            else:assert value['document_kind']=='exportConfig',value
+        run('inspect-config',['--cli','--inspect-config',str(config)],oracle=inspection)
         configured=scan+['--export-config',str(config),'--output',str(args.output/'configured.txt')]
         run('configured-export',configured)
         run('configured-existing-output',configured,1)

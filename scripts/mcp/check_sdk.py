@@ -33,7 +33,8 @@ def main():
         native=work/a.backend.name;shutil.copy2(a.backend,native)
         with (a.output/'app.log').open('w') as log:
             try:
-                env={**os.environ,'SNIFFER_SCAN_BACKEND':str(native)}
+                runtime=work/'runtime';runtime.mkdir()
+                env={**os.environ,'SNIFFER_SCAN_BACKEND':str(native),**{key:str(runtime)+os.sep for key in ('TMPDIR','TEMP','TMP')}}
                 child=subprocess.Popen([str(a.gui.resolve()),'--qa-background','--scan',str(fixture)],env=env,stdout=log,stderr=log)
                 report['ownedPid']=child.pid
                 deadline=time.monotonic()+90
@@ -73,7 +74,8 @@ def main():
                     try:child.wait(timeout=8)
                     except subprocess.TimeoutExpired:child.terminate();child.wait(timeout=8)
                 report['guiExitCode']=child.returncode if child else None
-                report['passed'] &= report['guiExitCode']==0
+                report['nativeScratchRemaining']=[str(p) for p in runtime.glob('sniffer-gpui-*')]
+                report['passed'] &= report['guiExitCode']==0 and not report['nativeScratchRemaining']
                 (a.output/'results.json').write_text(json.dumps(report,indent=2)+'\n')
     report['fixtureRemoved']=not work.exists()
     (a.output/'results.json').write_text(json.dumps(report,indent=2)+'\n')

@@ -102,7 +102,7 @@ pub fn show(path: &Path) -> Result<()> {
     if std::env::args_os().any(|arg| arg == "--qa-document-only" || arg == "--qa-preview-only") {
         command.arg("quiet");
     }
-    super::configure_child_process(&mut command);
+    crate::platform::process::configure_child_process(&mut command);
     let mut child = command
         .spawn()
         .context("Windows 미리보기 도우미를 실행하지 못했습니다.")?;

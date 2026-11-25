@@ -1,15 +1,10 @@
 #[path = "windows/preview.rs"]
 mod preview;
-use std::path::{Path, PathBuf};
+use std::path::Path;
+#[cfg(test)]
+use std::path::PathBuf;
 pub fn focused_rescan_scope() -> &'static str {
     "root"
-}
-pub fn configure_child_process(command: &mut std::process::Command) {
-    use std::os::windows::process::CommandExt;
-    command.creation_flags(windows::Win32::System::Threading::CREATE_NO_WINDOW.0);
-}
-pub fn backend(directory: &Path) -> PathBuf {
-    directory.join("ExplorerBackend.exe")
 }
 pub fn applications() -> std::path::PathBuf {
     std::env::var_os("ProgramFiles")
@@ -26,31 +21,8 @@ pub fn volumes() -> Vec<std::path::PathBuf> {
 pub fn reveal_label() -> &'static str {
     "탐색기에서 보기"
 }
-pub fn scan_path(path: &std::path::Path) -> PathBuf {
-    // A missing leaf still needs the existing parent's spelling (Temp/TEMP,
-    // drive case and short names) before scope checks and error classification.
-    let p = path
-        .ancestors()
-        .find_map(|ancestor| {
-            std::fs::canonicalize(ancestor).ok().map(|parent| {
-                let suffix = path.strip_prefix(ancestor).unwrap();
-                if suffix.as_os_str().is_empty() {
-                    parent
-                } else {
-                    parent.join(suffix)
-                }
-            })
-        })
-        .unwrap_or_else(|| path.to_path_buf());
-    let text = p.to_string_lossy();
-    if let Some(suffix) = text.strip_prefix("\\\\?\\UNC\\") {
-        return format!("\\\\{suffix}").into();
-    }
-    if let Some(suffix) = text.strip_prefix("\\\\?\\") {
-        return suffix.into();
-    }
-    p
-}
+#[cfg(test)]
+use crate::platform::paths::scan_path;
 
 pub fn preview(path: &Path) -> anyhow::Result<()> {
     preview::show(path)

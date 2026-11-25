@@ -4,13 +4,15 @@ import argparse, hashlib, json, pathlib, plistlib, shutil, subprocess
 
 p = argparse.ArgumentParser()
 p.add_argument('--rust-binary', type=pathlib.Path, required=True)
+p.add_argument('--cli-binary', type=pathlib.Path, help='Console companion (defaults to SpacerCLI beside the GUI binary)')
 p.add_argument('--native-directory', type=pathlib.Path, required=True)
 p.add_argument('--output', type=pathlib.Path, required=True)
 a = p.parse_args()
 repo = pathlib.Path(__file__).resolve().parents[2]
 assert not a.output.exists(), 'Output must be new; preserve the previous bundle for rollback'
 inputs = {'MacSpaceSniffer': a.rust_binary, 'MacScanBridge': a.native_directory / 'MacScanBridge',
-          'libMacPreviewSupport.dylib': a.native_directory / 'libMacPreviewSupport.dylib'}
+          'libMacPreviewSupport.dylib': a.native_directory / 'libMacPreviewSupport.dylib',
+          'SpacerCLI': a.cli_binary or a.rust_binary.with_name('SpacerCLI')}
 for value in inputs.values():
     assert value.is_file(), value
 contents = a.output / 'Contents'
@@ -30,7 +32,7 @@ info = {'CFBundleExecutable': 'MacSpaceSniffer', 'CFBundleIdentifier': 'local.ma
         'NSPrincipalClass': 'NSApplication',
         'NSHumanReadableCopyright': 'Space Sniffer contributors'}
 (contents / 'Info.plist').write_bytes(plistlib.dumps(info))
-for name in ['MacScanBridge', 'libMacPreviewSupport.dylib', 'MacSpaceSniffer']:
+for name in ['MacScanBridge', 'libMacPreviewSupport.dylib', 'SpacerCLI', 'MacSpaceSniffer']:
     subprocess.run(['codesign', '--force', '--sign', '-', str(contents / 'MacOS' / name)], check=True)
 subprocess.run(['codesign', '--force', '--sign', '-', str(a.output)], check=True)
 subprocess.run(['codesign', '--verify', '--deep', '--strict', str(a.output)], check=True)

@@ -13,11 +13,13 @@ output_root="${SNIFFER_OUTPUT_ROOT:-$(pwd)/dist/gpui-builds}"
 output="$output_root/${version}-$(uname -m)-$(date -u +%Y%m%dT%H%M%SZ)"
 python3 scripts/gpui-app/check-shared-domain.py
 python3 scripts/gpui-app/check-fonts.py
+CARGO_TARGET_DIR="$build_root/cli-target" CARGO_INCREMENTAL=0 cargo +1.97.0 build --release --locked --manifest-path gpui-app/cli/Cargo.toml --jobs "$jobs"
 swift build --scratch-path "$build_root/swift" -c release --product MacScanBridge --jobs 2
 swift build --scratch-path "$build_root/swift" -c release --product MacPreviewSupport --jobs 2
 SPACE_SNIFFER_BUNDLE_ID=local.macspacesniffer.app CARGO_INCREMENTAL=0 CARGO_TARGET_DIR="$build_root/target" \
   cargo +1.97.0 build --release --locked --manifest-path gpui-app/Cargo.toml --jobs "$jobs"
 python3 scripts/gpui-app/package-macos.py --rust-binary "$build_root/target/release/space-sniffer-gpui" \
+  --cli-binary "$build_root/cli-target/release/spacer-cli" \
   --native-directory "$build_root/swift/release" --output "$output/Mac Space Sniffer.app"
 ditto -c -k --sequesterRsrc --keepParent "$output/Mac Space Sniffer.app" "$output/Mac-Space-Sniffer-$version-$(uname -m).zip"
 python3 - "$output/Mac Space Sniffer.app" <<'PY'

@@ -10,6 +10,7 @@ mod motion;
 mod navigation;
 mod platform;
 mod projection;
+mod session_lifecycle;
 mod ui;
 mod watch;
 mod wire;
@@ -25,12 +26,20 @@ fn main() {
         match command {
             launch::Terminal::Help => print!("{}", launch::HELP),
             launch::Terminal::Version => println!("Spacer {}", env!("CARGO_PKG_VERSION")),
-            launch::Terminal::UnsupportedCli => {
-                eprintln!("The GPUI package does not include the legacy headless --cli interface. Use --help for available commands.");
-                std::process::exit(64);
+            launch::Terminal::Cli => {
+                let code = platform::process::run_cli(&launch_args).unwrap_or_else(|error| {
+                    eprintln!("Spacer CLI companion could not start: {error}");
+                    1
+                });
+                std::process::exit(code);
             }
         }
         return;
+    }
+    #[cfg(not(feature = "qa"))]
+    if let Err(error) = launch::validate_gui(&launch_args) {
+        eprintln!("{error}");
+        std::process::exit(64);
     }
     #[cfg(feature = "qa")]
     if std::env::args().nth(1).as_deref() == Some("--qa-wire-compare") {
@@ -121,6 +130,14 @@ fn main() {
     gpui_kit::application()
         .with_assets(gpui_kit::assets::AllAssets)
         .run(move |cx| {
+            // GPUI only polls quit futures for 200 ms. Finish owned runtime
+            // cleanup inside the callback before returning its ready future.
+            cx.on_app_quit(|_| {
+                if let Err(error) = session_lifecycle::finish_all() {
+                    eprintln!("{error:#}");
+                }
+                async {}
+            }).detach();
             gpui_kit::init(cx);
             ui::theme::init(cx);
             cx.text_system()

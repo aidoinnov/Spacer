@@ -1,10 +1,6 @@
-use std::path::{Path, PathBuf};
-pub fn configure_child_process(_: &mut std::process::Command) {}
+use std::path::Path;
 pub fn focused_rescan_scope() -> &'static str {
     "subtree"
-}
-pub fn backend(directory: &Path) -> PathBuf {
-    directory.join("MacScanBridge")
 }
 pub fn applications() -> std::path::PathBuf {
     "/Applications".into()
@@ -20,20 +16,7 @@ pub fn volumes() -> Vec<std::path::PathBuf> {
 pub fn reveal_label() -> &'static str {
     "Finder에서 보기"
 }
-/// Foundation's canonical spelling for the system temporary/variable aliases.
-pub fn scan_path(path: &std::path::Path) -> PathBuf {
-    let canonical = std::fs::canonicalize(path).unwrap_or_else(|_| path.to_path_buf());
-    for (native, display) in [
-        ("/private/tmp", "/tmp"),
-        ("/private/var", "/var"),
-        ("/private/etc", "/etc"),
-    ] {
-        if let Ok(suffix) = canonical.strip_prefix(native) {
-            return std::path::Path::new(display).join(suffix);
-        }
-    }
-    canonical
-}
+
 
 /// Loads the original AppKit QuickLook owner into GPUI's existing NSApplication.
 static PREVIEW_VISIBLE: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);

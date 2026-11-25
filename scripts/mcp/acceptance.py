@@ -16,7 +16,7 @@ import threading
 import time
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'gpui-app'))
-from qa_process_metrics import create_probe, owned_snapshot, same_path
+from qa_process_metrics import create_probe, owned_snapshot, same_path, foreground_pid, hidden_process_options
 from space_sniffer_mcp import Bridge, TOOLS
 
 
@@ -38,7 +38,7 @@ class Client:
     def __init__(self, bundle):
         self.child = subprocess.Popen([sys.executable, str(Path(__file__).with_name('space_sniffer_mcp.py')),
                                        '--bundle-id', bundle], stdin=subprocess.PIPE,
-                                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                                      stdout=subprocess.PIPE, stderr=subprocess.PIPE,**hidden_process_options())
         self.rows = queue.Queue()
         self.errors = bytearray()
         self.counter = 0
@@ -87,8 +87,14 @@ def main():
     parser.add_argument('--backend', type=Path, required=True)
     parser.add_argument('--bundle-id', default='local.macspacesniffer.app')
     parser.add_argument('--large-sns', type=Path, help='Optional owned SNS fixture for in-flight import cancellation')
+    parser.add_argument('--cancel-files',type=int,default=65536,help='Owned cancellation fixture file count (up to 1048576)')
+    parser.add_argument('--cancel-branches',type=int,default=128,help='Cancellation fixture branches; must divide the file count')
+    parser.add_argument('--require-progress',action='store_true',help='Require observed file-reading progress before cancellation')
+    parser.add_argument('--immediate-stop',action='store_true',help='Send stop directly after accepted start without a status round trip')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
+    assert 1<=args.cancel_files<=1048576 and 1<=args.cancel_branches<=args.cancel_files and args.cancel_files%args.cancel_branches==0
+    assert not(args.require_progress and args.immediate_stop)
     assert not args.output.exists()
     args.output.mkdir(parents=True)
     report = {'passed':False, 'checks':[], 'platform':sys.platform, 'scope':'Owned hidden QA app and real STDIO MCP; not performance acceptance',
@@ -124,7 +130,8 @@ def main():
         if preview.exists(): shutil.copy2(preview,gui.parent/preview.name)
         log=(args.output/'app.log').open('w')
         try:
-            env=os.environ.copy();env['SNIFFER_SCAN_BACKEND']=str(native)
+            runtime=work/'runtime';runtime.mkdir()
+            env={**os.environ,'SNIFFER_SCAN_BACKEND':str(native),**{key:str(runtime)+os.sep for key in ('TMPDIR','TEMP','TMP')}}
             child=subprocess.Popen([str(gui),'--qa-background','--scan',str(root)],env=env,stdout=log,stderr=log)
             report['ownedPid']=child.pid
             def wait(function,timeout=90):
@@ -161,6 +168,12 @@ def main():
                 s=call('app_status')
                 return s if s['phase'] in ('completed','completed_with_issues','offline','cancelled','failed') and not s['projection_pending'] and not s.get('geometry_pending') else None
             state=wait(settled); root=Path(state['root'])
+            # Cursor release requires one immutable revision. A live filesystem
+            # watcher can legitimately replace it during this fixture's setup.
+            call('scan_start',{'path':str(root),'watching':False,'replace':True})
+            state=wait(settled)
+            assert not state['watch_active'] and not state['watch_requested'],state
+            report['watchDisabledForStableQueryCases']=True
             assert state['files']==len(files) and state['logical_bytes']==expected and not state['window_visible'],state
             report['oracle']={'files':len(files),'logicalBytes':expected,'folders':3}
             def capture_native():
@@ -203,18 +216,24 @@ def main():
                 return {'rootChildren':len(rows),'textFiles':len(found['items'])}
             check('queries, pagination, stale revision, native filter and issues',query)
             def cursor():
+                report['cursorTrace']={'stage':'first-page','revisionBefore':call('app_status')['snapshot_revision']}
                 page=call('query_nodes',{'traversal':'subtree','limit':1,'budget':2})
                 assert 'next_cursor' in page and 'traversal_steps' in page,page
                 assert page['traversal_steps']<=2 and len(page['items'])<=1,page
+                report['cursorTrace']['firstPage']=page
                 token=page['next_cursor']
                 if token:
+                    report['cursorTrace']['stage']='cancel'
                     call('query_nodes',{'traversal':'subtree','cursor':token,'cancel_cursor':True})
+                    report['cursorTrace']['stage']='reuse-cancelled'
                     rejected=call('query_nodes',{'traversal':'subtree','cursor':token},error=True)
                     # Legacy control returns the native code; the GPUI native
                     # document stream currently carries its localized message.
                     assert any(marker in str(rejected) for marker in ('stale_cursor','Cursor expired')),rejected
+                    report['cursorTrace']['stage']='fresh-page'
                     fresh=call('query_nodes',{'traversal':'subtree','limit':20,'budget':1000})
                     assert len(fresh['items'])==len(files) and fresh['next_cursor'] is None,fresh
+                report['cursorTrace']['stage']='complete'
                 return {'supported':True}
             check('bounded subtree cursor and explicit release',cursor)
             def navigation():
@@ -232,6 +251,23 @@ def main():
                     assert bool(call('node_info',{'path':path})['node']['own_tag'])==expected_tag
                 return {'toggle':True}
             check('tag same-color toggle',tags)
+            def background_window():
+                before=call('app_status')['snapshot_revision']
+                foreground_before=foreground_pid()
+                second=call('window_new',{'background':True})['window_id']
+                try:
+                    result=client.result('tools/call',{'name':'app_status','arguments':{'instance_id':child.pid}})['structuredContent']
+                    assert len(result['windows'])==2,result
+                    new=next(w for w in result['windows'] if w['window_id']==second)
+                    assert not new['window_visible'] and not new['scan_documents'][0]['scanning'],new
+                    foreground_after=foreground_pid()
+                    assert foreground_after!=child.pid,'Hidden new window stole focus'
+                    assert call('app_status')['snapshot_revision']==before
+                finally:call('window_close',{'window_id':second})
+                result=client.result('tools/call',{'name':'app_status','arguments':{'instance_id':child.pid}})['structuredContent']
+                assert len(result['windows'])==1,result
+                return {'newHiddenWindowClosed':True,'originalDocumentPreserved':True,'foregroundBefore':foreground_before,'foregroundAfter':foreground_after,'focusObservationAvailable':bool(foreground_after)}
+            check('background new window preserves document and does not activate',background_window)
             def resources():
                 assert call('app_resources')['process']['rss_bytes']>0
                 assert call('volume_info',{'path':str(root)})['total_bytes']>0
@@ -311,16 +347,25 @@ def main():
             check('protocol errors and recovery',errors)
             def cancellation():
                 cancel_root=work/'cancel-fixture';cancel_root.mkdir()
-                for branch in range(128):
+                for branch in range(args.cancel_branches):
                     folder=cancel_root/f'b{branch:03}';folder.mkdir()
-                    for index in range(512):(folder/f'f{index:03}').touch()
+                    for index in range(args.cancel_files//args.cancel_branches):(folder/f'f{index:03}').touch()
                 call('scan_start',{'path':str(cancel_root),'watching':False})
-                active=call('app_status')['phase']=='scanning'
+                observed=None
+                if args.require_progress:
+                    def reading():
+                        state=call('app_status')
+                        assert state['phase']=='scanning',('Scan finished before observed reading progress',state)
+                        progress=state.get('progress') or {}
+                        return progress if progress.get('files',0)>0 else None
+                    observed=wait(reading,30)
+                active=None if args.immediate_stop else call('app_status')['phase']=='scanning'
                 call('scan_stop');s=wait(settled)
                 cancelled=bool(s['cancelled'])
-                if not(active and cancelled):
+                if args.require_progress:assert cancelled and active,('Observed read was not cancelled',s)
+                if not(cancelled and (active or args.immediate_stop)):
                     report['skipped'].append({'case':'active cancellation','reason':'Scan completed before cancellation could be observed; idle stop is not a cancellation proof'})
-                return {'filesInFixture':65536,'observedScanning':active,'cancelled':cancelled,'phase':s['phase'],'status':s['status']}
+                return {'filesInFixture':args.cancel_files,'readingProgress':observed,'branches':args.cancel_branches,'immediateStop':args.immediate_stop,'observedScanning':active,'cancelled':cancelled,'completedFiles':s['files'],'phase':s['phase'],'status':s['status']}
             check('active scan cancellation',cancellation)
             if args.large_sns:
                 def cancel_import():
@@ -337,10 +382,24 @@ def main():
                     assert call('app_status')['snapshot_revision']==prior_state['snapshot_revision']
                     return {'initialPhase':initial['phase'],'finalPhase':final['phase'],'previousDocumentPreserved':True}
                 check('in-flight SNS import cancellation',cancel_import)
+            def close_active_window():
+                call('scan_start',{'path':str(work/'cancel-fixture'),'watching':False})
+                def reading():
+                    state=call('app_status')
+                    assert state['phase']=='scanning',('Scan finished before close probe',state)
+                    return state if (state.get('progress') or {}).get('files',0)>0 else None
+                active=wait(reading,30)
+                capture_native()
+                started=time.monotonic()
+                assert call('window_close')['accepted']
+                child.wait(timeout=8)
+                assert child.returncode==0,child.returncode
+                return {'observedReading':active['progress'],'guiExitCode':child.returncode,
+                        'closeMs':round((time.monotonic()-started)*1000,2)}
+            check('MCP closes last window during active scan',close_active_window)
             report['toolsExercised']=sorted(used)
-            report['skipped'].append({'tool':'window_new','reason':'Creates and activates a visible window; no user input/focus takeover during this run'})
             report['rpcRequests']=client.counter
-            capture_native()
+            if child.poll() is None:capture_native()
         except BaseException as error:
             report['fatalError']=repr(error)
         finally:
@@ -372,8 +431,9 @@ def main():
                 if not remaining or time.monotonic()>deadline:break
                 time.sleep(.1)
             report['nativeRemaining']=remaining
+            report['nativeScratchRemaining']=[str(p) for p in runtime.glob('sniffer-gpui-*')]
             report['userInstancesPreserved']=prior.issubset({d['pid'] for d in bridge.instances()})
-            report['passed']=bool(report['checks']) and all(r['passed'] for r in report['checks']) and not report.get('fatalError') and report.get('guiExitCode')==0 and report.get('mcpExitCode')==0 and not remaining and report['userInstancesPreserved']
+            report['passed']=bool(report['checks']) and all(r['passed'] for r in report['checks']) and not report.get('fatalError') and report.get('guiExitCode')==0 and report.get('mcpExitCode')==0 and not remaining and not report['nativeScratchRemaining'] and report['userInstancesPreserved']
             save()
     report['fixtureRemoved']=not work.exists();save()
     sys.exit(0 if report['passed'] else 1)

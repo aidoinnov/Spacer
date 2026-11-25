@@ -1,3 +1,5 @@
+pub(crate) mod paths;
+pub(crate) mod process;
 use std::path::PathBuf;
 #[cfg(target_os = "macos")]
 mod macos;
@@ -7,34 +9,12 @@ mod windows;
 use macos as host;
 #[cfg(target_os = "windows")]
 use windows as host;
-/// Process presentation belongs to the host, independently of backend protocol.
-pub fn configure_child_process(command: &mut std::process::Command) {
-    host::configure_child_process(command);
-}
 pub fn focused_rescan_scope() -> &'static str {
     host::focused_rescan_scope()
 }
 /// The single OS composition boundary. UI/model/layout contain no OS cfgs.
 pub fn backend() -> PathBuf {
-    if let Some(path) = std::env::var_os("SNIFFER_SCAN_BACKEND") {
-        return path.into();
-    }
-    let directory = std::env::current_exe()
-        .ok()
-        .and_then(|p| p.parent().map(|p| p.to_path_buf()))
-        .unwrap_or_default();
-    #[cfg(target_os = "macos")]
-    {
-        macos::backend(&directory)
-    }
-    #[cfg(target_os = "windows")]
-    {
-        windows::backend(&directory)
-    }
-    #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-    {
-        directory.join("ScanBridge")
-    }
+    process::backend()
 }
 
 pub fn engine_watches() -> bool {
@@ -59,7 +39,7 @@ pub fn reveal_label() -> &'static str {
     host::reveal_label()
 }
 pub fn scan_path(path: &std::path::Path) -> PathBuf {
-    host::scan_path(path)
+    paths::scan_path(path)
 }
 
 pub fn preview(path: &std::path::Path) -> anyhow::Result<()> {

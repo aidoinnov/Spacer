@@ -8,12 +8,18 @@ do not rename frozen release artifacts or invalidate their recorded hashes.
 Read `docs/WORK_HANDOFF.md` before changing or packaging the product. It is the
 current completion/deferred-work record; older dated reports are historical.
 
-Latest CLI/MCP audit: `docs/CLI_MCP_VALIDATION.md`. Source fixes have been tested
-in separate QA builds, not installed. The GPUI binary has help/version handling
-but does not ship the legacy headless scan/export CLI. Windows final artifact
-retrieval, task removal and active filesystem cancellation proof remain open
-after a network loss. Never describe the legacy Mac CLI tests as a Windows or
-installed GPUI CLI pass.
+Latest CLI/MCP audit: `docs/CLI_MCP_FOLLOWUP.md` (2026-11-25).
+New source builds include `SpacerCLI` / `SpacerCLI.exe`, using canonical GPUI
+transport/document/model code. GUI `--cli` forwards before window initialization.
+See `docs/HEADLESS_CLI.md` for normalized output and legacy compatibility limits.
+The process/path adapters are shared by both hosts; `session_lifecycle` owns the
+normal-exit native/scratch cleanup barrier. GPUI only polls quit futures for
+200 ms, so do not move required cleanup into a detached reader or an unawaited
+quit future. Preserve the shared grace budget and exact owned-child handles.
+Functional packages reuse the installed 184B engines, remain separate from the
+installed apps, and are not performance-admitted replacement releases. Mac audit
+binaries use the dev profile with QA disabled/enabled as labelled; Windows uses
+release builds. Do not infer optimized Mac performance from functional checks.
 
 - Product UI is common Rust/GPUI for Mac and Windows. Keep OS branches in
   platform adapters/native ports; preserve the existing shared scan engine.
