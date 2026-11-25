@@ -12,12 +12,6 @@ public struct NodePathStorage: Sendable, Equatable {
         get { leaf.map { SnapshotPath.joinPOSIX(base, $0) } ?? base }
         set { base = newValue; leaf = nil }
     }
-    /// Reuse the node's existing name only when its exact spelling is the leaf.
-    /// Arbitrary caller/import paths and mismatched names remain literal data.
-    func sharingName(_ name: String) -> (base: String, usesName: Bool) {
-        if let leaf, leaf.utf8.elementsEqual(name.utf8) { return (base, true) }
-        return (wrappedValue, false)
-    }
     public static func == (lhs: Self, rhs: Self) -> Bool {
         if let l = lhs.leaf, let r = rhs.leaf, lhs.base == rhs.base, l == r { return true }
         return lhs.wrappedValue == rhs.wrappedValue

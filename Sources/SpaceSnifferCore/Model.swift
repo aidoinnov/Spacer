@@ -8,21 +8,10 @@ public enum SizeMode: String, Codable, CaseIterable, Sendable {
 public struct DiskNode: Codable, Identifiable, Sendable, Equatable {
     public var id: Int
     public var parent: Int?
-    private var pathBase: String
-    public var path: String {
-        get { pathUsesName ? SnapshotPath.joinPOSIX(pathBase, name) : pathBase }
-        set { pathBase = newValue; pathUsesName = false }
-    }
-    public var name: String {
-        willSet {
-            // Public name/path mutations have always been independent. Preserve
-            // the old path even when a new name is canonically equivalent.
-            if pathUsesName { pathBase = path; pathUsesName = false }
-        }
-    }
+    @NodePathStorage public var path: String
+    public var name: String
     public var isDirectory: Bool
     public var isSymbolicLink: Bool
-    private var pathUsesName: Bool
     public var logicalBytes: Int64
     public var allocatedBytes: Int64
     private var optionalMetadata = NodeOptionalMetadata()
@@ -59,16 +48,6 @@ public struct DiskNode: Codable, Identifiable, Sendable, Equatable {
     mutating func setNativeFileIdentity(device: Int64, inode: UInt64) {
         _fileIdentity = FileIdentity(device: device, inode: inode)
     }
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        guard lhs.id == rhs.id, lhs.parent == rhs.parent, lhs.name == rhs.name,
-              lhs.isDirectory == rhs.isDirectory, lhs.isSymbolicLink == rhs.isSymbolicLink,
-              lhs.logicalBytes == rhs.logicalBytes, lhs.allocatedBytes == rhs.allocatedBytes,
-              lhs.optionalMetadata == rhs.optionalMetadata, lhs.modified == rhs.modified,
-              lhs.children == rhs.children, lhs.issue == rhs.issue,
-              lhs._fileIdentity == rhs._fileIdentity else { return false }
-        if lhs.pathUsesName == rhs.pathUsesName, lhs.pathBase == rhs.pathBase { return true }
-        return lhs.path == rhs.path
-    }
     public init(id: Int, parent: Int?, path: String, name: String, isDirectory: Bool = false,
                 isSymbolicLink: Bool = false, logicalBytes: Int64 = 0, allocatedBytes: Int64 = 0,
                 modified: Date = .distantPast, children: [Int] = [], issue: String? = nil) {
@@ -82,9 +61,7 @@ public struct DiskNode: Codable, Identifiable, Sendable, Equatable {
     init(id: Int, parent: Int?, storedPath: NodePathStorage, name: String, isDirectory: Bool = false,
          isSymbolicLink: Bool = false, logicalBytes: Int64 = 0, allocatedBytes: Int64 = 0,
          modified: Date = .distantPast, children: [Int] = [], issue: String? = nil) {
-        let reference = storedPath.sharingName(name)
-        self.id = id; self.parent = parent; self.pathBase = reference.base
-        self.pathUsesName = reference.usesName; self.name = name
+        self.id = id; self.parent = parent; self._path = storedPath; self.name = name
         self.isDirectory = isDirectory; self.isSymbolicLink = isSymbolicLink
         self.logicalBytes = logicalBytes; self.allocatedBytes = allocatedBytes
         self.modified = modified; self.children = children; self.issue = issue

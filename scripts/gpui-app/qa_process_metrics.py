@@ -284,10 +284,9 @@ def diagnose_exit_timeout(probe, pid, prefix):
 def start_installed_app(path, log):
     """Launch one user-authorized installed app without mouse/keyboard input."""
     if sys.platform=='darwin':
-        subprocess.run(['open','-a',str(path)],check=True)
-        return None
+        return subprocess.Popen([str(path / 'Contents/MacOS/Spacer'), '--background'], stdout=log, stderr=log)
     if sys.platform=='win32':
-        return subprocess.Popen([str(path)],stdout=log,stderr=log)
+        return subprocess.Popen([str(path), '--background'],stdout=log,stderr=log)
     raise RuntimeError('Unsupported installed app host')
 
 

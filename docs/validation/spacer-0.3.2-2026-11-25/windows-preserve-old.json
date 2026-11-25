@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "snapshots": [
+    {
+      "path": "C:\\Users\\heeya8876\\AppData\\Local\\Spacer\\UpgradeSnapshots\\0.3.1-before-0.3.2\\analysis-38532-0-27daa1d1-7d61-4189-a845-dbba754ad108.sns",
+      "sha256": "4d759d34b32db2134563139700caa2639359a454974c840d47cecfa132c25ff9",
+      "files": 41
+    }
+  ]
+}

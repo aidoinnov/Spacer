@@ -1,0 +1,2 @@
+PASS: 11 portable production files; macOS batch adapter uses shared worker implementation
+Source boundary check only; Windows SDK build and native I/O are not validated by this check.

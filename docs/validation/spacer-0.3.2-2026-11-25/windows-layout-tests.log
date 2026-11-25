@@ -1,0 +1,71 @@
+swift.exe : Building for production...
+위치 C:\Users\heeya8876\spacer-032-build.ps1:13 문자:37
++ ... 'Continue'; & $tool @arguments *> (Join-Path $w 'current-build.log'); ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Building for production...:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[0/15] Write sources
+[1/15] Write swift-version-38EE359B92C3F854.txt
+[2/15] Write sources
+[6/15] Compiling WindowsDirectoryIO WindowsDirectoryIO.c
+[8/16] Compiling SpaceSnifferScanEngine DirectoryBatchReader.swift
+[9/18] Compiling WindowsScanCore Model.swift
+[10/18] Compiling ExplorerDomain ArtifactByteSink.swift
+[11/20] Compiling ExplorerDomainTests ReuseTests.swift
+[11/20] C:\Users\heeya8876\spacer-release-032-20261125\native\x86_64-unknown-windows-msvc\release\SpaceSnifferExplorerB
+ridgePackageDiscoveredTests.derived\all-discovered-tests.swift
+[12/20] Write sources
+[14/21] Compiling ExplorerBackend DocumentService.swift
+[14/21] Write Objects.LinkFileList
+[15/21] Linking ExplorerBackend.exe
+[17/21] Compiling SpaceSnifferExplorerBridgePackageDiscoveredTests ExplorerDomainTests.swift
+[17/21] C:\Users\heeya8876\spacer-release-032-20261125\native\x86_64-unknown-windows-msvc\release\SpaceSnifferExplorerB
+ridgePackageTests.derived\runner.swift
+[18/21] Write sources
+[20/22] Compiling SpaceSnifferExplorerBridgePackageTests runner.swift
+[20/22] Write Objects.LinkFileList
+[21/22] Linking SpaceSnifferExplorerBridgePackageTests.xctest
+Build complete! (53.59s)
+Test Suite 'Selected tests' started at 2026-11-25 03:38:35.583
+
+Test Suite 'SharedNodeNameTests' started at 2026-11-25 03:38:35.585
+
+Test Case 'SharedNodeNameTests.testMismatchedLeafAndNameNeverBecomeCoupled' started at 2026-11-25 03:38:35.585
+
+Test Case 'SharedNodeNameTests.testMismatchedLeafAndNameNeverBecomeCoupled' passed (0.001 seconds)
+
+Test Case 'SharedNodeNameTests.testNameMutationPreservesPathSpellingAndFrozenSnapshot' started at 2026-11-25 03:38:35.586
+
+Test Case 'SharedNodeNameTests.testNameMutationPreservesPathSpellingAndFrozenSnapshot' passed (0.001 seconds)
+
+Test Case 'SharedNodeNameTests.testParentPresencePreservesEveryIntAndIndependentCopies' started at 2026-11-25 03:38:35.587
+
+Test Case 'SharedNodeNameTests.testParentPresencePreservesEveryIntAndIndependentCopies' passed (0.0 seconds)
+
+Test Case 'SharedNodeNameTests.testPathMutationDoesNotChangeNameOrNativeMetadata' started at 2026-11-25 03:38:35.588
+
+Test Case 'SharedNodeNameTests.testPathMutationDoesNotChangeNameOrNativeMetadata' passed (0.0 seconds)
+
+Test Case 'SharedNodeNameTests.testSharedNodeStorageBudget' started at 2026-11-25 03:38:35.588
+
+NODE_STORAGE_STRIDE 184
+
+Test Case 'SharedNodeNameTests.testSharedNodeStorageBudget' passed (0.0 seconds)
+
+Test Suite 'SharedNodeNameTests' passed at 2026-11-25 03:38:35.588
+
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+
+Test Suite 'Selected tests' passed at 2026-11-25 03:38:35.588
+
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+
+??Test run started.
+
+??Testing Library Version: 6.2.4 (5ee435b15ad40ec)
+
+??Target Platform: x86_64-unknown-windows-msvc
+
+??Test run with 0 tests in 0 suites passed after 0.001 seconds.
+

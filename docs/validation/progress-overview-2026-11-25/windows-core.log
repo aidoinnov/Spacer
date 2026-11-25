@@ -1,0 +1,116 @@
+swift.exe : Building for debugging...
+위치 줄:9 문자:1
++ & swift test --package-path Packages\SpaceSnifferWindows --scratch-pa ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Building for debugging...:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[0/4] Write sources
+[1/4] Write swift-version-38EE359B92C3F854.txt
+[3/7] Compiling WindowsScanCoreTests WindowsOverviewTests.swift
+[4/7] Emitting module WindowsScanCoreTests
+[5/8] C:\Users\heeya8876\AppData\Local\Temp\spacer-overview-fix-20261125\Build-final-clean\x86_64-unknown-windows-msvc\
+debug\SpaceSnifferWindowsPackageDiscoveredTests.derived\all-discovered-tests.swift
+[6/9] Write sources
+[8/11] Emitting module SpaceSnifferWindowsPackageDiscoveredTests
+[9/11] Compiling SpaceSnifferWindowsPackageDiscoveredTests WindowsScanCoreTests.swift
+[10/12] Compiling SpaceSnifferWindowsPackageDiscoveredTests all-discovered-tests.swift
+[11/13] Wrapping AST for SpaceSnifferWindowsPackageDiscoveredTests for debugging
+[12/17] C:\Users\heeya8876\AppData\Local\Temp\spacer-overview-fix-20261125\Build-final-clean\x86_64-unknown-windows-msv
+c\debug\SpaceSnifferWindowsPackageTests.derived\runner.swift
+[13/18] Write sources
+[14/18] Wrapping AST for WindowsScanCoreTests for debugging
+[16/20] Compiling SpaceSnifferWindowsPackageTests runner.swift
+[17/20] Emitting module SpaceSnifferWindowsPackageTests
+[18/20] Write Objects.LinkFileList
+[19/20] Linking SpaceSnifferWindowsPackageTests.xctest
+Build complete! (5.58s)
+Test Suite 'All tests' started at 2026-11-25 03:11:39.747
+
+Test Suite 'debug.xctest' started at 2026-11-25 03:11:39.749
+
+Test Suite 'WindowsOverviewTests' started at 2026-11-25 03:11:39.749
+
+Test Case 'WindowsOverviewTests.testBuilderPublishesEightCurrentBranchesAndFinalWireContract' started at 2026-11-25 03:11:39.749
+
+Test Case 'WindowsOverviewTests.testBuilderPublishesEightCurrentBranchesAndFinalWireContract' passed (0.003 seconds)
+
+Test Case 'WindowsOverviewTests.testIndependentRankingsAreBoundedAndRetainSparseAndGrowingBranches' started at 2026-11-25 03:11:39.751
+
+Test Case 'WindowsOverviewTests.testIndependentRankingsAreBoundedAndRetainSparseAndGrowingBranches' passed (0.013 seconds)
+
+Test Case 'WindowsOverviewTests.testNativeEightFoldersMatchEveryObservedTotal' started at 2026-11-25 03:11:39.764
+
+Test Case 'WindowsOverviewTests.testNativeEightFoldersMatchEveryObservedTotal' passed (0.021 seconds)
+
+Test Case 'WindowsOverviewTests.testRootFilesCannotEvictEightKnownFoldersAndValuesStayCurrent' started at 2026-11-25 03:11:39.785
+
+Test Case 'WindowsOverviewTests.testRootFilesCannotEvictEightKnownFoldersAndValuesStayCurrent' passed (0.0 seconds)
+
+Test Suite 'WindowsOverviewTests' passed at 2026-11-25 03:11:39.785
+
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.036 (0.036) seconds
+
+Test Suite 'WindowsScannerTests' started at 2026-11-25 03:11:39.785
+
+Test Case 'WindowsScannerTests.testJunctionBoundaryIsVisibleButTargetIsNotTraversed' started at 2026-11-25 03:11:39.785
+
+JUNCTION_COMMAND root=C:/Users/heeya8876/AppData/Local/Temp/sniffer-native-D9FE8C17-884E-459C-9E4D-02FECE687AFB target=C:/Users/heeya8876/AppData/Local/Temp/sniffer-native-4C5464B5-AB13-457A-A100-B1E5A53FA743 out=Junction created for C:\Users\heeya8876\AppData\Local\Temp\sniffer-native-D9FE8C17-884E-459C-9E4D-02FECE687AFB\junction <<===>> C:\Users\heeya8876\AppData\Local\Temp\sniffer-native-4C5464B5-AB13-457A-A100-B1E5A53FA743
+
+
+ err=
+
+Test Case 'WindowsScannerTests.testJunctionBoundaryIsVisibleButTargetIsNotTraversed' passed (0.229 seconds)
+
+Test Case 'WindowsScannerTests.testMountedPolicyDeduplicatesVolumeAliasesAndRejectsCyclesAndJunctions' started at 2026-11-25 03:11:40.014
+
+Test Case 'WindowsScannerTests.testMountedPolicyDeduplicatesVolumeAliasesAndRejectsCyclesAndJunctions' passed (0.001 seconds)
+
+Test Case 'WindowsScannerTests.testNativeBatchWorkersAgreeWithKnownFileOracleAndUnicode' started at 2026-11-25 03:11:40.014
+
+Test Case 'WindowsScannerTests.testNativeBatchWorkersAgreeWithKnownFileOracleAndUnicode' passed (2.357 seconds)
+
+Test Case 'WindowsScannerTests.testNativeCancellationAndMissingFolderTerminate' started at 2026-11-25 03:11:42.372
+
+Test Case 'WindowsScannerTests.testNativeCancellationAndMissingFolderTerminate' passed (0.02 seconds)
+
+Test Case 'WindowsScannerTests.testNativeHardLinksCountPhysicalAllocationOnce' started at 2026-11-25 03:11:42.392
+
+Test Case 'WindowsScannerTests.testNativeHardLinksCountPhysicalAllocationOnce' passed (0.005 seconds)
+
+Test Case 'WindowsScannerTests.testOversizedWorkerBatchRetriesInlineWithoutLosingEntries' started at 2026-11-25 03:11:42.397
+
+Test Case 'WindowsScannerTests.testOversizedWorkerBatchRetriesInlineWithoutLosingEntries' passed (6.68 seconds)
+
+Test Case 'WindowsScannerTests.testRootMetadataAndVolumeCapacityAreQueriedOnceAtScanRoot' started at 2026-11-25 03:11:49.077
+
+Test Case 'WindowsScannerTests.testRootMetadataAndVolumeCapacityAreQueriedOnceAtScanRoot' passed (0.002 seconds)
+
+Test Case 'WindowsScannerTests.testTreeBuilderUsesInjectedReaderInsteadOfWindowsIO' started at 2026-11-25 03:11:49.079
+
+Test Case 'WindowsScannerTests.testTreeBuilderUsesInjectedReaderInsteadOfWindowsIO' passed (0.102 seconds)
+
+Test Case 'WindowsScannerTests.testWindowsPathStrategySeparatesNativePrefixFromPublicSpelling' started at 2026-11-25 03:11:49.181
+
+Test Case 'WindowsScannerTests.testWindowsPathStrategySeparatesNativePrefixFromPublicSpelling' passed (0.0 seconds)
+
+Test Suite 'WindowsScannerTests' passed at 2026-11-25 03:11:49.182
+
+	 Executed 9 tests, with 0 failures (0 unexpected) in 9.396 (9.396) seconds
+
+Test Suite 'debug.xctest' passed at 2026-11-25 03:11:49.182
+
+	 Executed 13 tests, with 0 failures (0 unexpected) in 9.432 (9.432) seconds
+
+Test Suite 'All tests' passed at 2026-11-25 03:11:49.182
+
+	 Executed 13 tests, with 0 failures (0 unexpected) in 9.432 (9.432) seconds
+
+??Test run started.
+
+??Testing Library Version: 6.2.4 (5ee435b15ad40ec)
+
+??Target Platform: x86_64-unknown-windows-msvc
+
+??Test run with 0 tests in 0 suites passed after 0.001 seconds.
+

@@ -1,0 +1,5 @@
+# Shared-source manifests hash the same Swift bytes on both hosts.
+*.swift text eol=lf
+# Preserve replay evidence and unified-diff context prefixes byte for byte.
+docs/validation/** -text -whitespace
+docs/pending/*.patch -text -whitespace

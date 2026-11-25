@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "foregroundBefore": 685,
+  "oracle": {
+    "files": 10,
+    "logicalBytes": 302,
+    "issues": 0,
+    "rootFolders": 8
+  },
+  "navigation": {
+    "enterFolder": true,
+    "upToRoot": true
+  },
+  "fixtureCapture": {
+    "width": 1600,
+    "height": 1200
+  },
+  "foregroundAfter": 685,
+  "pid": 47386,
+  "version": "0.3.2",
+  "serverInfo": {
+    "name": "spacer",
+    "version": "1.0.0"
+  },
+  "toolCount": 22,
+  "displayRoot": "/Users/aido/Applications/Spacer.app",
+  "displayFiles": 10,
+  "leftRunning": true,
+  "integrity": {
+    "bundledBytecodeRemaining": [],
+    "signatureVerifiedAfterMCP": true
+  }
+}

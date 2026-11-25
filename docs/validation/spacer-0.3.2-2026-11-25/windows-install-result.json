@@ -1,0 +1,15 @@
+﻿{
+    "uninstallPreservesUnknownData":  true,
+    "installerSmoke":  true,
+    "oldManagedInstallRemoved":  true,
+    "pid":  38548,
+    "foregroundAfter":  9876,
+    "foregroundBefore":  9876,
+    "cliChecks":  27,
+    "fileVersion":  "0.3.2.0",
+    "guiMcp":  true,
+    "rollbackArchive":  "C:\\Users\\heeya8876\\AppData\\Local\\Spacer\\Rollback\\0.3.1-before-0.3.2\\Spacer-0.3.1.zip",
+    "passed":  true,
+    "oldAnalysesPreserved":  true,
+    "install":  "C:\\Users\\heeya8876\\AppData\\Local\\Programs\\Spacer\\0.3.2"
+}

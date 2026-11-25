@@ -1,0 +1,176 @@
+{
+  "binary": "/Users/aido/Applications/Spacer.app/Contents/MacOS/Spacer",
+  "sha256": "3fa076a3ce751a3cd58db086db05c48174586d156af799df7bf04000e95e2858",
+  "scope": "Portable native-document CLI",
+  "checks": [
+    {
+      "name": "help",
+      "exit": 0,
+      "expectedExit": 0,
+      "passed": true
+    },
+    {
+      "name": "scan",
+      "exit": 0,
+      "expectedExit": 0,
+      "passed": true
+    },
+    {
+      "name": "logical-filter",
+      "exit": 0,
+      "expectedExit": 0,
+      "passed": true
+    },
+    {
+      "name": "hide-hidden",
+      "exit": 0,
+      "expectedExit": 0,
+      "passed": true
+    },
+    {
+      "name": "save-sns",
+      "exit": 0,
+      "expectedExit": 0,
+      "passed": true
+    },
+    {
+      "name": "load-sns",
+      "exit": 0,
+      "expectedExit": 0,
+      "passed": true
+    },
+    {
+      "name": "list-roots",
+      "exit": 0,
+      "expectedExit": 0,
+      "passed": true
+    },
+    {
+      "name": "export-txt",
+      "exit": 0,
+      "expectedExit": 0,
+      "passed": true
+    },
+    {
+      "name": "existing-output",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "missing-root",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "invalid-filter",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "unknown-option",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "missing-filter-value",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "flag-as-filter-value",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "conflicting-inputs",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "duplicate-input",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "invalid-codepage",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "load-only-option",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "ignored-list-output",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "unsupported-output",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "inspect-config",
+      "exit": 0,
+      "expectedExit": 0,
+      "passed": true
+    },
+    {
+      "name": "configured-export",
+      "exit": 0,
+      "expectedExit": 0,
+      "passed": true
+    },
+    {
+      "name": "configured-existing-output",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "configured-byte-cap",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "existing-sns",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "input-is-output",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    },
+    {
+      "name": "configured-sns-invalid",
+      "exit": 1,
+      "expectedExit": 1,
+      "passed": true
+    }
+  ],
+  "oracle": {
+    "files": 3,
+    "folders": 2,
+    "logicalBytes": 8239
+  },
+  "fixtureRemoved": true,
+  "passed": true
+}

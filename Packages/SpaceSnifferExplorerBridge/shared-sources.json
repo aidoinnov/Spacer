@@ -21,7 +21,7 @@
   },
   "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/Model.swift": {
     "source": "Sources/SpaceSnifferCore/Model.swift",
-    "sha256": "168c920951113aa88053e3f16f9fdfe7ab7e516421ae74a6a6813e70fc2f56df"
+    "sha256": "89398c980efbfeb3ecd0faa776a74ff79d3ba39177af70f22b9a3d980ecb815b"
   },
   "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/ArtifactSelection.swift": {
     "source": "Sources/SpaceSnifferCore/ArtifactSelection.swift",
@@ -53,7 +53,7 @@
   },
   "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/NodePathStorage.swift": {
     "source": "Sources/SpaceSnifferCore/NodePathStorage.swift",
-    "sha256": "9ff37ffe65d7813bef5a58aae0aa81c00506baebc7f7c3de8f1b2d5ebe9ffea7"
+    "sha256": "8d457dfd336fe6c2199face3255771ab1165c8699bab32d94c4048d98f2a2dea"
   },
   "Packages/SpaceSnifferExplorerBridge/Sources/ExplorerDomain/ArtifactByteSink.swift": {
     "source": "Sources/SpaceSnifferCore/ArtifactByteSink.swift",

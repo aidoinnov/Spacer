@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "backend": "/private/tmp/spacer-overview-fix-build/arm64-apple-macosx/debug/MacScanBridge",
+  "backendSHA256": "ccbcb613fb331f8674fb41fa0ce27f46438d25b48b46ad06cf464a51cc6a9412",
+  "scope": "native accounting regression; not GUI or speed acceptance",
+  "files": 65536,
+  "rootFolders": 8,
+  "usefulEvents": 41,
+  "lastObservedFiles": 65536,
+  "maxFolderLagBytes": 0,
+  "unexplainedRemainderBytes": 0,
+  "maxWireBytes": 4687,
+  "finalLogical": 65536,
+  "finalAllocated": 268435456,
+  "elapsedSeconds": 79.76753966597607,
+  "nativeExitCode": 0,
+  "readerStopped": true,
+  "fixtureRemoved": true
+}

@@ -71,6 +71,91 @@ final class ScanOverviewTests: XCTestCase {
         XCTAssertEqual(accumulator.value.folders.first?.id, 400)
     }
 
+    func testOverviewRefreshesKnownFolderBeforeNodeCountDoublesAndWithoutNewNodes() throws {
+        var snapshot = ScanSnapshot(rootPath: "/r", nodes: [
+            DiskNode(id: 0, parent: nil, path: "/r", name: "r", isDirectory: true, children: [1]),
+            DiskNode(id: 1, parent: 0, path: "/r/a", name: "a", isDirectory: true, logicalBytes: 100, allocatedBytes: 100)
+        ])
+        var overview = ScanOverviewAccumulator()
+        overview.update(from: snapshot)
+        snapshot.nodes[1].logicalBytes = 500
+        snapshot.nodes[1].allocatedBytes = 500
+        overview.markRootChanged(1)
+        overview.update(from: snapshot)
+        XCTAssertEqual(overview.value.folders.first?.allocatedBytes, 500)
+        snapshot.nodes.append(DiskNode(id: 2, parent: 1, path: "/r/a/f", name: "f", logicalBytes: 500, allocatedBytes: 500))
+        overview.update(from: snapshot)
+        XCTAssertEqual(overview.value.observedNodeCount, 3)
+        XCTAssertEqual(overview.value.largeFiles.first?.allocatedBytes, 500)
+    }
+
+    func testAllEightRootFoldersAreCurrentAtEachObservation() {
+        var snapshot = ScanSnapshot(rootPath: "/r", nodes: [
+            DiskNode(id: 0, parent: nil, path: "/r", name: "r", isDirectory: true, children: Array(1...8))
+        ] + (1...8).map { id in
+            DiskNode(id: id, parent: 0, path: "/r/\(id)", name: "\(id)", isDirectory: true)
+        })
+        var overview = ScanOverviewAccumulator()
+        for round in 1...3 {
+            for id in 1...8 {
+                snapshot.nodes[id].allocatedBytes = Int64(round * id * 4096)
+                snapshot.nodes[id].logicalBytes = Int64(round * id)
+                overview.markRootChanged(id)
+            }
+            overview.update(from: snapshot)
+            XCTAssertEqual(overview.value.folders.count, 8)
+            for item in overview.value.folders {
+                XCTAssertEqual(item.allocatedBytes, snapshot.nodes[item.id].allocatedBytes)
+                XCTAssertEqual(item.logicalBytes, snapshot.nodes[item.id].logicalBytes)
+            }
+        }
+    }
+
+    func testIndependentSizeRankingsRetainSparseAndGrowingFolders() throws {
+        var accumulator = ScanOverviewAccumulator()
+        for id in 1...1000 {
+            accumulator.observeFolder(DiskNode(id: id, parent: 0, path: "/\(id)", name: "\(id)",
+                isDirectory: true, logicalBytes: Int64(1001-id), allocatedBytes: Int64(id)))
+        }
+        XCTAssertEqual(accumulator.value.folders.map(\.id), Array((985...1000).reversed()))
+        XCTAssertEqual(accumulator.value.logicalFolders?.map(\.id), Array(1...16))
+        let sparse = DiskNode(id: 1001, parent: 0, path: "/sparse", name: "sparse", isDirectory: true,
+            logicalBytes: 100_000, allocatedBytes: 0)
+        accumulator.observeFolder(sparse)
+        XCTAssertEqual(accumulator.value.logicalFolders?.first?.id, 1001)
+        XCTAssertEqual(accumulator.value.folders.count, 16)
+        accumulator.observeFolder(DiskNode(id: 20, parent: 0, path: "/20", name: "20", isDirectory: true,
+            logicalBytes: 200_000, allocatedBytes: 200_000))
+        XCTAssertEqual(accumulator.value.folders.first?.id, 20)
+        XCTAssertEqual(accumulator.value.logicalFolders?.first?.id, 20)
+        var file = sparse
+        file.isDirectory = false
+        accumulator.observeFile(file)
+        XCTAssertTrue(accumulator.value.largeFiles.isEmpty)
+        XCTAssertEqual(accumulator.value.logicalLargeFiles?.first?.id, 1001)
+    }
+
+    func testWideOverviewRefreshesOnlyChangedRootBranches() {
+        var snapshot = ScanSnapshot(rootPath: "/r", nodes: [
+            DiskNode(id: 0, parent: nil, path: "/r", name: "r", isDirectory: true)
+        ] + (1...1000).map { id in
+            DiskNode(id: id, parent: 0, path: "/r/\(id)", name: "\(id)", isDirectory: true,
+                logicalBytes: Int64(id), allocatedBytes: Int64(id))
+        })
+        var overview = ScanOverviewAccumulator()
+        overview.update(from: snapshot)
+        XCTAssertEqual(overview.refreshedFolderCount, 1000)
+        snapshot.nodes[500].logicalBytes = 10_000
+        snapshot.nodes[500].allocatedBytes = 10_000
+        for _ in 0..<100 { overview.markRootChanged(500) }
+        overview.update(from: snapshot)
+        XCTAssertEqual(overview.refreshedFolderCount, 1)
+        XCTAssertEqual(overview.value.folders.first?.allocatedBytes, 10_000)
+        XCTAssertEqual(overview.value.rootFolderCount, 1000)
+        overview.update(from: snapshot)
+        XCTAssertEqual(overview.refreshedFolderCount, 0)
+    }
+
     func testSharedScanOverviewIsBoundedArrivesBeforeCompletionAndMatchesFinalTree() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("overview-"+UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)

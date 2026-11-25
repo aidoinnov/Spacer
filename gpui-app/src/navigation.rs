@@ -39,6 +39,20 @@ pub fn contains(scope: &Path, path: &Path) -> bool {
             || windows_path(&scope) && suffix.starts_with('\\')
     })
 }
+/// Keep cached/offline spelling intact; resolve native aliases only when the
+/// requested spelling is outside the lexical scope (e.g. Windows short names).
+pub fn resolve_contained_path(
+    scope: &Path,
+    path: PathBuf,
+    normalize: impl FnOnce(&Path) -> PathBuf,
+) -> Option<PathBuf> {
+    let path = if contains(scope, &path) {
+        path
+    } else {
+        normalize(&path)
+    };
+    contains(scope, &path).then_some(path)
+}
 pub fn parent(path: &Path) -> Option<PathBuf> {
     let text = path.to_string_lossy();
     let windows = windows_path(&text);
@@ -67,6 +81,28 @@ pub fn breadcrumbs(scope: &Path, focus: &Path) -> Vec<PathBuf> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn native_aliases_resolve_without_rewriting_cached_snapshot_paths() {
+        let scope = Path::new(r"C:\Users\long-user\data");
+        let cached = scope.join("child");
+        assert_eq!(
+            resolve_contained_path(scope, cached.clone(), |_| panic!(
+                "cached paths need no I/O"
+            )),
+            Some(cached.clone())
+        );
+        let alias = PathBuf::from(r"C:\Users\LONGUS~1\data\child");
+        assert_eq!(
+            resolve_contained_path(scope, alias.clone(), |path| {
+                assert_eq!(path, alias);
+                cached.clone()
+            }),
+            Some(cached)
+        );
+        assert!(
+            resolve_contained_path(scope, PathBuf::from("/outside"), |path| path.into()).is_none()
+        );
+    }
     #[test]
     fn windows_snapshot_paths_work_on_any_host() {
         let scope = Path::new(r"C:\data");

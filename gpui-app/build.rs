@@ -7,6 +7,10 @@ fn main() {
     let version = product["version"].as_str().unwrap();
     assert_eq!(version, std::env::var("CARGO_PKG_VERSION").unwrap());
     println!("cargo:rustc-env=SPACER_PRODUCT_NAME={name}");
+    println!(
+        "cargo:rustc-env=SPACER_BUNDLE_ID={}",
+        product["bundle_id"].as_str().unwrap()
+    );
     for file in ["app.rc", "AppIcon.ico"] {
         println!("cargo:rerun-if-changed=native/windows-app/{file}");
     }

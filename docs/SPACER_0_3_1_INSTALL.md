@@ -1,5 +1,7 @@
 # Spacer 0.3.1 — installed 2026-11-25
 
+Historical record; superseded by [0.3.2](SPACER_0_3_2_INSTALL.md). Its original hashes and delivery remain preserved.
+
 Spacer 0.3.1 is installed and running on the Mac and Windows 132. Both use
 optimized production builds, the shared GPUI interface, the console companion,
 and the previously validated 184B native engines. The unadopted 168B engine was

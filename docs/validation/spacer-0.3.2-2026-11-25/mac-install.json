@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "version": "0.3.2",
+  "installed": "/Users/aido/Applications/Spacer.app",
+  "rollbackArchive": "/Users/aido/Library/Application Support/Spacer/Rollback/0.3.1-before-0.3.2/Spacer-0.3.1.zip",
+  "rollbackBundle": "/Users/aido/Applications/.Spacer-0.3.1.rollback.app",
+  "engineNodeBytes": 184,
+  "sourceManifest": "/private/tmp/spacer-032-release/production/Spacer.manifest.json",
+  "rollbackBundleRemoved": true,
+  "rollbackArchiveSHA256": "0a23144d2309f27b92e1695885bb887963afc91259a8b934d92ec34ac86e1038"
+}

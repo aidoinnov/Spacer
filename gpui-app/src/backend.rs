@@ -140,7 +140,11 @@ impl ScanSession {
             commands,
             stopping: Default::default(),
         });
-        crate::session_lifecycle::register(process.child.clone(), process.commands.clone(), directory.clone())?;
+        crate::session_lifecycle::register(
+            process.child.clone(),
+            process.commands.clone(),
+            directory.clone(),
+        )?;
         let pending = process.pending.clone();
         let process_weak = Arc::downgrade(&process);
         let (tx, events) = mpsc::channel();
@@ -164,7 +168,13 @@ impl ScanSession {
                 };
                 match value.get("type").and_then(|v| v.as_str()) {
                     Some("progress") => {
-                        if let Ok(p) = serde_json::from_value(value) {
+                        if let Ok(mut p) = serde_json::from_value::<Progress>(value) {
+                            if let Err(error) = p.validate_overview() {
+                                eprintln!("Invalid native overview: {error}");
+                                // Keep scan progress usable while withholding inconsistent tiles.
+                                p.roots.clear();
+                                p.overview_version = None;
+                            }
                             let _ = tx.send(Event::Progress(p));
                         }
                     }

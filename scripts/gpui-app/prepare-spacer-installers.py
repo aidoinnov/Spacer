@@ -8,6 +8,7 @@ p=argparse.ArgumentParser(description=__doc__)
 p.add_argument('--mac-bundle',type=Path,required=True)
 p.add_argument('--windows-directory',type=Path,required=True)
 p.add_argument('--output',type=Path,required=True)
+p.add_argument('--engine-evidence',type=Path,help='Explicit proof for a rebuilt 184B engine; absent means frozen 0.3.1 hashes only')
 a=p.parse_args();assert not a.output.exists();a.output.mkdir(parents=True)
 repo=Path(__file__).resolve().parents[2];product=json.loads((repo/'gpui-app/product.json').read_text());version=product['version']
 mac=json.loads(a.mac_bundle.with_suffix('.manifest.json').read_text());win=json.loads(Path(str(a.windows_directory)+'.manifest.json').read_text(encoding='utf-8-sig'))
@@ -15,8 +16,12 @@ wf={v['path'].replace('\\','/'):v['sha256'] for v in win['files']}
 assert mac['version']==win['version']==version
 verify(a.mac_bundle,mac['files']);verify(a.windows_directory,wf)
 assert (a.mac_bundle/'Contents/Resources/MCP').stat().st_mode & 0o777 == 0o555, 'MCP resources must be read-only before packaging'
-assert mac['files']['Contents/MacOS/MacScanBridge']=='a8ab73ee1e9f307669bdd4138015a64e31cba2c0d9feb2720f235f014cb97df5'
-assert wf['ExplorerBackend.exe']=='1bf91efa01a4ecadeb96141dd1d5ca00099a7bf5d49e8e235cf3becc813e57d3'
+if a.engine_evidence:
+ from release_engine_evidence import verify_rebuilt_engine
+ verify_rebuilt_engine(a.engine_evidence,version,mac['files']['Contents/MacOS/MacScanBridge'],wf['ExplorerBackend.exe'])
+else:
+ assert mac['files']['Contents/MacOS/MacScanBridge']=='a8ab73ee1e9f307669bdd4138015a64e31cba2c0d9feb2720f235f014cb97df5'
+ assert wf['ExplorerBackend.exe']=='1bf91efa01a4ecadeb96141dd1d5ca00099a7bf5d49e8e235cf3becc813e57d3'
 def run(args,**kwargs):return subprocess.run([str(v) for v in args],check=True,**kwargs)
 with tempfile.TemporaryDirectory(prefix='spacer-installer-') as directory:
  work=Path(directory);root=work/'dmg';root.mkdir();shutil.copytree(a.mac_bundle,root/'Spacer.app');(root/'Applications').symlink_to('/Applications')
@@ -38,5 +43,8 @@ with tempfile.TemporaryDirectory(prefix='spacer-installer-') as directory:
  with zipfile.ZipFile(a.output/f'Spacer-{version}-windows-x64.zip','w',zipfile.ZIP_DEFLATED) as z:
   for name in sorted(wf):z.write(payload/name,'Spacer/'+name)
 shutil.copy2(a.mac_bundle.with_suffix('.manifest.json'),a.output/'mac.manifest.json');shutil.copy2(Path(str(a.windows_directory)+'.manifest.json'),a.output/'windows.manifest.json')
+if a.engine_evidence:
+ proof=a.output/'engine-proof';proof.mkdir();shutil.copy2(a.engine_evidence,proof/'engine-evidence.json')
+ for log in json.loads(a.engine_evidence.read_text())['layoutLogs'].values():shutil.copy2(a.engine_evidence.parent/log['file'],proof/log['file'])
 (a.output/'packaging.json').write_text(json.dumps({'version':version,'name':product['name'],'engineNodeBytes':184,'candidate168Included':False,'windowsInstallerPayloadVerified':True,'files':{v.name:sha(v) for v in a.output.iterdir() if v.is_file()}},indent=2)+'\n')
 print(a.output)

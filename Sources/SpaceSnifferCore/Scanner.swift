@@ -179,7 +179,8 @@ public enum DiskScanner {
         if case .adaptive(let reader) = metadataBackend { rootHint = reader.entryCount(rootURL.path, control: control, observeQuery: { io.entryCountMetrics?.record($0) }) }
         else { rootHint = nil }
         // Transient traversal hints only; DiskNode/NodeTable shape is unchanged.
-        var stack: [(id: Int, hint: UInt32?, device: dev_t)] = [(root, rootHint, rootEntry.device)]
+        var stack: [(id: Int, hint: UInt32?, device: dev_t, rootBranch: Int)] = [(root, rootHint, rootEntry.device, root)]
+        var currentRootBranch = root
         var metadataPolicy = ScanMetadataPolicy()
         var prefetched = DirectoryReadWindow<Int, DirectoryReadOutput>(futureCapacity: directoryConcurrency - 1)
         // Drain before the diagnostics defer and terminal return. A cancelled
@@ -200,6 +201,7 @@ public enum DiskScanner {
             // throttled; the next directory may have a different parent.
             if let delta = observedBytes.drain() {
                 snapshot.nodes.addObservedBytes(logical: delta.logical, allocated: delta.allocated, startingAt: delta.parent)
+                if overviewActive { overview.markRootChanged(currentRootBranch) }
             }
             let now = Date()
             var firstUsefulOverview = false
@@ -209,7 +211,7 @@ public enum DiskScanner {
                 firstUsefulOverview = true
             }
             guard force || firstUsefulOverview || now.timeIntervalSince(lastUpdate) > 0.6 else { return }
-            if overviewActive { overview.update(from: snapshot, force: force) }
+            if overviewActive { overview.update(from: snapshot) }
             progressSequence += 1
             heartbeat?(ScanProgress(sequence: progressSequence, rootPath: snapshot.rootPath, currentPath: path,
                 fileCount: snapshot.fileCount, folderCount: snapshot.folderCount,
@@ -274,6 +276,7 @@ public enum DiskScanner {
         let directoryReader = POSIXDirectoryReader()
         while let task = stack.popLast() {
             let id = task.id
+            currentRootBranch = task.rootBranch
             if control.isCancelled { break }
             let node = snapshot.nodes[id]
             let directoryPath = node.path
@@ -310,7 +313,7 @@ public enum DiskScanner {
                         snapshot.volumeCoverage?.exclude(path(), reason: reason); return
                     }
                     if let child = append(path, name: name, parent: id, metadata: metadata, sharedBase: directoryPath), snapshot.nodes[child.id].isDirectory {
-                        stack.append((child.id, hint, child.device))
+                        stack.append((child.id, hint, child.device, id == root ? child.id : task.rootBranch))
                     }
                     // Even one huge directory should report progress and honour cancellation.
                     if snapshot.nodes.count % 256 == 0 { report(path()) }

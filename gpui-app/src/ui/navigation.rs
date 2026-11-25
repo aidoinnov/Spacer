@@ -58,7 +58,14 @@ impl Explorer {
         Location::root(path)
     }
     pub fn navigate_path(&mut self, path: PathBuf, window: &mut Window, cx: &mut Context<Self>) {
-        if !crate::navigation::contains(&self.workspace.scope, &path) || path == self.focus_path() {
+        let Some(path) = crate::navigation::resolve_contained_path(
+            &self.workspace.scope,
+            path,
+            crate::platform::scan_path,
+        ) else {
+            return;
+        };
+        if path == self.focus_path() {
             return;
         }
         let target = self.resolve_location(path);

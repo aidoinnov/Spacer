@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-25",
+  "scope": "source candidate accounting regression; not installed or performance admitted",
+  "baseRevision": "b6c9cbf9e183deb674edf65180241430738e26d3",
+  "workingTreeChanges": true,
+  "macNativeModel": "unadopted 168B candidate; installed 184B preserved",
+  "tests": {
+    "macSwift": {
+      "executed": 27,
+      "skipped": 3,
+      "failures": 0,
+      "skipReason": "owned nested-volume fixture not provisioned"
+    },
+    "windowsSwift": {
+      "executed": 13,
+      "failures": 0,
+      "host": "Windows132 x64"
+    },
+    "rust": {
+      "executed": 37,
+      "failures": 0,
+      "features": [
+        "qa"
+      ]
+    },
+    "clippy": {
+      "allTargets": true,
+      "features": [
+        "qa"
+      ],
+      "denyWarnings": true,
+      "passed": true
+    }
+  },
+  "structuralWorkTest": {
+    "knownRootFolders": 1000,
+    "duplicateChangeSignals": 100,
+    "changedRootsRefreshed": 1,
+    "unchangedRootsRefreshed": 0,
+    "source": "ScanOverviewTests.testWideOverviewRefreshesOnlyChangedRootBranches"
+  },
+  "macNative": {
+    "passed": true,
+    "backend": "/private/tmp/spacer-overview-fix-build/arm64-apple-macosx/debug/MacScanBridge",
+    "backendSHA256": "ccbcb613fb331f8674fb41fa0ce27f46438d25b48b46ad06cf464a51cc6a9412",
+    "scope": "native accounting regression; not GUI or speed acceptance",
+    "files": 65536,
+    "rootFolders": 8,
+    "usefulEvents": 41,
+    "lastObservedFiles": 65536,
+    "maxFolderLagBytes": 0,
+    "unexplainedRemainderBytes": 0,
+    "maxWireBytes": 4687,
+    "finalLogical": 65536,
+    "finalAllocated": 268435456,
+    "elapsedSeconds": 79.76753966597607,
+    "nativeExitCode": 0,
+    "readerStopped": true,
+    "fixtureRemoved": true
+  },
+  "macHiddenRender": {
+    "passed": true,
+    "scenario": "eight current root folders; hidden scripted GPUI render",
+    "scanning": true,
+    "hasSnapshot": false,
+    "rectangles": 8,
+    "allInteractive": true,
+    "width": 1340,
+    "height": 861
+  },
+  "windowsResources": {
+    "ownedProcesses": 0,
+    "installedBackendSHA256": "1bf91efa01a4ecadeb96141dd1d5ca00099a7bf5d49e8e235cf3becc813e57d3",
+    "qaRoot": "C:\\Users\\heeya8876\\AppData\\Local\\Temp\\spacer-overview-fix-20261125"
+  },
+  "windowsCleanup": {
+    "ownedProcesses": 0,
+    "qaRootRemoved": true,
+    "sourceTransferRemoved": true
+  },
+  "sourceSHA256": {
+    "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/ScanOverviewPolicy.swift": "cd0526ab80ed1baac10d9946747acdbaeece12b978554318862aa1146e0ddd0e",
+    "Packages/SpaceSnifferWindows/Sources/WindowsScanCore/Model.swift": "81196b4e74f72ddb4695c732d686309fcc4f1eadbf019846958dfb3725766c75",
+    "Packages/SpaceSnifferWindows/Sources/WindowsScanCore/WindowsOverview.swift": "c8112b92e8bfc88cdf0cf311c4d67ce1df3c4e83de7ebeadee970677b26f1255",
+    "Packages/SpaceSnifferWindows/Sources/WindowsScanCore/WindowsTreeBuilder.swift": "16929d84c7ea2d6ac5d9acdf3114f05a13842ee6b0922390fb4aba877acb7ff9",
+    "Packages/SpaceSnifferWindows/Tests/WindowsScanCoreTests/WindowsOverviewTests.swift": "09de01c8a6c4cf8f6b17e4fb4f088c67304b3341a37027f42e92d9863d5f5bb1",
+    "Sources/MacScanBridge/main.swift": "9381b29ea0a23c22197af9f83c2e24ec642432b35ff4ca1576637bb990662f1b",
+    "Sources/SpaceSnifferCore/ScanOverview.swift": "77a1c95da616f8da171e0ee9563fc12bd2b5c8de6b41a900ddf4724e8602914c",
+    "Sources/SpaceSnifferCore/Scanner.swift": "92b6b0ae333e54e4c77c49ec8a6e02b08bb7d9ccc03df00a4737046be21bbd5e",
+    "gpui-app/src/backend.rs": "e77ed3bfd0702f4960708eeb5758909dc5f8a996167708547f6138bbb93d1c0b",
+    "gpui-app/src/layout.rs": "f36b0b248450fb44cf47679e8b16adec1ca3d7a65d72ec93414337e151d59a27",
+    "gpui-app/src/model.rs": "254e7e0460fe38cf8ca80b5c1f63996b923bcaae0376d9edcf40dec55b0be09b",
+    "gpui-app/src/ui/qa_progress.rs": "83bccdd08598461c811cfa27bc5a45ccb12bd09941f796f434741378690779a4",
+    "gpui-app/tests/fixtures/progress-overview-v1.json": "f17cead8c6c2bbbb9b1541279c24c518cef60514daf5a7aba8a14ddc914ead83",
+    "scripts/gpui-app/check-progress-overview.py": "4ddacec094664d71281fb1ce01edcf117d199ba0118daa1e45d31b53a891003b"
+  },
+  "notAdmitted": [
+    "same-build time/RSS performance acceptance",
+    "new live GUI interaction checks on both hosts",
+    "new candidate packaging/install"
+  ],
+  "evidenceSHA256": {
+    "before-core.log": "2ab6e007856337ff357ce4d892ffcd490ce8ccaadbe8e839f6b3719120bb7e7c",
+    "before-native.json": "a7afcd99422d9d2ebe005dde674519fefc02b9d42bb5f9e02194a9f6ebc4ac95",
+    "clippy.log": "0667929af87911c43bcb26dcc9b9706238fad9e897997440bbac9e29b951dcb4",
+    "mac-core.log": "322b6baf50ecf966d43435c746e8561b8883a94243b6bb7d66eb52339dc3ec7f",
+    "mac-native-progress.json": "7e5e96758aaeaeef8e60937d8d00316c6fb45b567954a0a7541a5f27c4b81b8e",
+    "mac-native.json": "92ddcc33723bb2650b4396a5d8eb5ebbd7a61fa7491e60f3c53d22f81642a601",
+    "mac-render.json": "1def971d5be89c87bc3685a58a8ec68308ac2f4f54ec0575c673b586ec88b42d",
+    "mac-render.png": "9146b9717f8445ee55b2d0ceba0d246aaa1a4a29783db0b259a6b01bd7f2c5f4",
+    "rust-tests.log": "01ef4d7f98ede0306fb4b41d20f11e624aaf5c6085a5108e591b92d3f7d9eaa7",
+    "scan-boundary.log": "2a90e21c72bec5ab037089de003753197f2007c74edf8c4e06618f991ef21cb0",
+    "ui-boundary.log": "62b9dd33bb65fc8d34a0bc88fa885332d7872f8281bfef584e60f10260e38810",
+    "windows-cleanup.json": "96f0d0353284e63e6f11ad5e487808b379b879e076e1cfb854938490ebada2ce",
+    "windows-core.log": "b64f73ff663335796cf60e2de2f66c1be842eaab7e8231985d7cbc05e8c534aa",
+    "windows-resources.json": "1af62e3e4e699744fdc741ef1b8fbfed9a3e349d0b2eb38da8ed7042c4b940f8"
+  }
+}

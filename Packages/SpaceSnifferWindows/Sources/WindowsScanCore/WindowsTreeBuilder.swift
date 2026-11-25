@@ -44,7 +44,7 @@ enum WindowsTreeBuilder {
                 lastProgress = Date()
                 progress(WindowsProgress(current: path, files: result.files, folders: result.folders, pending: pending.count,
                     errors: result.errors, excluded: result.excluded, logical: observedLogical, allocated: observedAllocated,
-                    roots: overview.roots(result.nodes)))
+                    roots: overview.roots(result.nodes), rootFolderCount: overview.rootFolderCount))
             }
             if !control.isCancelled {
                 window.replenish(from: pending.suffix(8).reversed(), maximumPlans: 8, key: { $0 }, submit: { child in
@@ -58,6 +58,12 @@ enum WindowsTreeBuilder {
             window.removeAll()
         }
         pool.shutdown()
+        // Flush the last consistent overview even when the final batch arrived
+        // within the heartbeat interval. Workers are already joined here.
+        progress(WindowsProgress(current: root, files: result.files, folders: result.folders,
+            pending: pending.count, errors: result.errors, excluded: result.excluded,
+            logical: observedLogical, allocated: observedAllocated, roots: overview.roots(result.nodes),
+            rootFolderCount: overview.rootFolderCount))
         result.cancelled = control.isCancelled
         // Builder alone assigns IDs, children and totals. Every child's parent
         // precedes it, so reversed IDs are a valid aggregate order.
@@ -93,7 +99,7 @@ enum WindowsTreeBuilder {
             result.nodes.append(WindowsNode(id: id, parent: parent, name: entry.name, path: path, directory: entry.directory,
                 logical: ownLogical, allocated: ownAllocated, attributes: entry.attributes, boundary: boundary, children: [],createdTicks:entry.createdTicks,accessedTicks:entry.accessedTicks,modifiedTicks:entry.modifiedTicks))
             result.nodes[parent].children.append(id)
-            if parent == 0 { overview.observe(id, nodes: result.nodes) }
+            if parent == 0 { overview.observe(id, nodes: result.nodes, isNewRoot: true) }
             logical += ownLogical; allocated += ownAllocated
             batchLogical += ownLogical; batchAllocated += ownAllocated
             if entry.directory { result.folders += 1; if !boundary { pending.append(id) } }

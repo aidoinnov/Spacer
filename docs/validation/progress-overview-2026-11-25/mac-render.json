@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "scenario": "eight current root folders; hidden scripted GPUI render",
+  "scanning": true,
+  "hasSnapshot": false,
+  "rectangles": 8,
+  "allInteractive": true,
+  "width": 1340,
+  "height": 861
+}

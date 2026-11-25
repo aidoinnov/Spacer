@@ -1,4 +1,5 @@
 import Foundation
+import SpaceSnifferScanEngine
 public struct WindowsNode: Codable, Sendable {
     public var id: Int
     public var parent: Int?
@@ -40,6 +41,8 @@ public struct WindowsProgress: Encodable, Sendable {
     public let logical: UInt64
     public let allocated: UInt64
     public let roots: [WindowsOverviewEntry]
+    public let rootFolderCount: Int
+    public let overviewVersion = ScanOverviewPolicy.wireVersion
 }
 
 /// No child arrays: intermediate IPC stays bounded independently of a branch's size.

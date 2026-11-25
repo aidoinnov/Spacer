@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "backend": "/private/tmp/spacer-032-release/Spacer.app/Contents/MacOS/MacScanBridge",
+  "backendSHA256": "04429b22aafeea715fa3e47f8f407919ccca321483280919776066e85811f872",
+  "scope": "native accounting regression; not GUI or speed acceptance",
+  "files": 65536,
+  "rootFolders": 8,
+  "usefulEvents": 3,
+  "lastObservedFiles": 65536,
+  "maxFolderLagBytes": 0,
+  "unexplainedRemainderBytes": 0,
+  "maxWireBytes": 4670,
+  "finalLogical": 65536,
+  "finalAllocated": 268435456,
+  "elapsedSeconds": 0.2138730000006035,
+  "nativeExitCode": 0,
+  "readerStopped": true,
+  "fixtureRemoved": true
+}

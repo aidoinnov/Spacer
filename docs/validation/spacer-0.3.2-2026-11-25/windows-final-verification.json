@@ -1,0 +1,10 @@
+﻿{
+    "passed":  true,
+    "installedPayloadFilesVerified":  39,
+    "guiSHA256":  "205b62d7617c92c5258822fb91a70b7e41285f84f5d89c5a0587d9bd0c2ee8cc",
+    "backendSHA256":  "6be6d53744aeef819a86d107071905053de24a717f14ce001cb8e35dc38ddbda",
+    "ownedQaProcesses":  0,
+    "scheduledTasksRemoved":  true,
+    "oldManagedExecutableAbsent":  true,
+    "bundledBytecode":  0
+}

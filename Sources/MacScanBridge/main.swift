@@ -11,6 +11,8 @@ struct WireProgress: Encodable {
     let type = "progress"
     var current: String; var files: Int; var folders: Int; var pending: Int
     var errors: Int; var excluded:Int? = nil; var logical: Int64; var allocated: Int64; var roots: [WireOverview]
+    var overviewVersion: Int? = nil
+    var rootFolderCount: Int? = nil
 }
 let args=CommandLine.arguments
 ParentLifetime.install(args)
@@ -54,11 +56,18 @@ actor BridgeSession {
             }
             if update.isScanning {awaitingCompletion=true}
             if let p=update.progress, update.isScanning {
-                let folders=(p.overview?.folders ?? []).prefix(4).map { WireOverview(name:$0.name,path:$0.path,directory:true,logical:$0.logicalBytes,allocated:$0.allocatedBytes) }
-                let files=(p.overview?.largeFiles ?? []).prefix(4).map { WireOverview(name:$0.name,path:$0.path,directory:false,logical:$0.logicalBytes,allocated:$0.allocatedBytes) }
-                let roots=folders+files
+                let overview = p.overview
+                func candidates(_ allocated: [ScanOverviewItem], _ logical: [ScanOverviewItem], directory: Bool) -> [WireOverview] {
+                    var seen = Set<Int>()
+                    return (allocated + logical).filter { seen.insert($0.id).inserted }.map {
+                        WireOverview(name:$0.name,path:$0.path,directory:directory,logical:$0.logicalBytes,allocated:$0.allocatedBytes)
+                    }
+                }
+                let folders = candidates(overview?.folders ?? [], overview?.logicalFolders ?? [], directory: true)
+                let files = candidates(overview?.largeFiles ?? [], overview?.logicalLargeFiles ?? [], directory: false)
                 bridgeEmit(WireProgress(current:p.currentPath,files:p.fileCount,folders:p.folderCount,pending:p.pendingFolders,
-                    errors:p.issueCount,logical:p.logicalBytes,allocated:p.allocatedBytes,roots:Array(roots)))
+                    errors:p.issueCount,logical:p.logicalBytes,allocated:p.allocatedBytes,roots:folders+files,
+                    overviewVersion: overview == nil ? nil : ScanOverview.wireVersion, rootFolderCount: overview?.rootFolderCount))
             }
             if !update.isScanning && (awaitingCompletion || publishedRevision != update.revision) {
                 do {

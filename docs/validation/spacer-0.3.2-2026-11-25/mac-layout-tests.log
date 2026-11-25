@@ -1,0 +1,105 @@
+Building for production...
+[0/21] /private/tmp/spacer-032-swift/arm64-apple-macosx/release/MacSpaceSnifferPackageTests.derived/runner.swift
+[1/21] Write sources
+[12/21] Write swift-version--58304C5D6DBC2206.txt
+[14/23] Compiling SpaceSnifferScanEngine DirectoryBatchReader.swift
+[15/24] Compiling MacPreviewSupport PreviewPort.swift
+[15/24] Write Objects.LinkFileList
+[16/24] Linking libMacPreviewSupport.dylib
+[18/24] Compiling SpaceSnifferCore ArtifactByteSink.swift
+[19/26] Compiling SnifferTestSupport OptimizationFixture.swift
+[20/27] Compiling SpaceSnifferAutomation ConfigurationPayload.swift
+[21/28] Compiling MacScanBridge DocumentService.swift
+[22/29] Compiling SpaceSnifferAutomationTests AutomationTests.swift
+[23/30] Compiling SpaceSnifferCoreTests ArtifactExecutorTests.swift
+[23/30] Write Objects.LinkFileList
+[24/30] Linking MacScanBridge
+[26/30] Compiling MacSpaceSniffer App.swift
+[26/30] Write Objects.LinkFileList
+[27/30] Linking MacSpaceSniffer
+[29/31] Compiling MacSpaceSnifferTests ExplicitWindowRetentionTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:18: warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                  `- warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:48: warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                                                `- warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/MapRenderingTests.swift:89:18: warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 87 |         for _ in 0..<500 where store.projectionPending { try await Task.sleep(for: .milliseconds(5)) }
+ 88 |         let reader = try XCTUnwrap(store.automationContext); let frozen = try SNSSnapshot.encode(reader.snapshot)
+ 89 |         weak var geometry = store.geometrySource
+    |                  `- warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 90 |         XCTAssertNotNil(store.projectionSource); store.shutdown(); store.shutdown()
+ 91 |         XCTAssertNil(store.snapshot); XCTAssertNil(store.projectionSource); XCTAssertNil(store.geometrySource)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[30/32] Compiling MacSpaceSnifferPackageTests runner.swift
+[30/32] Write Objects.LinkFileList
+[31/32] Linking MacSpaceSnifferPackageTests
+Build complete! (1041.77s)
+Test Suite 'Selected tests' started at 2026-11-25 12:49:34.634.
+Test Suite 'MacSpaceSnifferPackageTests.xctest' started at 2026-11-25 12:49:34.638.
+Test Suite 'ScanOverviewTests' started at 2026-11-25 12:49:34.638.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testAllEightRootFoldersAreCurrentAtEachObservation]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testAllEightRootFoldersAreCurrentAtEachObservation]' passed (0.003 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testAncestorUpdateKeepsPreviouslyPublishedPagesUnchanged]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testAncestorUpdateKeepsPreviouslyPublishedPagesUnchanged]' passed (0.006 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testBoundedTopFoldersRetainsGrowingCandidatesAndCanonicalTies]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testBoundedTopFoldersRetainsGrowingCandidatesAndCanonicalTies]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testEntryPermutationMovesMetadataThroughEverySmallCycle]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testEntryPermutationMovesMetadataThroughEverySmallCycle]' passed (0.019 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testIndependentSizeRankingsRetainSparseAndGrowingFolders]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testIndependentSizeRankingsRetainSparseAndGrowingFolders]' passed (0.002 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testLargeOrderingIndexUsesRawBytesAndRejectsDuplicateOrMissingNames]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testLargeOrderingIndexUsesRawBytesAndRejectsDuplicateOrMissingNames]' passed (0.006 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testOverviewRefreshesKnownFolderBeforeNodeCountDoublesAndWithoutNewNodes]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testOverviewRefreshesKnownFolderBeforeNodeCountDoublesAndWithoutNewNodes]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testSharedScanOverviewIsBoundedArrivesBeforeCompletionAndMatchesFinalTree]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testSharedScanOverviewIsBoundedArrivesBeforeCompletionAndMatchesFinalTree]' passed (0.673 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testWideOverviewRefreshesOnlyChangedRootBranches]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testWideOverviewRefreshesOnlyChangedRootBranches]' passed (0.001 seconds).
+Test Suite 'ScanOverviewTests' passed at 2026-11-25 12:49:35.358.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.711 (0.719) seconds
+Test Suite 'ScanProgressTests' started at 2026-11-25 12:49:35.358.
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testCancellationAfterFirstUsefulPublicationFlushesPendingByteDeltas]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testCancellationAfterFirstUsefulPublicationFlushesPendingByteDeltas]' passed (0.255 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testDeltaTotalsAndLightweightFinalProgressAgreeWithoutDoubleCounting]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testDeltaTotalsAndLightweightFinalProgressAgreeWithoutDoubleCounting]' passed (0.161 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testIntermediateSnapshotNodeVolumeIsLinearEvenWithMillionsOfProgressTicks]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testIntermediateSnapshotNodeVolumeIsLinearEvenWithMillionsOfProgressTicks]' passed (0.005 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testProgressCallbackCancelsLargeDirectoryWithConsistentPartialTotals]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testProgressCallbackCancelsLargeDirectoryWithConsistentPartialTotals]' passed (0.175 seconds).
+Test Suite 'ScanProgressTests' passed at 2026-11-25 12:49:35.953.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.595 (0.596) seconds
+Test Suite 'SharedNodeNameTests' started at 2026-11-25 12:49:35.953.
+Test Case '-[SpaceSnifferCoreTests.SharedNodeNameTests testMismatchedLeafAndNameNeverBecomeCoupled]' started.
+Test Case '-[SpaceSnifferCoreTests.SharedNodeNameTests testMismatchedLeafAndNameNeverBecomeCoupled]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.SharedNodeNameTests testNameMutationPreservesPathSpellingAndFrozenSnapshot]' started.
+Test Case '-[SpaceSnifferCoreTests.SharedNodeNameTests testNameMutationPreservesPathSpellingAndFrozenSnapshot]' passed (0.001 seconds).
+Test Case '-[SpaceSnifferCoreTests.SharedNodeNameTests testParentPresencePreservesEveryIntAndIndependentCopies]' started.
+Test Case '-[SpaceSnifferCoreTests.SharedNodeNameTests testParentPresencePreservesEveryIntAndIndependentCopies]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.SharedNodeNameTests testPathMutationDoesNotChangeNameOrNativeMetadata]' started.
+Test Case '-[SpaceSnifferCoreTests.SharedNodeNameTests testPathMutationDoesNotChangeNameOrNativeMetadata]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.SharedNodeNameTests testSharedNodeStorageBudget]' started.
+Test Case '-[SpaceSnifferCoreTests.SharedNodeNameTests testSharedNodeStorageBudget]' passed (0.000 seconds).
+Test Suite 'SharedNodeNameTests' passed at 2026-11-25 12:49:35.956.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.003) seconds
+Test Suite 'MacSpaceSnifferPackageTests.xctest' passed at 2026-11-25 12:49:35.956.
+	 Executed 18 tests, with 0 failures (0 unexpected) in 1.308 (1.318) seconds
+Test Suite 'Selected tests' passed at 2026-11-25 12:49:35.956.
+	 Executed 18 tests, with 0 failures (0 unexpected) in 1.308 (1.323) seconds
+NODE_STORAGE_STRIDE 184
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

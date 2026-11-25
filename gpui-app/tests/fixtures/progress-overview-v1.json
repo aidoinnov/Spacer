@@ -1,0 +1,478 @@
+[
+  {
+    "logical": 247,
+    "allocated": 1011712,
+    "folders": 9,
+    "overviewVersion": 1,
+    "files": 247,
+    "errors": 0,
+    "current": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00246",
+    "roots": [
+      {
+        "logical": 247,
+        "name": "group-7",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7",
+        "allocated": 1011712,
+        "directory": true
+      },
+      {
+        "logical": 1,
+        "name": "f00000",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00000",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00001",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00001",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00002",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00002",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00003",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00003",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00004",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00004",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00005",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00005",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00006",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00006",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00007",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00007",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00008",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00008",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00009",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00009",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00010",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00010",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00011",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00011",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00012",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00012",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00013",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00013",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00014",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00014",
+        "allocated": 4096,
+        "directory": false
+      },
+      {
+        "logical": 1,
+        "name": "f00015",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00015",
+        "allocated": 4096,
+        "directory": false
+      }
+    ],
+    "rootFolderCount": 8,
+    "pending": 7,
+    "type": "progress"
+  },
+  {
+    "folders": 9,
+    "pending": 3,
+    "errors": 0,
+    "rootFolderCount": 8,
+    "allocated": 146763776,
+    "roots": [
+      {
+        "allocated": 33554432,
+        "directory": true,
+        "name": "group-4",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-4",
+        "logical": 8192
+      },
+      {
+        "allocated": 33554432,
+        "directory": true,
+        "name": "group-5",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-5",
+        "logical": 8192
+      },
+      {
+        "allocated": 33554432,
+        "directory": true,
+        "name": "group-6",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-6",
+        "logical": 8192
+      },
+      {
+        "allocated": 33554432,
+        "directory": true,
+        "name": "group-7",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7",
+        "logical": 8192
+      },
+      {
+        "allocated": 12546048,
+        "directory": true,
+        "name": "group-3",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-3",
+        "logical": 3063
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00000",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00000",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00001",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00001",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00002",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00002",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00003",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00003",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00004",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00004",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00005",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00005",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00006",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00006",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00007",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00007",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00008",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00008",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00009",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00009",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00010",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00010",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00011",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00011",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00012",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00012",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00013",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00013",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00014",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00014",
+        "logical": 1
+      },
+      {
+        "allocated": 4096,
+        "directory": false,
+        "name": "f00015",
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00015",
+        "logical": 1
+      }
+    ],
+    "type": "progress",
+    "overviewVersion": 1,
+    "logical": 35831,
+    "current": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-3/f03062",
+    "files": 35831
+  },
+  {
+    "files": 65536,
+    "roots": [
+      {
+        "directory": true,
+        "logical": 8192,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-0",
+        "name": "group-0",
+        "allocated": 33554432
+      },
+      {
+        "directory": true,
+        "logical": 8192,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-1",
+        "name": "group-1",
+        "allocated": 33554432
+      },
+      {
+        "directory": true,
+        "logical": 8192,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-2",
+        "name": "group-2",
+        "allocated": 33554432
+      },
+      {
+        "directory": true,
+        "logical": 8192,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-3",
+        "name": "group-3",
+        "allocated": 33554432
+      },
+      {
+        "directory": true,
+        "logical": 8192,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-4",
+        "name": "group-4",
+        "allocated": 33554432
+      },
+      {
+        "directory": true,
+        "logical": 8192,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-5",
+        "name": "group-5",
+        "allocated": 33554432
+      },
+      {
+        "directory": true,
+        "logical": 8192,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-6",
+        "name": "group-6",
+        "allocated": 33554432
+      },
+      {
+        "directory": true,
+        "logical": 8192,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7",
+        "name": "group-7",
+        "allocated": 33554432
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00000",
+        "name": "f00000",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00001",
+        "name": "f00001",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00002",
+        "name": "f00002",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00003",
+        "name": "f00003",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00004",
+        "name": "f00004",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00005",
+        "name": "f00005",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00006",
+        "name": "f00006",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00007",
+        "name": "f00007",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00008",
+        "name": "f00008",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00009",
+        "name": "f00009",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00010",
+        "name": "f00010",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00011",
+        "name": "f00011",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00012",
+        "name": "f00012",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00013",
+        "name": "f00013",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00014",
+        "name": "f00014",
+        "allocated": 4096
+      },
+      {
+        "directory": false,
+        "logical": 1,
+        "path": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input/group-7/f00015",
+        "name": "f00015",
+        "allocated": 4096
+      }
+    ],
+    "current": "/var/folders/v1/q6ts_sr502s5hpqyrswwlb340000gn/T/spacer-overview-owned-b5p0x_a_/input",
+    "rootFolderCount": 8,
+    "allocated": 268435456,
+    "logical": 65536,
+    "pending": 0,
+    "overviewVersion": 1,
+    "type": "progress",
+    "folders": 9,
+    "errors": 0
+  }
+]

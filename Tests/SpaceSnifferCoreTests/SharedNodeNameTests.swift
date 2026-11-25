@@ -7,7 +7,7 @@ import XCTest
 
 final class SharedNodeNameTests: XCTestCase {
     func testSharedNodeStorageBudget() {
-        XCTAssertLessThanOrEqual(MemoryLayout<DiskNode>.stride, 168)
+        XCTAssertEqual(MemoryLayout<DiskNode>.stride, 184)
         print("NODE_STORAGE_STRIDE \(MemoryLayout<DiskNode>.stride)")
     }
 

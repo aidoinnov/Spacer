@@ -1,0 +1,47 @@
+   Compiling space-sniffer-gpui v0.3.1 (/Volumes/develop/Code/Products/mac-space-sniffer/gpui-app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.68s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/main.rs (/private/tmp/spacer-followup-20261125/ssd-gui-target/debug/deps/space_sniffer_gpui-fe8abbaf4cba3db2)
+
+running 37 tests
+test launch::tests::gui_arguments_are_not_silently_ignored ... ok
+test launch::tests::terminal_options_do_not_become_scan_paths ... ok
+test latest_work::tests::dropping_owner_discards_pending_without_waiting_for_active ... ok
+test layout::overview_tests::actual_native_trace_survives_decode_validation_and_layout ... ok
+test latest_work::tests::rapid_replacement_executes_only_active_and_latest ... ok
+test layout::bounded_tests::a_file_saved_as_snapshot_root_still_has_a_visible_tile ... ok
+test layout::bounded_tests::leaving_the_canvas_discards_pending_geometry_and_reentry_rebuilds ... ok
+test layout::overview_tests::aggregate_only_progress_is_still_visible ... ok
+test layout::overview_tests::eight_known_folders_have_no_synthetic_remainder ... ok
+test layout::overview_tests::bounded_candidates_are_ranked_for_the_selected_size_mode ... ok
+test layout::overview_tests::file_only_overview_and_logical_mode_are_supported ... ok
+test layout::overview_tests::partial_scan_draws_before_a_snapshot_exists ... ok
+test document::tests::new_output_never_overwrites_a_file_created_during_streaming ... ok
+test model::tag_tests::native_masks_display_first_own_color ... ok
+test document::tests::failed_stream_preserves_existing_file_and_removes_staging ... ok
+test layout::overview_tests::inconsistent_new_overview_is_rejected_instead_of_saturating_silently ... ok
+test layout::overview_tests::old_progress_remains_compatible_without_claiming_unvisited_bytes ... ok
+test layout::overview_tests::sparse_folder_is_visible_in_logical_mode ... ok
+test motion::parity_tests::interrupted_transition_continues_from_visible_rect ... ok
+test layout::tests::matches_original_swift_geometry ... ok
+test motion::parity_tests::original_swift_samples ... ok
+test motion::parity_tests::outgoing_nodes_cannot_be_clicked ... ok
+test motion::parity_tests::reduced_motion_skips_transition ... ok
+test model::compact_path_tests::compact_paths_and_hierarchy_lookup_work_for_both_path_flavors ... ok
+test motion::tests::matches_swift_curve ... ok
+test navigation::tests::windows_snapshot_paths_work_on_any_host ... ok
+test navigation::tests::scoped_breadcrumbs_stop_at_original_root ... ok
+test ui::control_rescan::tests::invalid_request_is_rejected_before_dispatch ... ok
+test ui::control_rescan::tests::cached_scope_rejects_files_boundaries_and_prefix_siblings ... ok
+test ui::control_rescan::tests::paths_are_framed_as_data_and_root_does_not_become_a_focus_command ... ok
+test ui::control_scan::tests::scan_options_preserve_explicit_false_and_omitted_values ... ok
+test wire::tests::malformed_counts_and_truncated_headers_fail_before_allocation ... ok
+test ui::control_scan::tests::scan_request_rejects_relative_paths_and_malformed_options ... ok
+test projection::reuse_tests::navigation_reuses_weight_storage ... ok
+test projection::tests::masks_and_size_match ... ok
+test layout::bounded_tests::very_wide_folder_keeps_weight_in_an_explicit_noninteractive_remainder ... ok
+test automation::tests::local_transport_survives_empty_probe_authenticates_and_cleans_registry ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+

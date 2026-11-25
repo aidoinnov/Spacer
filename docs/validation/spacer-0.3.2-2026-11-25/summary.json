@@ -1,0 +1,217 @@
+{
+  "version": "0.3.2",
+  "installed": true,
+  "sourceBaseRevision": "b6c9cbf9e183deb674edf65180241430738e26d3",
+  "sourceHashes": {
+    "Packages/SpaceSnifferExplorerBridge/shared-sources.json": "69ea1dde16d44b6875ea41d07a0670d018f8bca6396335273ab02a30c2b420c7",
+    "Packages/SpaceSnifferScanEngine/Sources/SpaceSnifferScanEngine/ScanOverviewPolicy.swift": "cd0526ab80ed1baac10d9946747acdbaeece12b978554318862aa1146e0ddd0e",
+    "Packages/SpaceSnifferWindows/Sources/WindowsScanCore/Model.swift": "81196b4e74f72ddb4695c732d686309fcc4f1eadbf019846958dfb3725766c75",
+    "Packages/SpaceSnifferWindows/Sources/WindowsScanCore/WindowsOverview.swift": "c8112b92e8bfc88cdf0cf311c4d67ce1df3c4e83de7ebeadee970677b26f1255",
+    "Packages/SpaceSnifferWindows/Sources/WindowsScanCore/WindowsTreeBuilder.swift": "16929d84c7ea2d6ac5d9acdf3114f05a13842ee6b0922390fb4aba877acb7ff9",
+    "Packages/SpaceSnifferWindows/Tests/WindowsScanCoreTests/WindowsOverviewTests.swift": "09de01c8a6c4cf8f6b17e4fb4f088c67304b3341a37027f42e92d9863d5f5bb1",
+    "Sources/MacScanBridge/main.swift": "9381b29ea0a23c22197af9f83c2e24ec642432b35ff4ca1576637bb990662f1b",
+    "Sources/SpaceSnifferCore/Model.swift": "89398c980efbfeb3ecd0faa776a74ff79d3ba39177af70f22b9a3d980ecb815b",
+    "Sources/SpaceSnifferCore/NodePathStorage.swift": "8d457dfd336fe6c2199face3255771ab1165c8699bab32d94c4048d98f2a2dea",
+    "Sources/SpaceSnifferCore/ScanOverview.swift": "77a1c95da616f8da171e0ee9563fc12bd2b5c8de6b41a900ddf4724e8602914c",
+    "Sources/SpaceSnifferCore/Scanner.swift": "92b6b0ae333e54e4c77c49ec8a6e02b08bb7d9ccc03df00a4737046be21bbd5e",
+    "gpui-app/Cargo.lock": "09b8b57b81a481b9a5b818ec6cfe03026ca62ef5d54326fbaf4e1b32516b3fd6",
+    "gpui-app/Cargo.toml": "9136f90bf8270a376cb29b3d75d5175f546a2a223394331773ef944f871b767a",
+    "gpui-app/build.rs": "6c938275b3018d1a5b43d5e2bec1582537799a1a77e5adac568ee368a6acedf7",
+    "gpui-app/cli/Cargo.lock": "89db786ac9af1f9c8bca29321bc37ff0407d24c1da12b5155ffce6afe23e6b2f",
+    "gpui-app/cli/Cargo.toml": "5a4e4e8f5de52872403e94b417c85bc1c5dfaf6cd8b2d632045ac83b32e596f2",
+    "gpui-app/product.json": "c06b93bef6930416a6f327fd8b8fca4e686cbcc9d3c130898d3aad037398dc5f",
+    "gpui-app/src/automation.rs": "e3f4b058f7c3e653fb110fccd263355e1586ba10aed3ab71dc5fff8cfe7b831a",
+    "gpui-app/src/backend.rs": "e77ed3bfd0702f4960708eeb5758909dc5f8a996167708547f6138bbb93d1c0b",
+    "gpui-app/src/launch.rs": "ae65a5a46ffb43d947f0045127117e9cfe66edf7f6a8c3043ec62fc16f19582b",
+    "gpui-app/src/layout.rs": "f36b0b248450fb44cf47679e8b16adec1ca3d7a65d72ec93414337e151d59a27",
+    "gpui-app/src/main.rs": "0378dc524f0879834be150b62af2eabc90f1aae39a0a6c81c5a8feed10da27b6",
+    "gpui-app/src/model.rs": "254e7e0460fe38cf8ca80b5c1f63996b923bcaae0376d9edcf40dec55b0be09b",
+    "gpui-app/src/navigation.rs": "bd423a58340e3eb4a10caeaa9daf9cb876ab1528fa698423415eba15a14189b4",
+    "gpui-app/src/ui/navigation.rs": "49c73531a16aaea82ab1b65fc49d13b68f401502ad209df1423878fda204504f",
+    "gpui-app/src/ui/qa_progress.rs": "83bccdd08598461c811cfa27bc5a45ccb12bd09941f796f434741378690779a4",
+    "gpui-app/tests/fixtures/progress-overview-v1.json": "f17cead8c6c2bbbb9b1541279c24c518cef60514daf5a7aba8a14ddc914ead83",
+    "scripts/gpui-app/check-installed.py": "23b0daf3bea46f6c6d4fae84f9d1256c634826d595ed71024bb8076e15f5c195",
+    "scripts/gpui-app/check-progress-overview.py": "4ddacec094664d71281fb1ce01edcf117d199ba0118daa1e45d31b53a891003b",
+    "scripts/gpui-app/prepare-spacer-installers.py": "5b224036049e354905a14a2a7cbe9ab880f760fa16683f3fcadcc11c7dceab6d",
+    "scripts/gpui-app/qa_process_metrics.py": "24013bdf2333eef4ae40f7623244b45ec67bcad61bb9d76d6041a45e3e401c31",
+    "scripts/gpui-app/release_engine_evidence.py": "8012664181427d0186367b89df711c01ecc83baa3517888c197ad4d8710a0771",
+    "scripts/gpui-app/test_release_engine_evidence.py": "2fe8d085849d2b390b8f695d771f2bdfdb5cc4f10b1e9a6cca8b69e356160b5a",
+    ".gitattributes": "e99158257b1ff0c129e2c4b2e83d7ee69562e795590ca9572365602703189c14"
+  },
+  "engineNodeBytes": 184,
+  "candidate168Included": false,
+  "modelCandidatePatch": "docs/pending/node-storage-168.patch",
+  "tests": {
+    "macRelease": 18,
+    "windowsLayout": 5,
+    "windowsNative": 13,
+    "rust": 38,
+    "clippyAllTargetsDenyWarnings": true,
+    "releaseGuardUnitPassed": true
+  },
+  "installedCli": {
+    "mac": 27,
+    "windows": 27
+  },
+  "mcpToolCount": 22,
+  "installedUi": {
+    "mac": {
+      "passed": true,
+      "foregroundBefore": 685,
+      "oracle": {
+        "files": 10,
+        "logicalBytes": 302,
+        "issues": 0,
+        "rootFolders": 8
+      },
+      "navigation": {
+        "enterFolder": true,
+        "upToRoot": true
+      },
+      "fixtureCapture": {
+        "width": 1600,
+        "height": 1200
+      },
+      "foregroundAfter": 685,
+      "pid": 47386,
+      "version": "0.3.2",
+      "serverInfo": {
+        "name": "spacer",
+        "version": "1.0.0"
+      },
+      "toolCount": 22,
+      "displayRoot": "/Users/aido/Applications/Spacer.app",
+      "displayFiles": 10,
+      "leftRunning": true,
+      "integrity": {
+        "bundledBytecodeRemaining": [],
+        "signatureVerifiedAfterMCP": true
+      }
+    },
+    "windows": {
+      "passed": true,
+      "foregroundBefore": 40956,
+      "oracle": {
+        "files": 10,
+        "logicalBytes": 302,
+        "issues": 0,
+        "rootFolders": 8
+      },
+      "navigation": {
+        "enterFolder": true,
+        "upToRoot": true
+      },
+      "fixtureCapture": {
+        "width": 1600,
+        "height": 1200
+      },
+      "foregroundAfter": 40956,
+      "pid": 38548,
+      "version": "0.3.2",
+      "serverInfo": {
+        "name": "spacer",
+        "version": "1.0.0"
+      },
+      "toolCount": 22,
+      "displayRoot": "C:\\Users\\heeya8876\\AppData\\Local\\Programs\\Spacer\\0.3.2",
+      "displayFiles": 40,
+      "leftRunning": true,
+      "integrity": {
+        "bundledBytecodeRemaining": []
+      }
+    }
+  },
+  "nativeOracle": {
+    "passed": true,
+    "backend": "/private/tmp/spacer-032-release/Spacer.app/Contents/MacOS/MacScanBridge",
+    "backendSHA256": "04429b22aafeea715fa3e47f8f407919ccca321483280919776066e85811f872",
+    "scope": "native accounting regression; not GUI or speed acceptance",
+    "files": 65536,
+    "rootFolders": 8,
+    "usefulEvents": 3,
+    "lastObservedFiles": 65536,
+    "maxFolderLagBytes": 0,
+    "unexplainedRemainderBytes": 0,
+    "maxWireBytes": 4670,
+    "finalLogical": 65536,
+    "finalAllocated": 268435456,
+    "elapsedSeconds": 0.2138730000006035,
+    "nativeExitCode": 0,
+    "readerStopped": true,
+    "fixtureRemoved": true
+  },
+  "binarySHA256": {
+    "macGUI": "3fa076a3ce751a3cd58db086db05c48174586d156af799df7bf04000e95e2858",
+    "macBackend": "04429b22aafeea715fa3e47f8f407919ccca321483280919776066e85811f872",
+    "windowsGUI": "205b62d7617c92c5258822fb91a70b7e41285f84f5d89c5a0587d9bd0c2ee8cc",
+    "windowsBackend": "6be6d53744aeef819a86d107071905053de24a717f14ce001cb8e35dc38ddbda"
+  },
+  "installers": {
+    "macDmgPayloadAndSignaturesVerified": true,
+    "windowsUnknownSentinelPreserved": true,
+    "windowsInstalledPayloadFilesVerified": 39
+  },
+  "resources": {
+    "windows": {
+      "captureTaskRemoved": true,
+      "ownedQaProcesses": 0,
+      "installedAppLeftRunning": true,
+      "candidatePayloadRemoved": true,
+      "passed": true
+    },
+    "macOldBundleRemoved": true,
+    "macSignatureVerifiedAfterMCP": true,
+    "macBundledBytecode": 0,
+    "macMcpDirectoryMode": "0555"
+  },
+  "rollback": {
+    "mac": {
+      "passed": true,
+      "version": "0.3.2",
+      "installed": "/Users/aido/Applications/Spacer.app",
+      "rollbackArchive": "/Users/aido/Library/Application Support/Spacer/Rollback/0.3.1-before-0.3.2/Spacer-0.3.1.zip",
+      "rollbackBundle": "/Users/aido/Applications/.Spacer-0.3.1.rollback.app",
+      "engineNodeBytes": 184,
+      "sourceManifest": "/private/tmp/spacer-032-release/production/Spacer.manifest.json",
+      "rollbackBundleRemoved": true,
+      "rollbackArchiveSHA256": "0a23144d2309f27b92e1695885bb887963afc91259a8b934d92ec34ac86e1038"
+    },
+    "windows": {
+      "uninstallPreservesUnknownData": true,
+      "installerSmoke": true,
+      "oldManagedInstallRemoved": true,
+      "pid": 38548,
+      "foregroundAfter": 9876,
+      "foregroundBefore": 9876,
+      "cliChecks": 27,
+      "fileVersion": "0.3.2.0",
+      "guiMcp": true,
+      "rollbackArchive": "C:\\Users\\heeya8876\\AppData\\Local\\Spacer\\Rollback\\0.3.1-before-0.3.2\\Spacer-0.3.1.zip",
+      "passed": true,
+      "oldAnalysesPreserved": true,
+      "install": "C:\\Users\\heeya8876\\AppData\\Local\\Programs\\Spacer\\0.3.2"
+    },
+    "windowsSnapshotsSaved": 1
+  },
+  "performanceAdmission": "deferred; no throughput/RSS acceptance claim",
+  "evidenceSHA256": {
+    "clippy.log": "3e0fa4829e632ea2d1a1855b305dd7dc96ae28edcd3a9b6bb2e1cae1ab813cfd",
+    "mac-cli.json": "53dab865a55ca7aa698e662f66af340d58c233dc54b336fc94d96c91ec7145de",
+    "mac-eight-folders.png": "3d9cf8bcfbbf8fe0f3a2be6b923ddaa8bd7837207ec598dba8a83840d7a42818",
+    "mac-install.json": "a6c1598d19b722bc3283c860c9cbbb8e14fa91878e7ae878ac63477ad356486b",
+    "mac-layout-tests.log": "bec249e286323a3bb2c5ca8dd76d2da9748aae5093335995f1694eed692dc73d",
+    "mac-native-oracle.json": "db299084b3a4bd7b42ce7eb6392ebe561b04106495c11dd9d8ad744dc431df95",
+    "mac-ui-settled.json": "d1427c0d7cd7ab4d37672096ea197b572b3152fdf202cb663684f3b35ab7f858",
+    "mac-ui.json": "d1427c0d7cd7ab4d37672096ea197b572b3152fdf202cb663684f3b35ab7f858",
+    "rust-tests.log": "9124be9a126379f53b2e93d4beb571c49a08e9d1ba9e58c681f38755488ee822",
+    "windows-cleanup.json": "71e9da6e48bbc76439a0439e0d82baf7dbaa6f1a65802e2abed059d9ede8a587",
+    "windows-cli.json": "abe048112e0349f49a24868f9cafdbbf4344aafabbf88457c9cff5e0af4eb2f1",
+    "windows-eight-folders.png": "43053d16eedfa09f4aaa1126b02be3eacd953c8ee4cb0130acefa71bd5ba2362",
+    "windows-final-verification.json": "623092ca5197b3bc9cff4fab956b3c49db8ea5b45942e7a4a862d9efcb413231",
+    "windows-install-result.json": "6b66463b9d2dd9ddbf03e064a95650e1af292b042aab5c5681de0ddeeedf0adc",
+    "windows-layout-tests.log": "958d5b4b13f11b30df6daf2a26743156e278d658dcdd3b3795c9e1599f75de53",
+    "windows-preserve-old.json": "8e69ea2b2ba6c102acf40e55e0ef026245c0d1ee115fd89a96f5eea13d5b3227",
+    "windows-ui-settled.json": "6d16aa9f6b6693f47c9fe88b3cb9bb87c6b2d86d058f2e85d282beee11700596",
+    "windows-ui.json": "8b7f83d07945116741ddbc3ba5c327ebaf3bf6c4d78609199d040a2e1c138cbd"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "backendSHA256": "a8ab73ee1e9f307669bdd4138015a64e31cba2c0d9feb2720f235f014cb97df5",
+  "knownRootFolders": 8,
+  "filesInFixture": 65536,
+  "foldersSent": 4,
+  "total": 268435456,
+  "folderBytesSent": 134217728,
+  "uiRemainder": 134217728,
+  "nativeExitCode": 0,
+  "fixtureRemoved": true
+}

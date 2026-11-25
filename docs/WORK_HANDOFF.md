@@ -1,19 +1,21 @@
 # 현재 설치·작업 마감 기록 — 2026-11-25
 
-현재 **Spacer 0.3.1**을 Mac과 Windows132에 설치했다.
-사용자가 이름 변경·설치·기존 테스트 앱 정리·Git 최신화를 명시적으로 요청했다.
-[설치·검수 기록](SPACER_0_3_1_INSTALL.md)이 현재 설치 기준이며, 아래 0.3.0 표는
-과거 동결본의 기록이다. 0.3.1은 양쪽 optimized release GPUI/CLI와 검증된 184B
-backend를 조합했다. 168B 후보는 채택하지 않았다.
+현재 **Spacer 0.3.2**가 Mac과 Windows132에 설치되어 실행 중이다.
+[설치·검수 기록](SPACER_0_3_2_INSTALL.md)과
+[증거 요약](validation/spacer-0.3.2-2026-11-25/summary.json)을 기준으로 이어서 진행한다.
 
-- Mac: `~/Applications/Spacer.app`, 실행 파일 `Contents/MacOS/Spacer`.
-- Windows: `%LOCALAPPDATA%\Programs\Spacer\0.3.1\Spacer.exe`.
-- 제품명·버전·패키지 이름은 `gpui-app/product.json`에서 조합한다.
-- 기존 bundle ID·설정·복구 데이터 경로는 호환 목적으로 유지한다.
-- 구 앱은 바이트 검증한 ZIP으로 보존한 뒤 실행 가능한 사본을 정리했다.
-- Mac DMG 실제 payload 설치, Windows 새 installer 설치·제거·실제 설치 검수,
-  양쪽 설치본의 CLI 각27개·실제 화면/분석·bundled MCP 22종 목록을 확인했다.
-- `.codex/config.toml`과 로컬 MCP 설정은 설치된 Spacer의 bridge를 가리킨다.
+- Mac: `~/Applications/Spacer.app`. Windows: `%LOCALAPPDATA%\Programs\Spacer\0.3.2`.
+- 양쪽 optimized production 빌드와 184B 모델. 기본 소스도 184B로 복원했다.
+  미채택 168B 후보는 `docs/pending/node-storage-168.patch`에 보존했다.
+- 진행 개요를 전체 snapshot 전송 제한에서 분리하고 바뀐 상위 분기만 갱신한다.
+  Mac 폴더 4개 절단을 제거했으며 논리/할당 후보·생략 표시를 공통 계약으로 맞췄다.
+- Windows 짧은 경로 탐색과 기본 controller namespace도 기존 플랫폼 어댑터/
+  `product.json`으로 정리했다. 표준 `--background`로 포커스를 가져오지 않고 검수한다.
+- 설치본 CLI 각27개, 실제 bundled MCP 22개 목록·스캔·폴더 8개 표시·진입/상위 이동·
+  1600×1200 화면 확인. 전환 애니메이션 완료 후 캡처했다. 물리적 입력 재검수는 하지 않았다.
+- Mac DMG payload/서명·MCP 후 서명/바이트코드 0 검수, Windows installer 설치/제거·
+  미지 파일 보존·설치 파일 해시 검수. 이전 앱은 ZIP으로 보존했고 Windows 분석은 SNS로 저장했다.
+- 과거 0.3.1 설치는 [별도 이력](SPACER_0_3_1_INSTALL.md)이다. 옛 증거/해시는 수정하지 않는다.
 
 최신 CLI/MCP 점검: [2026-11-25 후속 검수](CLI_MCP_FOLLOWUP.md).
 공통 Rust CLI(`SpacerCLI`/`SpacerCLI.exe`)와 GPUI의 `--cli` 연결, 두 플랫폼의

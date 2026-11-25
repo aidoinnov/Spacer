@@ -11,7 +11,7 @@ use std::{
 };
 pub const BUNDLE_ID: &str = match option_env!("SPACE_SNIFFER_BUNDLE_ID") {
     Some(value) => value,
-    None => "local.macspacesniffer.gpui",
+    None => env!("SPACER_BUNDLE_ID"),
 };
 pub struct Request {
     pub value: Value,

@@ -159,6 +159,11 @@ impl Snapshot {
         Ok(Some(Arc::new(s)))
     }
 }
+/// Native overview v1: two size modes × two item kinds × bounded candidates.
+pub const OVERVIEW_VERSION: u32 = 1;
+pub const OVERVIEW_CANDIDATE_LIMIT: usize = 16;
+const OVERVIEW_WIRE_LIMIT: usize = OVERVIEW_CANDIDATE_LIMIT * 4;
+
 #[derive(Clone, Debug, Default, Deserialize)]
 pub struct Overview {
     pub name: String,
@@ -180,7 +185,51 @@ pub struct Progress {
     pub allocated: u64,
     #[serde(default)]
     pub roots: Vec<Overview>,
+    /// Version 1: bounded candidates use the same observed totals as this event.
+    #[serde(default, rename = "overviewVersion")]
+    pub overview_version: Option<u32>,
+    #[serde(default, rename = "rootFolderCount")]
+    pub root_folder_count: Option<usize>,
 }
+impl Progress {
+    /// Each kind is a disjoint candidate set; files may overlap folder totals.
+    pub fn validate_overview(&self) -> Result<()> {
+        if self.overview_version != Some(OVERVIEW_VERSION) {
+            return Ok(());
+        }
+        if self.roots.len() > OVERVIEW_WIRE_LIMIT {
+            bail!("overview candidate limit exceeded");
+        }
+        let mut paths = std::collections::HashSet::new();
+        for root in &self.roots {
+            if root.path.is_empty() || !paths.insert(&root.path) {
+                bail!("invalid overview path");
+            }
+        }
+        if self
+            .root_folder_count
+            .is_some_and(|count| count < self.roots.iter().filter(|r| r.directory).count())
+        {
+            bail!("overview folder count is inconsistent");
+        }
+        for directory in [true, false] {
+            let (mut logical, mut allocated) = (0u64, 0u64);
+            for root in self.roots.iter().filter(|r| r.directory == directory) {
+                logical = logical
+                    .checked_add(root.logical)
+                    .ok_or_else(|| anyhow::anyhow!("overview logical overflow"))?;
+                allocated = allocated
+                    .checked_add(root.allocated)
+                    .ok_or_else(|| anyhow::anyhow!("overview allocated overflow"))?;
+            }
+            if logical > self.logical || allocated > self.allocated {
+                bail!("overview exceeds observed total");
+            }
+        }
+        Ok(())
+    }
+}
+
 pub fn bytes(value: u64) -> String {
     let units = ["B", "KB", "MB", "GB", "TB", "PB"];
     let mut n = value as f64;

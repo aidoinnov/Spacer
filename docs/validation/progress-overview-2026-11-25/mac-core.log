@@ -1,0 +1,96 @@
+[0/1] Planning build
+Building for debugging...
+[0/8] Write sources
+[1/8] Write swift-version--58304C5D6DBC2206.txt
+[3/9] Emitting module SpaceSnifferCore
+[4/9] Compiling SpaceSnifferCore Scanner.swift
+[4/12] Write Objects.LinkFileList
+[6/12] Linking MacScanBridge
+[7/12] Applying MacScanBridge
+[8/12] Linking MacSpaceSniffer
+[9/12] Applying MacSpaceSniffer
+[10/12] Write Objects.LinkFileList
+[11/12] Linking MacSpaceSnifferPackageTests
+Build complete! (5.03s)
+Test Suite 'Selected tests' started at 2026-11-25 12:21:31.750.
+Test Suite 'MacSpaceSnifferPackageTests.xctest' started at 2026-11-25 12:21:31.751.
+Test Suite 'ScanOverviewTests' started at 2026-11-25 12:21:31.751.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testAllEightRootFoldersAreCurrentAtEachObservation]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testAllEightRootFoldersAreCurrentAtEachObservation]' passed (0.002 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testAncestorUpdateKeepsPreviouslyPublishedPagesUnchanged]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testAncestorUpdateKeepsPreviouslyPublishedPagesUnchanged]' passed (0.003 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testBoundedTopFoldersRetainsGrowingCandidatesAndCanonicalTies]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testBoundedTopFoldersRetainsGrowingCandidatesAndCanonicalTies]' passed (0.003 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testEntryPermutationMovesMetadataThroughEverySmallCycle]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testEntryPermutationMovesMetadataThroughEverySmallCycle]' passed (0.018 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testIndependentSizeRankingsRetainSparseAndGrowingFolders]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testIndependentSizeRankingsRetainSparseAndGrowingFolders]' passed (0.003 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testLargeOrderingIndexUsesRawBytesAndRejectsDuplicateOrMissingNames]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testLargeOrderingIndexUsesRawBytesAndRejectsDuplicateOrMissingNames]' passed (0.034 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testOverviewRefreshesKnownFolderBeforeNodeCountDoublesAndWithoutNewNodes]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testOverviewRefreshesKnownFolderBeforeNodeCountDoublesAndWithoutNewNodes]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testSharedScanOverviewIsBoundedArrivesBeforeCompletionAndMatchesFinalTree]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testSharedScanOverviewIsBoundedArrivesBeforeCompletionAndMatchesFinalTree]' passed (0.570 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testWideOverviewRefreshesOnlyChangedRootBranches]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testWideOverviewRefreshesOnlyChangedRootBranches]' passed (0.007 seconds).
+Test Suite 'ScanOverviewTests' passed at 2026-11-25 12:21:32.392.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.640 (0.641) seconds
+Test Suite 'ScanProgressTests' started at 2026-11-25 12:21:32.392.
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testCancellationAfterFirstUsefulPublicationFlushesPendingByteDeltas]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testCancellationAfterFirstUsefulPublicationFlushesPendingByteDeltas]' passed (0.148 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testDeltaTotalsAndLightweightFinalProgressAgreeWithoutDoubleCounting]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testDeltaTotalsAndLightweightFinalProgressAgreeWithoutDoubleCounting]' passed (0.176 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testIntermediateSnapshotNodeVolumeIsLinearEvenWithMillionsOfProgressTicks]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testIntermediateSnapshotNodeVolumeIsLinearEvenWithMillionsOfProgressTicks]' passed (0.491 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testProgressCallbackCancelsLargeDirectoryWithConsistentPartialTotals]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanProgressTests testProgressCallbackCancelsLargeDirectoryWithConsistentPartialTotals]' passed (0.122 seconds).
+Test Suite 'ScanProgressTests' passed at 2026-11-25 12:21:33.330.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.937 (0.938) seconds
+Test Suite 'ScanVolumeNativeIntegrationTests' started at 2026-11-25 12:21:33.330.
+Test Case '-[SpaceSnifferCoreTests.ScanVolumeNativeIntegrationTests testDefaultSkipsMountedTreeAndOptInIncludesBothNestedVolumes]' started.
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/SpaceSnifferCoreTests/ScanVolumeNativeIntegrationTests.swift:7: -[SpaceSnifferCoreTests.ScanVolumeNativeIntegrationTests testDefaultSkipsMountedTreeAndOptInIncludesBothNestedVolumes] : Test skipped - owned nested-volume fixture not provisioned
+Test Case '-[SpaceSnifferCoreTests.ScanVolumeNativeIntegrationTests testDefaultSkipsMountedTreeAndOptInIncludesBothNestedVolumes]' skipped (0.001 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanVolumeNativeIntegrationTests testMountedRootCanBeSelectedButAnchoredScopedRescanCannotEscape]' started.
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/SpaceSnifferCoreTests/ScanVolumeNativeIntegrationTests.swift:7: -[SpaceSnifferCoreTests.ScanVolumeNativeIntegrationTests testMountedRootCanBeSelectedButAnchoredScopedRescanCannotEscape] : Test skipped - owned nested-volume fixture not provisioned
+Test Case '-[SpaceSnifferCoreTests.ScanVolumeNativeIntegrationTests testMountedRootCanBeSelectedButAnchoredScopedRescanCannotEscape]' skipped (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanVolumeNativeIntegrationTests testWatcherExcludedEventAndFocusCannotStartAnOutOfScopeScan]' started.
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/SpaceSnifferCoreTests/ScanVolumeNativeIntegrationTests.swift:7: -[SpaceSnifferCoreTests.ScanVolumeNativeIntegrationTests testWatcherExcludedEventAndFocusCannotStartAnOutOfScopeScan] : Test skipped - owned nested-volume fixture not provisioned
+Test Case '-[SpaceSnifferCoreTests.ScanVolumeNativeIntegrationTests testWatcherExcludedEventAndFocusCannotStartAnOutOfScopeScan]' skipped (0.000 seconds).
+Test Suite 'ScanVolumeNativeIntegrationTests' passed at 2026-11-25 12:21:33.332.
+	 Executed 3 tests, with 3 tests skipped and 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'ScanVolumePolicyTests' started at 2026-11-25 12:21:33.332.
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testCoverageIsBoundedAndLegacyJSONAndSNSDoNotInventScope]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testCoverageIsBoundedAndLegacyJSONAndSNSDoNotInventScope]' passed (0.007 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testFullInventoryBufferIsConservativelyIncomplete]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testFullInventoryBufferIsConservativelyIncomplete]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testMountBoundaryAndNewDeviceAreExcludedIncludingSameDeviceMount]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testMountBoundaryAndNewDeviceAreExcludedIncludingSameDeviceMount]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testNativeSystemInventoryKeepsUsersAndRejectsDataAlias]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testNativeSystemInventoryKeepsUsersAndRejectsDataAlias]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testScopedMergeReplacesExclusionsAndRejectsModeMixOrTruncation]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testScopedMergeReplacesExclusionsAndRejectsModeMixOrTruncation]' passed (0.002 seconds).
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testSystemDataFirmlinkViewIsIncludedButDirectAliasIsExcludedInBothModes]' started.
+Test Case '-[SpaceSnifferCoreTests.ScanVolumePolicyTests testSystemDataFirmlinkViewIsIncludedButDirectAliasIsExcludedInBothModes]' passed (0.000 seconds).
+Test Suite 'ScanVolumePolicyTests' passed at 2026-11-25 12:21:33.343.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.010 (0.011) seconds
+Test Suite 'SpaceAccountingTests' started at 2026-11-25 12:21:33.343.
+Test Case '-[SpaceSnifferCoreTests.SpaceAccountingTests testAllVolumeTotalsAreNotSubtractedFromOneVolumesUsedSpace]' started.
+Test Case '-[SpaceSnifferCoreTests.SpaceAccountingTests testAllVolumeTotalsAreNotSubtractedFromOneVolumesUsedSpace]' passed (0.001 seconds).
+Test Case '-[SpaceSnifferCoreTests.SpaceAccountingTests testLiveEquationAndPresentationNeverDoubleCountObservedData]' started.
+Test Case '-[SpaceSnifferCoreTests.SpaceAccountingTests testLiveEquationAndPresentationNeverDoubleCountObservedData]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.SpaceAccountingTests testOverlappingOrUnavailableOSObservationsRemainExplicit]' started.
+Test Case '-[SpaceSnifferCoreTests.SpaceAccountingTests testOverlappingOrUnavailableOSObservationsRemainExplicit]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.SpaceAccountingTests testScopeOfflineTypesAndAccessErrorsDoNotInventAttribution]' started.
+Test Case '-[SpaceSnifferCoreTests.SpaceAccountingTests testScopeOfflineTypesAndAccessErrorsDoNotInventAttribution]' passed (0.000 seconds).
+Test Case '-[SpaceSnifferCoreTests.SpaceAccountingTests testSignedExtremesCannotWrapResidualOrPresentationArea]' started.
+Test Case '-[SpaceSnifferCoreTests.SpaceAccountingTests testSignedExtremesCannotWrapResidualOrPresentationArea]' passed (0.000 seconds).
+Test Suite 'SpaceAccountingTests' passed at 2026-11-25 12:21:33.345.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'MacSpaceSnifferPackageTests.xctest' passed at 2026-11-25 12:21:33.345.
+	 Executed 27 tests, with 3 tests skipped and 0 failures (0 unexpected) in 1.590 (1.594) seconds
+Test Suite 'Selected tests' passed at 2026-11-25 12:21:33.345.
+	 Executed 27 tests, with 3 tests skipped and 0 failures (0 unexpected) in 1.590 (1.595) seconds
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

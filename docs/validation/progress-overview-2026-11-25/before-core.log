@@ -1,0 +1,373 @@
+Building for debugging...
+[0/25] /private/tmp/spacer-overview-fix-build/arm64-apple-macosx/debug/MacSpaceSnifferPackageTests.derived/runner.swift
+[1/25] Write sources
+[10/25] Write MacSpaceSniffer-entitlement.plist
+[10/25] Write sources
+[13/25] Write MacScanBridge-entitlement.plist
+[14/25] Write swift-version--58304C5D6DBC2206.txt
+[16/33] Compiling SpaceSnifferScanEngine DirectoryBatchReader.swift
+[17/33] Compiling SpaceSnifferScanEngine DirectoryIOBudget.swift
+[18/33] Compiling SpaceSnifferScanEngine DirectoryReadTicket.swift
+[19/33] Compiling SpaceSnifferScanEngine DirectoryReadWindow.swift
+[20/33] Compiling SpaceSnifferScanEngine DirectoryReadWindowPolicy.swift
+[21/33] Emitting module SpaceSnifferScanEngine
+[22/38] Compiling SpaceSnifferScanEngine DirectorySiblingAdmission.swift
+[23/38] Compiling SpaceSnifferScanEngine DirectoryWorkerPool.swift
+[24/38] Compiling SpaceSnifferScanEngine ObservedByteBatch.swift
+[25/38] Compiling SpaceSnifferScanEngine ScanControl.swift
+[26/38] Compiling SpaceSnifferScanEngine ScanPublication.swift
+[27/62] Emitting module SpaceSnifferCore
+[28/84] Emitting module MacPreviewSupport
+[29/84] Compiling MacPreviewSupport PreviewPort.swift
+[30/85] Compiling MacPreviewSupport QuickLook.swift
+[30/85] Write Objects.LinkFileList
+[31/85] Linking libMacPreviewSupport.dylib
+[33/85] Compiling SpaceSnifferCore ArtifactByteSink.swift
+[34/85] Compiling SpaceSnifferCore ArtifactFileTransaction.swift
+[35/85] Compiling SpaceSnifferCore ArtifactIOExecutor.swift
+[36/85] Compiling SpaceSnifferCore ArtifactSelection.swift
+[37/85] Compiling SpaceSnifferCore ArtifactTransfer.swift
+[38/85] Compiling SpaceSnifferCore ArtifactWorker.swift
+[39/85] Compiling SpaceSnifferCore ConfigurationFile.swift
+[40/85] Compiling SpaceSnifferCore ConfiguredExportOptions.swift
+[41/85] Compiling SpaceSnifferCore ConfiguredReport.swift
+[42/85] Compiling SpaceSnifferCore DUSnapshot.swift
+[43/85] Compiling SpaceSnifferCore DesktopFileActions.swift
+[44/85] Compiling SpaceSnifferCore DirectoryMonitor.swift
+[45/85] Compiling SpaceSnifferCore DirectoryMonitorRegistration.swift
+[46/85] Compiling SpaceSnifferCore DirectoryReadAhead.swift
+[47/85] Compiling SpaceSnifferCore DirectoryWatchPath.swift
+[48/85] Compiling SpaceSnifferCore DiskNodeCoding.swift
+[49/85] Compiling SpaceSnifferCore EntryCountMetrics.swift
+[50/85] Compiling SpaceSnifferCore ExplorerSemantics.swift
+[51/85] Compiling SpaceSnifferCore FileIdentity.swift
+[52/85] Compiling SpaceSnifferCore Filter.swift
+[53/85] Compiling SpaceSnifferCore FilterProjection.swift
+[54/85] Compiling SpaceSnifferCore FilterScratch.swift
+[55/85] Compiling SpaceSnifferCore FocusScanRequests.swift
+[56/107] Compiling SpaceSnifferCore FocusScanTarget.swift
+[57/107] Compiling SpaceSnifferCore GeometrySession.swift
+[58/107] Compiling SpaceSnifferCore LatestWorker.swift
+[59/107] Compiling SpaceSnifferCore MacDirectoryBatchReader.swift
+[60/107] Compiling SpaceSnifferCore MacDirectoryScratch.swift
+[61/107] Compiling SpaceSnifferCore MacScanResources.swift
+[62/107] Compiling SpaceSnifferCore Model.swift
+[63/107] Compiling SpaceSnifferCore NativeConfiguration.swift
+[64/107] Compiling SpaceSnifferCore NativeDirectoryMetadata.swift
+[65/107] Compiling SpaceSnifferCore NativeExportTemplate.swift
+[66/107] Compiling SpaceSnifferCore NavigationState.swift
+[67/107] Compiling SpaceSnifferCore NodeOptionalMetadata.swift
+[68/107] Compiling SpaceSnifferCore NodePathStorage.swift
+[69/107] Compiling SpaceSnifferCore NodeTable.swift
+[70/107] Compiling SpaceSnifferCore OrderedDirectoryReader.swift
+[71/107] Compiling SpaceSnifferCore POSIXDirectoryReader.swift
+[72/107] Compiling SpaceSnifferCore PathIO.swift
+[73/107] Compiling SpaceSnifferCore ExportFormatting.swift
+[74/107] Compiling SpaceSnifferCore LegacyCodePageDecoder.swift
+[75/107] Compiling SpaceSnifferCore ProjectionDelta.swift
+[76/107] Compiling SpaceSnifferCore ProjectionSession.swift
+[77/107] Compiling SpaceSnifferCore RefreshPathIndex.swift
+[78/107] Compiling SpaceSnifferCore RefreshQueue.swift
+[79/107] Compiling SpaceSnifferCore Report.swift
+[80/107] Compiling SpaceSnifferCore SNSSnapshot.swift
+[81/107] Compiling SpaceSnifferCore ScanAdmission.swift
+[82/107] Compiling SpaceSnifferCore ScanEngineBridge.swift
+[83/107] Compiling SpaceSnifferCore ScanMetadataPolicy.swift
+[84/107] Compiling SpaceSnifferCore ScanOverview.swift
+[85/107] Compiling SpaceSnifferCore ScanRetryPolicy.swift
+[86/107] Compiling SpaceSnifferCore ScanService.swift
+[87/107] Compiling SpaceSnifferCore ScanVolumeCoverage.swift
+[88/107] Compiling SpaceSnifferCore ScanVolumePolicy.swift
+[89/107] Compiling SpaceSnifferCore ScanWork.swift
+[90/107] Compiling SpaceSnifferCore Scanner.swift
+[91/107] Compiling SpaceSnifferCore ScratchBudget.swift
+[92/107] Compiling SpaceSnifferCore SnapshotPath.swift
+[93/107] Compiling SpaceSnifferCore SnapshotTree.swift
+[94/107] Compiling SpaceSnifferCore SpaceAccounting.swift
+[95/107] Compiling SpaceSnifferCore TagPolicy.swift
+[96/107] Compiling SpaceSnifferCore Treemap.swift
+[97/107] Compiling SpaceSnifferCore TreemapMotion.swift
+[98/107] Compiling SpaceSnifferCore WindowsLegacyText.swift
+[99/107] Compiling SpaceSnifferCore WorkerTelemetry.swift
+[100/114] Emitting module SpaceSnifferAutomation
+[101/117] Emitting module SnifferTestSupport
+[102/117] Compiling SnifferTestSupport OptimizationFixture.swift
+[103/124] Emitting module MacScanBridge
+[104/129] Compiling MacScanBridge ScopedRescanCommand.swift
+[105/129] Compiling MacScanBridge SnapshotImport.swift
+[106/129] Compiling MacScanBridge SubtreeQuerySession.swift
+[107/129] Compiling MacScanBridge DocumentService.swift
+[108/129] Compiling MacScanBridge JSONValue.swift
+[109/129] Compiling MacScanBridge ParentLifetime.swift
+[110/129] Compiling MacScanBridge Queries.swift
+[111/149] Compiling SpaceSnifferCoreTests ArtifactExecutorTests.swift
+[112/149] Compiling SpaceSnifferCoreTests ArtifactImportTests.swift
+[113/149] Compiling SpaceSnifferCoreTests ArtifactStreamingTests.swift
+[114/149] Compiling SpaceSnifferCoreTests ConfiguredExportIntegrationTests.swift
+[115/149] Compiling SpaceSnifferCoreTests ConfiguredReportTests.swift
+[116/149] Compiling SpaceSnifferCoreTests CoreTests.swift
+[117/149] Compiling SpaceSnifferCoreTests DUSnapshotTests.swift
+[118/149] Compiling SpaceSnifferCoreTests DirectoryMonitorRegistrationTests.swift
+[119/149] Compiling SpaceSnifferCoreTests DirectoryReadAheadTests.swift
+[120/149] Compiling SpaceSnifferCoreTests DirectoryWatchPathTests.swift
+[121/149] Compiling SpaceSnifferCoreTests EngineTests.swift
+[122/152] Emitting module SpaceSnifferCoreTests
+[123/170] Compiling SpaceSnifferAutomationTests AutomationTests.swift
+[124/170] Compiling SpaceSnifferAutomationTests IntegratedResourceTests.swift
+[125/170] Emitting module SpaceSnifferAutomationTests
+[126/172] Compiling SpaceSnifferAutomationTests SpaceAccountingPayloadTests.swift
+[127/172] Compiling SpaceSnifferAutomationTests SubtreeQueryTests.swift
+[128/182] Emitting module MacSpaceSniffer
+[129/190] Compiling SpaceSnifferCoreTests LegacyNavigationState.swift
+[130/190] Compiling SpaceSnifferCoreTests LegacyRefreshQueue.swift
+[131/190] Compiling SpaceSnifferCoreTests LegacySNSCodePageTests.swift
+[132/190] Compiling SpaceSnifferCoreTests LegacyTreemap.swift
+[133/190] Compiling SpaceSnifferCoreTests MemoryLifetimeTests.swift
+[134/190] Compiling SpaceSnifferCoreTests NativeConfigurationTests.swift
+[135/190] Compiling SpaceSnifferCoreTests NativeDirectoryMetadataTests.swift
+[136/190] Compiling SpaceSnifferCoreTests NativeExportTemplateTests.swift
+[137/190] Compiling SpaceSnifferCoreTests NativeReportLineEndingTests.swift
+[138/190] Compiling SpaceSnifferCoreTests NavigationTests.swift
+[139/190] Compiling SpaceSnifferCoreTests OptimizationMatrixTests.swift
+[140/190] Compiling SpaceSnifferCoreTests PathIdentityFollowupTests.swift
+[141/190] Compiling SpaceSnifferCoreTests PoolCandidates.swift
+[142/190] Compiling SpaceSnifferCoreTests PoolOwnershipTests.swift
+[143/190] Compiling SpaceSnifferCoreTests ProjectionSessionTests.swift
+[144/190] Compiling SpaceSnifferCoreTests ReferenceContractTests.swift
+[145/190] Compiling SpaceSnifferCoreTests RefreshIndexTests.swift
+[146/190] Compiling SpaceSnifferCoreTests RefreshLifecycleTests.swift
+[147/208] Compiling MacSpaceSniffer App.swift
+[148/208] Compiling MacSpaceSniffer AutomationHub.swift
+[149/208] Compiling MacSpaceSniffer ContentView.swift
+[150/208] Compiling MacSpaceSniffer ExplicitWindowRetention.swift
+[151/208] Compiling MacSpaceSniffer HeadlessArguments.swift
+[152/208] Compiling MacSpaceSniffer HeadlessCommand.swift
+[153/208] Compiling MacSpaceSniffer HeadlessConfiguration.swift
+[154/208] Compiling MacSpaceSniffer MapAccessibilityCache.swift
+[155/208] Compiling MacSpaceSniffer MapTextCache.swift
+[156/208] Compiling MacSpaceSniffer MapTooltipRegistry.swift
+[157/208] Compiling MacSpaceSniffer MapTransition.swift
+[158/208] Compiling MacSpaceSniffer MapWindowLifecycle.swift
+[159/208] Compiling MacSpaceSniffer OverviewPaintProbe.swift
+[160/208] Compiling MacSpaceSniffer QuickLook.swift
+[161/208] Compiling MacSpaceSniffer ScanStore.swift
+[162/208] Compiling MacSpaceSniffer SnapshotOpenOptions.swift
+[163/208] Compiling MacSpaceSniffer TreemapView.swift
+[164/208] Compiling SpaceSnifferCoreTests FrozenSnapshotValidationOracle.swift
+[165/208] Compiling SpaceSnifferCoreTests LegacyArtifactReference.swift
+[174/208] Compiling SpaceSnifferCoreTests RefreshQueueTests.swift
+[175/208] Compiling SpaceSnifferCoreTests ResourceOptimizationTests.swift
+[176/208] Compiling SpaceSnifferCoreTests SNSVolumeWireContractTests.swift
+[177/208] Compiling SpaceSnifferCoreTests ScanAdmissionTests.swift
+[178/208] Compiling SpaceSnifferCoreTests ScanOptimizationContractsTests.swift
+[179/208] Compiling SpaceSnifferCoreTests ScanOverviewTests.swift
+[180/208] Compiling SpaceSnifferCoreTests ScanProgressTests.swift
+[181/208] Compiling SpaceSnifferCoreTests ScanRecoveryTests.swift
+[182/208] Compiling SpaceSnifferCoreTests ScanRetryTests.swift
+[183/208] Compiling SpaceSnifferCoreTests ScanReviewFixTests.swift
+[184/208] Compiling SpaceSnifferCoreTests ScanSchedulingTests.swift
+[185/208] Compiling SpaceSnifferCoreTests ScanVolumeNativeIntegrationTests.swift
+[186/208] Compiling SpaceSnifferCoreTests ScanVolumePolicyTests.swift
+[187/208] Compiling SpaceSnifferCoreTests SharedNodeNameTests.swift
+[188/208] Compiling SpaceSnifferCoreTests SnapshotPathTests.swift
+[189/208] Compiling SpaceSnifferCoreTests SnapshotValidationBitsetTests.swift
+[190/208] Compiling SpaceSnifferCoreTests SpaceAccountingTests.swift
+[191/208] Compiling SpaceSnifferCoreTests WeightCancellationTests.swift
+[191/208] Write Objects.LinkFileList
+[192/208] Linking MacScanBridge
+[193/208] Applying MacScanBridge
+[203/208] Write Objects.LinkFileList
+[204/208] Linking MacSpaceSniffer
+[205/208] Applying MacSpaceSniffer
+[207/215] Compiling MacSpaceSnifferTests ExplicitWindowRetentionTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:18: warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                  `- warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:48: warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                                                `- warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[208/215] Compiling MacSpaceSnifferTests FrozenPresentationReadersTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:18: warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                  `- warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:48: warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                                                `- warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[209/215] Compiling MacSpaceSnifferTests HeadlessArgumentsTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:18: warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                  `- warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:48: warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                                                `- warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[210/215] Compiling MacSpaceSnifferTests HeadlessConfigurationTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:18: warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                  `- warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:48: warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                                                `- warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[211/215] Compiling MacSpaceSnifferTests LegacyMapCanvas.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:18: warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                  `- warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:48: warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                                                `- warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[212/215] Compiling MacSpaceSnifferTests MapAccessibilityTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:18: warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                  `- warning: weak variable 'weakWindow' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/ExplicitWindowRetentionTests.swift:10:48: warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 8 |         let owner = ExplicitWindowRetention<NSObject, NSObject>(begin: { calls.begin() }, end: { calls.end() })
+ 9 |         var window: NSObject? = NSObject(); var model: NSObject? = NSObject()
+10 |         weak var weakWindow = window; weak var weakModel = model
+   |                                                `- warning: weak variable 'weakModel' was never mutated; consider changing to 'let' constant [#WeakMutability]
+11 |         owner.retain("one", window: window!, model: model!)
+12 |         owner.retain("one", window: window!, model: model!)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[213/215] Emitting module MacSpaceSnifferTests
+[214/221] Compiling MacSpaceSnifferTests MapMotionTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/MapRenderingTests.swift:89:18: warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 87 |         for _ in 0..<500 where store.projectionPending { try await Task.sleep(for: .milliseconds(5)) }
+ 88 |         let reader = try XCTUnwrap(store.automationContext); let frozen = try SNSSnapshot.encode(reader.snapshot)
+ 89 |         weak var geometry = store.geometrySource
+    |                  `- warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 90 |         XCTAssertNotNil(store.projectionSource); store.shutdown(); store.shutdown()
+ 91 |         XCTAssertNil(store.snapshot); XCTAssertNil(store.projectionSource); XCTAssertNil(store.geometrySource)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[215/221] Compiling MacSpaceSnifferTests MapRenderingTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/MapRenderingTests.swift:89:18: warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 87 |         for _ in 0..<500 where store.projectionPending { try await Task.sleep(for: .milliseconds(5)) }
+ 88 |         let reader = try XCTUnwrap(store.automationContext); let frozen = try SNSSnapshot.encode(reader.snapshot)
+ 89 |         weak var geometry = store.geometrySource
+    |                  `- warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 90 |         XCTAssertNotNil(store.projectionSource); store.shutdown(); store.shutdown()
+ 91 |         XCTAssertNil(store.snapshot); XCTAssertNil(store.projectionSource); XCTAssertNil(store.geometrySource)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[216/221] Compiling MacSpaceSnifferTests MapTooltipTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/MapRenderingTests.swift:89:18: warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 87 |         for _ in 0..<500 where store.projectionPending { try await Task.sleep(for: .milliseconds(5)) }
+ 88 |         let reader = try XCTUnwrap(store.automationContext); let frozen = try SNSSnapshot.encode(reader.snapshot)
+ 89 |         weak var geometry = store.geometrySource
+    |                  `- warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 90 |         XCTAssertNotNil(store.projectionSource); store.shutdown(); store.shutdown()
+ 91 |         XCTAssertNil(store.snapshot); XCTAssertNil(store.projectionSource); XCTAssertNil(store.geometrySource)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[217/221] Compiling MacSpaceSnifferTests QueryCursorLifetimeTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/MapRenderingTests.swift:89:18: warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 87 |         for _ in 0..<500 where store.projectionPending { try await Task.sleep(for: .milliseconds(5)) }
+ 88 |         let reader = try XCTUnwrap(store.automationContext); let frozen = try SNSSnapshot.encode(reader.snapshot)
+ 89 |         weak var geometry = store.geometrySource
+    |                  `- warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 90 |         XCTAssertNotNil(store.projectionSource); store.shutdown(); store.shutdown()
+ 91 |         XCTAssertNil(store.snapshot); XCTAssertNil(store.projectionSource); XCTAssertNil(store.geometrySource)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[218/221] Compiling MacSpaceSnifferTests RescanNavigationTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/MapRenderingTests.swift:89:18: warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 87 |         for _ in 0..<500 where store.projectionPending { try await Task.sleep(for: .milliseconds(5)) }
+ 88 |         let reader = try XCTUnwrap(store.automationContext); let frozen = try SNSSnapshot.encode(reader.snapshot)
+ 89 |         weak var geometry = store.geometrySource
+    |                  `- warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 90 |         XCTAssertNotNil(store.projectionSource); store.shutdown(); store.shutdown()
+ 91 |         XCTAssertNil(store.snapshot); XCTAssertNil(store.projectionSource); XCTAssertNil(store.geometrySource)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[219/221] Compiling MacSpaceSnifferTests VolumeTraversalStoreTests.swift
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/MacSpaceSnifferTests/MapRenderingTests.swift:89:18: warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 87 |         for _ in 0..<500 where store.projectionPending { try await Task.sleep(for: .milliseconds(5)) }
+ 88 |         let reader = try XCTUnwrap(store.automationContext); let frozen = try SNSSnapshot.encode(reader.snapshot)
+ 89 |         weak var geometry = store.geometrySource
+    |                  `- warning: weak variable 'geometry' was never mutated; consider changing to 'let' constant [#WeakMutability]
+ 90 |         XCTAssertNotNil(store.projectionSource); store.shutdown(); store.shutdown()
+ 91 |         XCTAssertNil(store.snapshot); XCTAssertNil(store.projectionSource); XCTAssertNil(store.geometrySource)
+
+[#WeakMutability]: <https://docs.swift.org/compiler/documentation/diagnostics/weak-mutability>
+[220/223] Compiling MacSpaceSnifferPackageTests runner.swift
+[221/223] Emitting module MacSpaceSnifferPackageTests
+[221/223] Write Objects.LinkFileList
+[222/223] Linking MacSpaceSnifferPackageTests
+Build complete! (53.45s)
+Test Suite 'Selected tests' started at 2026-11-25 11:53:01.692.
+Test Suite 'MacSpaceSnifferPackageTests.xctest' started at 2026-11-25 11:53:01.699.
+Test Suite 'ScanOverviewTests' started at 2026-11-25 11:53:01.699.
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testOverviewRefreshesKnownFolderBeforeNodeCountDoublesAndWithoutNewNodes]' started.
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/SpaceSnifferCoreTests/ScanOverviewTests.swift:84: error: -[SpaceSnifferCoreTests.ScanOverviewTests testOverviewRefreshesKnownFolderBeforeNodeCountDoublesAndWithoutNewNodes] : XCTAssertEqual failed: ("Optional(100)") is not equal to ("Optional(500)")
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/SpaceSnifferCoreTests/ScanOverviewTests.swift:87: error: -[SpaceSnifferCoreTests.ScanOverviewTests testOverviewRefreshesKnownFolderBeforeNodeCountDoublesAndWithoutNewNodes] : XCTAssertEqual failed: ("2") is not equal to ("3")
+/Volumes/develop/Code/Products/mac-space-sniffer/Tests/SpaceSnifferCoreTests/ScanOverviewTests.swift:88: error: -[SpaceSnifferCoreTests.ScanOverviewTests testOverviewRefreshesKnownFolderBeforeNodeCountDoublesAndWithoutNewNodes] : XCTAssertEqual failed: ("nil") is not equal to ("Optional(500)")
+Test Case '-[SpaceSnifferCoreTests.ScanOverviewTests testOverviewRefreshesKnownFolderBeforeNodeCountDoublesAndWithoutNewNodes]' failed (4.578 seconds).
+Test Suite 'ScanOverviewTests' failed at 2026-11-25 11:53:06.278.
+	 Executed 1 test, with 3 failures (0 unexpected) in 4.578 (4.579) seconds
+Test Suite 'MacSpaceSnifferPackageTests.xctest' failed at 2026-11-25 11:53:06.278.
+	 Executed 1 test, with 3 failures (0 unexpected) in 4.578 (4.579) seconds
+Test Suite 'Selected tests' failed at 2026-11-25 11:53:06.278.
+	 Executed 1 test, with 3 failures (0 unexpected) in 4.578 (4.586) seconds
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

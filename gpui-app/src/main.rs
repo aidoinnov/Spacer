@@ -3,8 +3,8 @@ mod automation;
 mod backend;
 mod document;
 mod latest_work;
-mod layout;
 mod launch;
+mod layout;
 mod model;
 mod motion;
 mod navigation;
@@ -89,8 +89,11 @@ fn main() {
     let mut visible_probe = false;
     let mut json_wire = false;
     let mut background_qa = false;
+    let mut background_launch = false;
     while let Some(arg) = args.next() {
-        if arg == "--qa-background" {
+        if arg == "--background" {
+            background_launch = true;
+        } else if arg == "--qa-background" {
             background_qa = true;
         } else if arg == "--qa-wire-json" {
             json_wire = true;
@@ -137,7 +140,8 @@ fn main() {
                     eprintln!("{error:#}");
                 }
                 async {}
-            }).detach();
+            })
+            .detach();
             gpui_kit::init(cx);
             ui::theme::init(cx);
             cx.text_system()
@@ -158,7 +162,7 @@ fn main() {
                     initial,
                     qa_output,
                     visible: (!probe || visible_probe) && !background_qa,
-                    focus: !probe && !background_qa,
+                    focus: !probe && !background_qa && !background_launch,
                 },
                 cx,
             )
@@ -197,7 +201,7 @@ fn main() {
                 }
             })
             .detach();
-            if !background_qa {
+            if !background_qa && !background_launch {
                 cx.activate(true);
             }
         });

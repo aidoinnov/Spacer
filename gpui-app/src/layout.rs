@@ -389,12 +389,16 @@ pub fn overview_tiles(
     };
     let has_folders = progress.roots.iter().any(|n| n.directory && value(n) > 0);
     let mut seen = std::collections::HashSet::new();
-    let mut items: Vec<_> = progress
+    let mut candidates: Vec<_> = progress
         .roots
         .iter()
         .filter(|n| n.directory == has_folders && value(n) > 0)
         .filter(|n| seen.insert(n.path.as_str()))
-        .take(16)
+        .collect();
+    candidates.sort_unstable_by(|a, b| value(b).cmp(&value(a)).then(a.path.cmp(&b.path)));
+    let mut items: Vec<_> = candidates
+        .into_iter()
+        .take(crate::model::OVERVIEW_CANDIDATE_LIMIT)
         .map(|n| Tile {
             id: None,
             path: n.path.clone(),
@@ -417,13 +421,24 @@ pub fn overview_tiles(
     let covered = items
         .iter()
         .fold(0u64, |sum, t| sum.saturating_add(t.weight));
+    let omitted_folders = progress
+        .root_folder_count
+        .unwrap_or(0)
+        .saturating_sub(items.iter().filter(|item| item.folder).count());
     let remainder = total.saturating_sub(covered);
     if remainder > 0 {
         items.push(Tile {
             id: None,
             path: "sniffer:overview:remainder".into(),
             parent_path: None,
-            name: "그 외 집계 · 분석 중".into(),
+            name: match progress.overview_version {
+                Some(crate::model::OVERVIEW_VERSION) if omitted_folders > 0 => {
+                    format!("기타 항목 (폴더 {omitted_folders}개 포함)")
+                }
+                Some(crate::model::OVERVIEW_VERSION) => "기타 항목".into(),
+                _ if progress.roots.is_empty() => "폴더 집계 대기 중".into(),
+                _ => "기타 집계".into(),
+            },
             weight: remainder,
             folder: true,
             rect: Rect::default(),
@@ -504,6 +519,197 @@ mod overview_tests {
         );
         assert_eq!(tiles.iter().map(|t| t.weight).sum::<u64>(), 50);
         assert_eq!(tiles[0].weight, 40);
+    }
+    #[test]
+    fn eight_known_folders_have_no_synthetic_remainder() {
+        let p = Progress {
+            allocated: 800,
+            logical: 400,
+            overview_version: Some(1),
+            roots: (0..8)
+                .map(|i| entry(&format!("/d{i}"), true, 100))
+                .collect(),
+            ..Default::default()
+        };
+        for mode in [SizeMode::Allocated, SizeMode::Logical] {
+            let tiles = overview_tiles(
+                &p,
+                mode,
+                Rect {
+                    x: 0.,
+                    y: 0.,
+                    w: 800.,
+                    h: 500.,
+                },
+            );
+            assert_eq!(tiles.len(), 8);
+            assert!(
+                tiles
+                    .iter()
+                    .all(|t| t.interactive && t.path != "sniffer:overview:remainder")
+            );
+        }
+    }
+    #[test]
+    fn bounded_candidates_are_ranked_for_the_selected_size_mode() {
+        let mut roots: Vec<_> = (0..32)
+            .map(|i| entry(&format!("/d{i:02}"), true, 32 - i))
+            .collect();
+        for (i, root) in roots.iter_mut().enumerate() {
+            root.logical = i as u64;
+        }
+        let p = Progress {
+            allocated: 528,
+            logical: 496,
+            roots,
+            overview_version: Some(1),
+            ..Default::default()
+        };
+        let bounds = Rect {
+            x: 0.,
+            y: 0.,
+            w: 800.,
+            h: 500.,
+        };
+        for mode in [SizeMode::Allocated, SizeMode::Logical] {
+            let tiles = overview_tiles(&p, mode, bounds);
+            let named: Vec<_> = tiles.iter().filter(|t| t.interactive).collect();
+            assert_eq!(named.len(), 16);
+            assert!(named.iter().all(|t| if mode == SizeMode::Logical {
+                t.weight >= 16
+            } else {
+                t.weight >= 17
+            }));
+            assert_eq!(
+                tiles.iter().map(|t| t.weight).sum::<u64>(),
+                if mode == SizeMode::Logical { 496 } else { 528 }
+            );
+            assert_eq!(
+                tiles.iter().find(|t| !t.interactive).unwrap().name,
+                "기타 항목"
+            );
+        }
+    }
+    #[test]
+    fn old_progress_remains_compatible_without_claiming_unvisited_bytes() {
+        let p: Progress = serde_json::from_value(serde_json::json!({
+            "current":"/", "files":1,"folders":1,"pending":1,"errors":0,
+            "logical":50,"allocated":100,"roots":[]
+        }))
+        .unwrap();
+        let bounds = Rect {
+            x: 0.,
+            y: 0.,
+            w: 800.,
+            h: 500.,
+        };
+        assert_eq!(
+            overview_tiles(&p, SizeMode::Allocated, bounds)[0].name,
+            "폴더 집계 대기 중"
+        );
+        let p = Progress {
+            roots: vec![entry("/a", true, 20)],
+            ..p
+        };
+        assert_eq!(
+            overview_tiles(&p, SizeMode::Allocated, bounds)[0].name,
+            "기타 집계"
+        );
+    }
+    #[test]
+    fn inconsistent_new_overview_is_rejected_instead_of_saturating_silently() {
+        let mut p = Progress {
+            allocated: 10,
+            logical: 5,
+            overview_version: Some(1),
+            roots: vec![entry("/a", true, 20)],
+            ..Default::default()
+        };
+        assert!(p.validate_overview().is_err());
+        p.allocated = 100;
+        p.logical = 50;
+        assert!(p.validate_overview().is_ok());
+        p.roots.push(entry("/a", true, 20));
+        assert!(p.validate_overview().is_err());
+        p.roots = (0..65).map(|i| entry(&format!("/{i}"), false, 1)).collect();
+        assert!(p.validate_overview().is_err());
+    }
+    #[test]
+    fn sparse_folder_is_visible_in_logical_mode() {
+        let p = Progress {
+            logical: 100,
+            allocated: 0,
+            overview_version: Some(1),
+            root_folder_count: Some(1),
+            roots: vec![Overview {
+                name: "sparse".into(),
+                path: "/sparse".into(),
+                directory: true,
+                logical: 100,
+                allocated: 0,
+            }],
+            ..Default::default()
+        };
+        assert!(p.validate_overview().is_ok());
+        let tiles = overview_tiles(
+            &p,
+            SizeMode::Logical,
+            Rect {
+                x: 0.,
+                y: 0.,
+                w: 800.,
+                h: 500.,
+            },
+        );
+        assert_eq!(tiles.len(), 1);
+        assert_eq!(tiles[0].weight, 100);
+        let invalid = Progress {
+            root_folder_count: Some(0),
+            ..p
+        };
+        assert!(invalid.validate_overview().is_err());
+    }
+    #[test]
+    fn actual_native_trace_survives_decode_validation_and_layout() {
+        // Three events from the owned 65,536-file native oracle: early, middle, final.
+        let events: Vec<Progress> =
+            serde_json::from_str(include_str!("../tests/fixtures/progress-overview-v1.json"))
+                .unwrap();
+        assert_eq!(events.len(), 3);
+        for event in &events {
+            event.validate_overview().unwrap();
+            for mode in [SizeMode::Allocated, SizeMode::Logical] {
+                let tiles = overview_tiles(
+                    event,
+                    mode,
+                    Rect {
+                        x: 0.,
+                        y: 0.,
+                        w: 800.,
+                        h: 500.,
+                    },
+                );
+                assert!(tiles.iter().all(|t| t.interactive));
+                assert_eq!(
+                    tiles.iter().map(|t| t.weight).sum::<u64>(),
+                    if mode == SizeMode::Logical {
+                        event.logical
+                    } else {
+                        event.allocated
+                    }
+                );
+            }
+        }
+        assert_eq!(
+            events
+                .last()
+                .unwrap()
+                .roots
+                .iter()
+                .filter(|r| r.directory)
+                .count(),
+            8
+        );
     }
     #[test]
     fn aggregate_only_progress_is_still_visible() {
