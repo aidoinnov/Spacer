@@ -1,8 +1,19 @@
-# 작업 마감·배포 준비 — 2026-11-24
+# 현재 설치·작업 마감 기록 — 2026-11-25
 
-프로젝트 이름은 **Spacer**, GitHub 저장소는 `aidoinnov/Spacer`(공개)로 정했다.
-기존 실행 파일·bundle ID·설치 경로·0.3.0 설치파일의 Space Sniffer 이름은 그대로다.
-제품 표시명/설치파일 이름 전환은 다음 릴리스에서 별도로 적용·검증한다.
+현재 **Spacer 0.3.1**을 Mac과 Windows132에 설치했다.
+사용자가 이름 변경·설치·기존 테스트 앱 정리·Git 최신화를 명시적으로 요청했다.
+[설치·검수 기록](SPACER_0_3_1_INSTALL.md)이 현재 설치 기준이며, 아래 0.3.0 표는
+과거 동결본의 기록이다. 0.3.1은 양쪽 optimized release GPUI/CLI와 검증된 184B
+backend를 조합했다. 168B 후보는 채택하지 않았다.
+
+- Mac: `~/Applications/Spacer.app`, 실행 파일 `Contents/MacOS/Spacer`.
+- Windows: `%LOCALAPPDATA%\Programs\Spacer\0.3.1\Spacer.exe`.
+- 제품명·버전·패키지 이름은 `gpui-app/product.json`에서 조합한다.
+- 기존 bundle ID·설정·복구 데이터 경로는 호환 목적으로 유지한다.
+- 구 앱은 바이트 검증한 ZIP으로 보존한 뒤 실행 가능한 사본을 정리했다.
+- Mac DMG 실제 payload 설치, Windows 새 installer 설치·제거·실제 설치 검수,
+  양쪽 설치본의 CLI 각27개·실제 화면/분석·bundled MCP 22종 목록을 확인했다.
+- `.codex/config.toml`과 로컬 MCP 설정은 설치된 Spacer의 bridge를 가리킨다.
 
 최신 CLI/MCP 점검: [2026-11-25 후속 검수](CLI_MCP_FOLLOWUP.md).
 공통 Rust CLI(`SpacerCLI`/`SpacerCLI.exe`)와 GPUI의 `--cli` 연결, 두 플랫폼의
@@ -10,8 +21,9 @@
 추가했다. 종료 시 reader보다 앱이 먼저 끝나 임시 wire 파일이 남던 경로는
 `session_lifecycle` 공통 종료 장벽으로 정리한다. 프로세스·scratch를 함께 검수한다.
 기존 Windows 원문 회수와 소유 예약 작업 제거도 수행했다.
-현재 설치본과 동결 패키지는 교체하지 않았다. 후속 검수용 패키지는 설치본의
-184B backend를 재사용한다. Mac은 기능 검수용 dev profile, Windows는 release다.
+이 CLI/MCP 후속 검수 당시에는 설치본을 바꾸지 않았다. 이후 사용자의 별도
+설치 지시에 따라 위 0.3.1로 교체했다. 당시 dev-profile Mac 검수와 현재 optimized
+설치 검수를 혼동하지 않는다.
 CLI의 정규화된 설정 조회 출력·미지원 인코딩 조합은 [사용법](HEADLESS_CLI.md)에
 명시했다. 모든 레거시 CLI 옵션/형식의 완전 호환을 의미하지 않는다.
 
@@ -19,7 +31,7 @@ CLI의 정규화된 설정 조회 출력·미지원 인코딩 조합은 [사용�
 정식 속도 판정과 과거 종료 지연 원인 조사는 후속으로 이관한다. 해당 항목을
 합격·해결로 바꾸지 않는다. 현재 작업은 검증된 설치본의 설치파일 제작과 배포 준비다.
 
-## 완료
+## 0.3.0까지의 완료 이력
 
 - Mac/Windows 공통 GPUI UI 이식, 트리맵 탐색·진행 표시·애니메이션·아이콘,
   필터·문서·태그·보고서·preview·감시·부분 재검사. 플랫폼 차이는 포트/어댑터로 분리.
@@ -36,7 +48,7 @@ CLI의 정규화된 설정 조회 출력·미지원 인코딩 조합은 [사용�
   추가 Mac 검수 프로세스 잔류0. Windows는 앞선 종료/예약 작업 정리를 확인했으나
   마지막 재접속은 인증 불가로 최신 상태 재조회 불가.
 
-## 배포 기준 — 검증된 184B 설치본
+## 과거 0.3.0 동결본 — 검증된 184B 설치본
 
 원본 동결 패키지:
 `~/Downloads/SpaceSniffer-GPUI-0.3.0-OS-Input-20261124/`.
@@ -49,9 +61,9 @@ CLI의 정규화된 설정 조회 출력·미지원 인코딩 조합은 [사용�
 | Windows GUI | `77280faa7f57cf40f385925d7b828d621c90becc11cd80ce30061a70f229a2d2` |
 | Windows 184B backend | `1bf91efa01a4ecadeb96141dd1d5ca00099a7bf5d49e8e235cf3becc813e57d3` |
 
-Mac: `~/Applications/Mac Space Sniffer.app`. Windows132:
+과거 Mac: `~/Applications/Mac Space Sniffer.app`. 과거 Windows132:
 `%LOCALAPPDATA%\Programs\SpaceSniffer-Windows\0.3.0-GPUI`.
-현재 설치본과 rollback, 사용자 preview/Recovery는 유지한다.
+0.3.0은 rollback ZIP으로 보존했다. 현재 Spacer와 사용자 preview/Recovery는 유지한다.
 Mac arm64/macOS14+ 검증, Windows132 x64 검증. Intel Mac runtime은 미검증.
 Mac ad-hoc, Windows unsigned. 공인 서명/공증 완료로 설명하지 않는다.
 
@@ -64,7 +76,8 @@ Mac ad-hoc, Windows unsigned. 공인 서명/공증 완료로 설명하지 않는
   현재 후보 **미배포**. working tree 단순 빌드는 후보를 섞을 수 있다.
 - [ ] 과거 8초 종료 지연 재현 시 OS 상태/stack/dump·독립 exit witness 수집으로
   원인 규명. 62회 정상 결과만으로 해결로 간주하지 않는다.
-- [ ] 새 설치파일 자체의 Windows clean install/upgrade/uninstall runtime 검수.
+- [x] 0.3.1 새 Windows installer 설치·제거(미지 파일 보존)·실제 설치 후 실행 검수.
+  임의의 모든 이전 버전에서의 자동 upgrade 전수 검수는 이 결과에 포함하지 않는다.
 - [ ] 외부 공개 전 Developer ID/notarization·Authenticode 및 의존성 재배포 고지 검토.
 
 ## 근거·다음 진입점

@@ -1,5 +1,7 @@
 # GPUI 0.3.0 설치파일·배포 준비
 
+Current installation: [Spacer 0.3.1](SPACER_0_3_1_INSTALL.md), installed on both platforms on 2026-11-25. The 0.3.0 evidence below is historical.
+
 패키지 revision `20261124.1`은 [검증된 현재 설치본](WORK_HANDOFF.md)의 포장 버전이다.
 앱 바이너리를 재빌드하지 않으며, 미채택 168B 성능 후보를 포함하지 않는다.
 설치파일 제작과 외부 공개/원격 설치 교체는 별도 상태로 기록한다.

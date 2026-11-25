@@ -3,8 +3,8 @@
 // The pinned GPUI dependency owns RT_MANIFEST(1): asInvoker, PerMonitorV2,
 // Windows 10 compatibility and Common Controls. A second owner breaks linking.
 1 VERSIONINFO
- FILEVERSION 0,3,0,0
- PRODUCTVERSION 0,3,0,0
+ FILEVERSION @VERSION_COMMAS@
+ PRODUCTVERSION @VERSION_COMMAS@
  FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
  FILEFLAGS 0
  FILEOS VOS_NT_WINDOWS32
@@ -14,11 +14,11 @@ BEGIN
  BEGIN
   BLOCK "040904b0"
   BEGIN
-   VALUE "FileDescription", "Space Sniffer GPUI\0"
-   VALUE "FileVersion", "0.3.0.0\0"
-   VALUE "ProductName", "Mac Space Sniffer\0"
-   VALUE "ProductVersion", "0.3.0\0"
-   VALUE "OriginalFilename", "MacSpaceSniffer.exe\0"
+   VALUE "FileDescription", "@NAME@\0"
+   VALUE "FileVersion", "@VERSION@.0\0"
+   VALUE "ProductName", "@NAME@\0"
+   VALUE "ProductVersion", "@VERSION@\0"
+   VALUE "OriginalFilename", "@EXE@.exe\0"
   END
  END
  BLOCK "VarFileInfo"

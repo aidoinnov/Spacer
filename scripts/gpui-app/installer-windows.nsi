@@ -1,4 +1,7 @@
-; Build from a hash-verified payload using prepare-installers.py.
+; Build from a verified Spacer payload using prepare-spacer-installers.py.
+!ifndef VERSION
+ !error "VERSION is required"
+!endif
 Unicode true
 !include "MUI2.nsh"
 !include "x64.nsh"
@@ -6,23 +9,23 @@ Unicode true
 !ifndef PAYLOAD
   !error "PAYLOAD is required"
 !endif
-Name "Space Sniffer 0.3.0"
+Name "Spacer ${VERSION}"
 OutFile "${OUTPUT}"
-InstallDir "$LOCALAPPDATA\Programs\SpaceSniffer-Windows\0.3.0-GPUI-20261124.1"
+InstallDir "$LOCALAPPDATA\Programs\Spacer\${VERSION}"
 RequestExecutionLevel user
 ManifestDPIAware true
 SetCompressor zlib
 Icon "${APPICON}"
 UninstallIcon "${APPICON}"
-VIProductVersion "0.3.0.300"
-VIAddVersionKey "ProductName" "Space Sniffer"
-VIAddVersionKey "FileDescription" "Space Sniffer per-user installer"
-VIAddVersionKey "FileVersion" "0.3.0 (20261124.1)"
-VIAddVersionKey "LegalCopyright" "Space Sniffer contributors"
-!define KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\SpaceSniffer-GPUI-20261124.1"
-!define LINKNAME "Space Sniffer 0.3.0 (20261124.1)"
+VIProductVersion "${VERSION}.0"
+VIAddVersionKey "ProductName" "Spacer"
+VIAddVersionKey "FileDescription" "Spacer per-user installer"
+VIAddVersionKey "FileVersion" "${VERSION}"
+VIAddVersionKey "LegalCopyright" "Spacer contributors"
+!define KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Spacer-${VERSION}"
+!define LINKNAME "Spacer ${VERSION}"
 !insertmacro MUI_PAGE_WELCOME
-; Fixed versioned per-user path: never overwrite the previous 0.3.0-GPUI app.
+; Versioned per-user path preserves the previous installation.
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_UNPAGE_CONFIRM
@@ -36,7 +39,7 @@ Function .onInit
     MessageBox MB_ICONSTOP "This package requires 64-bit Windows."
     Abort
   ${EndIf}
-  System::Call 'kernel32::CreateMutexW(p 0, i 0, w "Local\SpaceSnifferInstaller20261124_1") p .r0 ?e'
+  System::Call 'kernel32::CreateMutexW(p 0, i 0, w "Local\SpacerInstaller") p .r0 ?e'
   Pop $1
   ${If} $1 = 183
     MessageBox MB_ICONSTOP "Another installer is already running."
@@ -45,7 +48,7 @@ Function .onInit
   SetShellVarContext current
 FunctionEnd
 
-Section "Space Sniffer" SEC_MAIN
+Section "Spacer" SEC_MAIN
   ${If} ${FileExists} "$INSTDIR\*.*"
     MessageBox MB_ICONSTOP "This build is already installed. Uninstall it first. Your previous version remains available."
     Abort
@@ -57,12 +60,12 @@ Section "Space Sniffer" SEC_MAIN
   SetOutPath "$INSTDIR"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   CreateDirectory "$SMPROGRAMS\${LINKNAME}"
-  CreateShortCut "$SMPROGRAMS\${LINKNAME}\Space Sniffer.lnk" "$INSTDIR\MacSpaceSniffer.exe"
+  CreateShortCut "$SMPROGRAMS\${LINKNAME}\Spacer.lnk" "$INSTDIR\Spacer.exe"
   CreateShortCut "$SMPROGRAMS\${LINKNAME}\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
-  WriteRegStr HKCU "${KEY}" "DisplayName" "Space Sniffer 0.3.0 (20261124.1)"
-  WriteRegStr HKCU "${KEY}" "DisplayVersion" "0.3.0"
+  WriteRegStr HKCU "${KEY}" "DisplayName" "Spacer ${VERSION}"
+  WriteRegStr HKCU "${KEY}" "DisplayVersion" "${VERSION}"
   WriteRegStr HKCU "${KEY}" "InstallLocation" "$INSTDIR"
-  WriteRegStr HKCU "${KEY}" "DisplayIcon" "$INSTDIR\MacSpaceSniffer.exe"
+  WriteRegStr HKCU "${KEY}" "DisplayIcon" "$INSTDIR\Spacer.exe"
   WriteRegStr HKCU "${KEY}" "UninstallString" '$\"$INSTDIR\Uninstall.exe$\"'
   WriteRegDWORD HKCU "${KEY}" "NoModify" 1
   WriteRegDWORD HKCU "${KEY}" "NoRepair" 1
@@ -73,7 +76,7 @@ Function .onInstFailed
     !include "${DELETE_INCLUDE}"
     Delete "$INSTDIR\Uninstall.exe"
     RMDir "$INSTDIR"
-    Delete "$SMPROGRAMS\${LINKNAME}\Space Sniffer.lnk"
+    Delete "$SMPROGRAMS\${LINKNAME}\Spacer.lnk"
     Delete "$SMPROGRAMS\${LINKNAME}\Uninstall.lnk"
     RMDir "$SMPROGRAMS\${LINKNAME}"
     DeleteRegKey HKCU "${KEY}"
@@ -85,7 +88,7 @@ FunctionEnd
   ${If} ${FileExists} "$INSTDIR\${NAME}"
   System::Call 'kernel32::CreateFileW(w "$INSTDIR\${NAME}", i 0x40000000, i 1, p 0, i 3, i 0, p 0) p .r0'
   ${If} $0 == -1
-    MessageBox MB_ICONSTOP "Close Space Sniffer and its preview before uninstalling. No process will be stopped automatically."
+    MessageBox MB_ICONSTOP "Close Spacer and its preview before uninstalling. No process will be stopped automatically."
     Abort
   ${EndIf}
   System::Call 'kernel32::CloseHandle(p r0)'
@@ -94,13 +97,14 @@ FunctionEnd
 
 Section "Uninstall"
   SetShellVarContext current
-  !insertmacro GuardClosed "MacSpaceSniffer.exe"
+  !insertmacro GuardClosed "Spacer.exe"
+  !insertmacro GuardClosed "SpacerCLI.exe"
   !insertmacro GuardClosed "ExplorerBackend.exe"
   !insertmacro GuardClosed "WindowsPreviewHost.exe"
   !include "${DELETE_INCLUDE}"
   Delete "$INSTDIR\Uninstall.exe"
   RMDir "$INSTDIR"
-  Delete "$SMPROGRAMS\${LINKNAME}\Space Sniffer.lnk"
+  Delete "$SMPROGRAMS\${LINKNAME}\Spacer.lnk"
   Delete "$SMPROGRAMS\${LINKNAME}\Uninstall.lnk"
   RMDir "$SMPROGRAMS\${LINKNAME}"
   DeleteRegKey HKCU "${KEY}"

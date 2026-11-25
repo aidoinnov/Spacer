@@ -1,6 +1,6 @@
 # Headless CLI
 
-New source builds include a console companion named `SpacerCLI` on macOS and
+Spacer 0.3.1 and new source builds include a console companion named `SpacerCLI` on macOS and
 `SpacerCLI.exe` on Windows. The GPUI executable forwards `--cli` commands to that
 companion before initializing a window. Frozen 0.3.0 downloads from November 24
 predate this addition; they have not been replaced.
@@ -13,9 +13,9 @@ Backend discovery and path normalization live in the shared platform adapters.
 
 ```sh
 # macOS bundle, with paths containing spaces quoted
-APP="$HOME/Applications/Mac Space Sniffer.app/Contents/MacOS"
+APP="$HOME/Applications/Spacer.app/Contents/MacOS"
 "$APP/SpacerCLI" --scan "$HOME/Downloads" --issues
-"$APP/MacSpaceSniffer" --cli --scan "$HOME/Downloads" --filter '*.zip' --logical
+"$APP/Spacer" --cli --scan "$HOME/Downloads" --filter '*.zip' --logical
 
 # Save a new SNS snapshot, then export its paths without scanning the filesystem
 "$APP/SpacerCLI" --scan "$HOME/Downloads" --output downloads.sns
@@ -87,7 +87,7 @@ compatibility.
 python3 scripts/gpui-app/check-cli.py --portable --binary /path/SpacerCLI \
   --output /new/cli-evidence
 python3 scripts/gpui-app/check-cli.py --portable --gui \
-  --binary /path/MacSpaceSniffer --output /new/forwarding-evidence
+  --binary /path/Spacer --output /new/forwarding-evidence
 python3 scripts/gpui-app/check-cli-lifecycle.py --binary /path/SpacerCLI \
   --backend /path/MacScanBridge --output /new/lifecycle-evidence
 ```

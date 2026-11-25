@@ -10,23 +10,10 @@ import tempfile
 import zipfile
 
 
-def sha(path):
-    with path.open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
-
+from prepare_installers_support import sha,verify,nsis_quote
 
 def run(argv, **kwargs):
     return subprocess.run([str(x) for x in argv], check=True, **kwargs)
-
-
-def verify(root, files):
-    actual = {p.relative_to(root).as_posix(): sha(p)
-              for p in root.rglob('*') if p.is_file()}
-    assert actual == files, f'Payload does not exactly match frozen manifest: {root}'
-
-
-def nsis_quote(value):
-    return str(value).replace('$', '$$').replace('"', '$\\"')
 
 
 def main():
@@ -111,7 +98,7 @@ def main():
             run(['makensis', f'-DPAYLOAD={payload}', f'-DOUTPUT={exe}',
                  f'-DAPPICON={repo}/gpui-app/native/windows-app/AppIcon.ico',
                  f'-DINSTALL_INCLUDE={ins}', f'-DDELETE_INCLUDE={dele}',
-                 repo/'scripts/gpui-app/installer-windows.nsi'], stdout=log)
+                 repo/'scripts/gpui-app/installer-windows-legacy-0.3.0.nsi'], stdout=log)
         extracted = work/'extracted'
         with (evidence/'installer-extract.log').open('w') as log:
             run(['7z', 'x', exe, f'-o{extracted}', '-y'], stdout=log)

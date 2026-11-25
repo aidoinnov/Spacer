@@ -52,7 +52,9 @@ An SNS snapshot is an offline record of a scan. Its paths may belong to another 
 
 Intel Mac runtime support has not been verified. Previews use Quick Look on macOS and a separate helper on Windows, so supported file types differ.
 
-Mac DMG and Windows EXE packages have been built for 0.3.0, but **public downloads are not available yet**. The new Windows installer still needs install/uninstall testing. The Mac package is ad-hoc signed and not notarized; the Windows package is unsigned.
+**Current version: 0.3.1.** Mac DMG and Windows EXE packages have been built and tested locally, including Windows installation and removal. Public release downloads have not been published. The Mac package is ad-hoc signed and not notarized; the Windows package is unsigned.
+
+Installed paths are `~/Applications/Spacer.app` on Mac and `%LOCALAPPDATA%\Programs\Spacer\0.3.1` on Windows. See the [installation record](docs/SPACER_0_3_1_INSTALL.md) for what was checked.
 
 You can build from source using the steps below.
 
@@ -68,7 +70,7 @@ cd Spacer
 ./scripts/build-gpui-app.sh
 ```
 
-The app is written to `dist/gpui-builds/`. `dist/Mac Space Sniffer GPUI.app` points to the latest build. Building does not replace an installed copy.
+The app is written to `dist/gpui-builds/`. `dist/Spacer.app` points to the latest build. Building does not replace an installed copy.
 
 ### Windows
 

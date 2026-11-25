@@ -613,7 +613,7 @@ impl Render for Explorer {
                         div()
                             .text_size(px(14.))
                             .font_weight(FontWeight::SEMIBOLD)
-                            .child("Mac Space Sniffer"),
+                            .child(env!("SPACER_PRODUCT_NAME")),
                     )
                     .child(
                         div()

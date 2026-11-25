@@ -1,8 +1,8 @@
 {
   "source": "scripts/mcp/space_sniffer_mcp.py",
-  "source_sha256": "799bef937011c16a41568779d80a8af0ef61b5102f791e0d79ccb930e4cbde1d",
+  "source_sha256": "aa142b276235a79a3623ff51bc6a5c9f0b36855a6e2a1f1154fbb28b2dd5cb68",
   "serverInfo": {
-    "name": "mac-space-sniffer",
+    "name": "spacer",
     "version": "1.0.0"
   },
   "tools": [

@@ -18,9 +18,9 @@ pub fn validate_gui(args: &[OsString]) -> Result<(), &'static str> {
 }
 
 pub const HELP: &str = "Spacer — disk usage analyzer\n\
-Usage: MacSpaceSniffer [--scan PATH | --snapshot FILE | PATH]\n\
-       MacSpaceSniffer --help\n\
-       MacSpaceSniffer --version\n\n\
+Usage: Spacer [--scan PATH | --snapshot FILE | PATH]\n\
+       Spacer --help\n\
+       Spacer --version\n\n\
 Use --cli --scan PATH or --cli --load FILE for headless operation.\n\
 Use --cli --help for all headless options. Windows terminals can also run SpacerCLI.exe directly.\n\
 MCP control is provided by scripts/mcp/space_sniffer_mcp.py.\n";

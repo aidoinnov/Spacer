@@ -54,7 +54,7 @@ Windows도 `SPACE_SNIFFER_BUNDLE_ID=local.macspacesniffer.app`으로 release 빌
 
 ## 기본 빌드 명령
 
-Mac: `scripts/build-gpui-app.sh`. `SNIFFER_BUILD_ROOT`를 지정하면 같은 Swift/Cargo cache를 재사용합니다. 작업 볼륨 공간이 부족하면 `SNIFFER_OUTPUT_ROOT`로 패키지 출력도 내부 디스크에 둘 수 있습니다. 기본 cache는 OS 임시 디렉터리에 두며 작업 볼륨을 수 GB의 Cargo cache로 채우지 않습니다. output은 새 버전/architecture/시각 경로이고 `dist/Mac Space Sniffer GPUI.app` alias를 갱신합니다. 현재 `--universal`을 지원한다고 표시하지 않습니다.
+Mac: `scripts/build-gpui-app.sh`. `SNIFFER_BUILD_ROOT`를 지정하면 같은 Swift/Cargo cache를 재사용합니다. 작업 볼륨 공간이 부족하면 `SNIFFER_OUTPUT_ROOT`로 패키지 출력도 내부 디스크에 둘 수 있습니다. 기본 cache는 OS 임시 디렉터리에 두며 작업 볼륨을 수 GB의 Cargo cache로 채우지 않습니다. output은 새 버전/architecture/시각 경로이고 `dist/Spacer.app` alias를 갱신합니다. 현재 `--universal`을 지원한다고 표시하지 않습니다.
 
 Windows x64 Developer PowerShell:
 

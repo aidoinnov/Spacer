@@ -20,12 +20,12 @@ SPACE_SNIFFER_BUNDLE_ID=local.macspacesniffer.app CARGO_INCREMENTAL=0 CARGO_TARG
   cargo +1.97.0 build --release --locked --manifest-path gpui-app/Cargo.toml --jobs "$jobs"
 python3 scripts/gpui-app/package-macos.py --rust-binary "$build_root/target/release/space-sniffer-gpui" \
   --cli-binary "$build_root/cli-target/release/spacer-cli" \
-  --native-directory "$build_root/swift/release" --output "$output/Mac Space Sniffer.app"
-ditto -c -k --sequesterRsrc --keepParent "$output/Mac Space Sniffer.app" "$output/Mac-Space-Sniffer-$version-$(uname -m).zip"
-python3 - "$output/Mac Space Sniffer.app" <<'PY'
+  --native-directory "$build_root/swift/release" --output "$output/Spacer.app"
+ditto -c -k --sequesterRsrc --keepParent "$output/Spacer.app" "$output/Spacer-$version-$(uname -m).zip"
+python3 - "$output/Spacer.app" <<'PY'
 from pathlib import Path
 import os, sys
-app=Path(sys.argv[1]); alias=Path('dist/Mac Space Sniffer GPUI.app'); stage=alias.with_name('.GPUI-latest.next')
+app=Path(sys.argv[1]); alias=Path('dist/Spacer.app'); stage=alias.with_name('.GPUI-latest.next')
 assert not stage.exists() and (not alias.exists() or alias.is_symlink()), 'Do not replace an unrelated bundle'
 stage.symlink_to(os.path.relpath(app, alias.parent), target_is_directory=True)
 os.replace(stage, alias)

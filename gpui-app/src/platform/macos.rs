@@ -156,7 +156,7 @@ pub fn volume_info(path: &std::path::Path) -> anyhow::Result<serde_json::Value> 
 
 pub fn titlebar_options() -> gpui_kit::TitlebarOptions {
     gpui_kit::TitlebarOptions {
-        title: Some("Space Sniffer — GPUI".into()),
+        title: Some(env!("SPACER_PRODUCT_NAME").into()),
         appears_transparent: true,
         traffic_light_position: Some(gpui_kit::point(gpui_kit::px(10.), gpui_kit::px(16.))),
     }
