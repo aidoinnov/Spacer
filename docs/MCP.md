@@ -14,12 +14,13 @@ later is required; the bridge has no third-party Python dependencies.
   "mcpServers": {
     "spacer": {
       "command": "python3",
-      "args": ["/absolute/path/to/Spacer/scripts/mcp/space_sniffer_mcp.py"]
+      "args": ["-B", "/absolute/path/to/Spacer/scripts/mcp/space_sniffer_mcp.py"]
     }
   }
 }
 ```
 
+The `-B` argument prevents Python bytecode from being written into the app.
 Use `python` and an absolute Windows script path on Windows. Packaged builds also
 include the bridge under `Contents/Resources/MCP` on macOS or `MCP` on Windows.
 Use the bridge bundled with the app when working with an older package. The

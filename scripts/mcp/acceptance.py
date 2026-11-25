@@ -36,7 +36,7 @@ def owned_directory():
 
 class Client:
     def __init__(self, bundle, server=None):
-        self.child = subprocess.Popen([sys.executable, str(server or Path(__file__).with_name('space_sniffer_mcp.py')),
+        self.child = subprocess.Popen([sys.executable, '-B', str(server or Path(__file__).with_name('space_sniffer_mcp.py')),
                                        '--bundle-id', bundle], stdin=subprocess.PIPE,
                                       stdout=subprocess.PIPE, stderr=subprocess.PIPE,**hidden_process_options())
         self.rows = queue.Queue()

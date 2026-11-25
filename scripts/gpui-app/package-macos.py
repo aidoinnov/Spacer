@@ -29,6 +29,7 @@ for name, source in inputs.items():
     shutil.copy2(source, contents / 'MacOS' / name)
 for name in ['space_sniffer_mcp.py', 'control_transport.py']:
     shutil.copy2(repo / 'scripts/mcp' / name, resources / 'MCP' / name)
+(resources / 'MCP').chmod(0o555)
 shutil.copy2(repo / 'gpui-app/native/macos-app/AppIcon.icns', resources / 'AppIcon.icns')
 shutil.copy2(repo / 'gpui-app/assets/fonts/OFL.txt', resources / 'NotoSansKR-OFL.txt')
 info = {'CFBundleExecutable': executable, 'CFBundleIdentifier': product['bundle_id'],
@@ -45,7 +46,7 @@ subprocess.run(['codesign', '--verify', '--deep', '--strict', str(a.output)], ch
 result = subprocess.run([str(contents / 'MacOS' / executable), '--qa-output', 'unused'], capture_output=True)
 assert result.returncode == 64, 'Release must reject acceptance commands before opening a window'
 manifest = {'version': version, 'bundleId': info['CFBundleIdentifier'], 'signature': 'ad-hoc',
-            'qaCommandsRejected': True, 'files': {str(v.relative_to(a.output)): hashlib.sha256(v.read_bytes()).hexdigest()
+            'qaCommandsRejected': True, 'mcpResourceDirectoryMode': '0555', 'files': {str(v.relative_to(a.output)): hashlib.sha256(v.read_bytes()).hexdigest()
                                                for v in a.output.rglob('*') if v.is_file()}}
 a.output.with_suffix('.manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
 print(json.dumps({'bundle': str(a.output), 'passed': True, 'signature': 'ad-hoc'}))

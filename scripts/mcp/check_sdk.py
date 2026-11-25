@@ -49,7 +49,7 @@ def main():
                 async def check():
                     for mode,version in [('auto','2026-07-28'),('legacy','2025-11-25')]:
                         params=StdioServerParameters(command=sys.executable,
-                            args=[str(Path(__file__).with_name('space_sniffer_mcp.py'))],
+                            args=['-B',str(Path(__file__).with_name('space_sniffer_mcp.py'))],
                             env={**os.environ,'PYTHONIOENCODING':'ascii'})
                         async with Client(params,mode=mode,read_timeout_seconds=30) as client:
                             assert client.protocol_version==version,client.protocol_version

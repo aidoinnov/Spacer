@@ -14,6 +14,7 @@ mac=json.loads(a.mac_bundle.with_suffix('.manifest.json').read_text());win=json.
 wf={v['path'].replace('\\','/'):v['sha256'] for v in win['files']}
 assert mac['version']==win['version']==version
 verify(a.mac_bundle,mac['files']);verify(a.windows_directory,wf)
+assert (a.mac_bundle/'Contents/Resources/MCP').stat().st_mode & 0o777 == 0o555, 'MCP resources must be read-only before packaging'
 assert mac['files']['Contents/MacOS/MacScanBridge']=='a8ab73ee1e9f307669bdd4138015a64e31cba2c0d9feb2720f235f014cb97df5'
 assert wf['ExplorerBackend.exe']=='1bf91efa01a4ecadeb96141dd1d5ca00099a7bf5d49e8e235cf3becc813e57d3'
 def run(args,**kwargs):return subprocess.run([str(v) for v in args],check=True,**kwargs)

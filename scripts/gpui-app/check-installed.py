@@ -2,7 +2,7 @@
 """Exercise the installed production app through its bundled real STDIO MCP."""
 import argparse,base64,json,os,sys,tempfile,time
 from pathlib import Path
-from qa_process_metrics import start_installed_app
+from qa_process_metrics import start_installed_app,verify_installed_resources
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'mcp'))
 from acceptance import Client,Bridge
 p=argparse.ArgumentParser(description=__doc__)
@@ -49,5 +49,8 @@ try:
 except Exception as error:report['error']=repr(error)
 finally:
  if client:client.close()
+ if report.get('passed'):
+  try:report['integrity']=verify_installed_resources(a.app,a.server)
+  except Exception as error:report.update(passed=False,error=repr(error))
  (a.output/'results.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report));sys.exit(0 if report['passed'] else 1)

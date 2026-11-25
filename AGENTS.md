@@ -8,6 +8,9 @@ Current installed release: **0.3.1**, optimized production GPUI/CLI with the pin
 - Windows 132: `%LOCALAPPDATA%\Programs\Spacer\0.3.1\Spacer.exe`.
 - `gpui-app/product.json` owns release display metadata. Cargo versions and the
   generated Windows resource must agree. Package composition validates versions.
+- Packaged MCP resources on Mac must remain read-only (0555); launch Python
+  bridges with `-B`. Verify the app signature after real MCP use as well as before.
+  Never let `__pycache__` modify sealed bundle resources.
 - The legacy bundle ID, controller namespace and settings/recovery locations
   deliberately remain compatible. Do not rename user data along with the UI.
 - The user explicitly authorized the 0.3.1 rename/install and removal of old test

@@ -75,3 +75,19 @@ Mac signing is ad-hoc; Windows is unsigned. These facts do not change the
 installation and functional results above. The earlier [CLI/MCP audit](CLI_MCP_FOLLOWUP.md)
 records the broader 22-tool and cancellation coverage. No formal throughput
 admission or historical exit-delay root-cause conclusion is made by this install.
+
+## MCP cache and post-run signature check
+
+A final post-launch check found that importing the bundled transport created a
+`__pycache__` file inside the Mac app and invalidated its sealed resources. The
+owned cache was removed and the bundled MCP resource directory made read-only
+(mode 0555). The packager now applies that mode before signing. Local MCP client
+configuration and QA/SDK launchers also pass Python `-B`.
+
+The running Mac analysis was preserved: the process was not restarted or
+cancelled. Actual bundled STDIO MCP communication succeeded afterward without
+recreating bytecode, and strict deep signature verification passed again. An
+independent official SDK 2.3.0 connection without `-B` also passed against the
+read-only bundle with all 22 tools listed and no bytecode created. The
+updated DMG/ZIP retain the resource-directory mode. This post-run integrity check
+is part of the installation evidence, not just the pre-launch signing check.

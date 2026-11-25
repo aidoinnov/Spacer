@@ -289,3 +289,15 @@ def start_installed_app(path, log):
     if sys.platform=='win32':
         return subprocess.Popen([str(path)],stdout=log,stderr=log)
     raise RuntimeError('Unsupported installed app host')
+
+
+def verify_installed_resources(app, server):
+    """Check integrity after bundled Python has actually run."""
+    from pathlib import Path
+    cache=list(Path(server).parent.glob('__pycache__/*.pyc'))
+    if cache:raise AssertionError('Bundled MCP wrote bytecode: '+str(cache))
+    result={'bundledBytecodeRemaining':[]}
+    if sys.platform=='darwin':
+        subprocess.run(['codesign','--verify','--deep','--strict',str(app)],check=True,capture_output=True)
+        result['signatureVerifiedAfterMCP']=True
+    return result
